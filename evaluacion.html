@@ -100,15 +100,15 @@
             background-color: #f0f5fc;
         }
 
+        .phase-accordion details[open] summary {
+            background-color: var(--color-primario);
+            color: var(--color-blanco);
+        }
+
         .phase-accordion summary::after {
             content: '➕';
             font-size: 1.5rem;
             transition: transform 0.3s ease-out;
-        }
-
-        .phase-accordion details[open] summary {
-            background-color: var(--color-primario);
-            color: var(--color-blanco);
         }
 
         .phase-accordion details[open] summary::after {
@@ -141,6 +141,9 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             border-left: 5px solid var(--color-secundario);
             transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         
         .activity-card:hover {
@@ -157,7 +160,47 @@
         .activity-card .duration {
             font-weight: 600;
             color: #555;
+            margin-top: 10px;
         }
+        
+        .resource-buttons {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-resource {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn-presentation {
+            background-color: var(--color-primario);
+            color: var(--color-blanco);
+        }
+        
+        .btn-presentation:hover {
+            background-color: #004a80;
+            transform: scale(1.03);
+        }
+
+        .btn-activity {
+            background-color: var(--color-secundario);
+            color: var(--color-texto);
+        }
+
+        .btn-activity:hover {
+            background-color: #e6b325;
+            transform: scale(1.03);
+        }
+
 
         footer {
             text-align: center;
@@ -189,14 +232,24 @@
                     <summary>Misión 1: Conectar y Activar <span class="achievement-badge">Logro desbloqueado!</span></summary>
                     <div class="activities-container">
                         <div class="activity-card">
-                            <h3>Bienvenida e Impacto Inicial</h3>
-                            <p>Captamos la atención y establecemos un marco de propósito compartido con un mensaje potente sobre el poder de la evaluación.</p>
-                            <p class="duration">Duración: 5 min</p>
+                            <div>
+                                <h3>Bienvenida e Impacto Inicial</h3>
+                                <p>Captamos la atención con un mensaje potente sobre el poder de la evaluación.</p>
+                                <p class="duration">Duración: 5 min</p>
+                            </div>
+                            <div class="resource-buttons">
+                                <a href="https://gamma.app/docs/La-Evaluacion-yvjhqvklt7jkzrp" target="_blank" class="btn-resource btn-presentation">Abrir Presentación</a>
+                            </div>
                         </div>
                         <div class="activity-card">
-                            <h3>Trivia: Mitos y Verdades</h3>
-                            <p>Activamos los conocimientos previos con un juego interactivo. ¡Prepara tu celular para participar y derribar mitos!</p>
-                             <p class="duration">Duración: 5 min</p>
+                             <div>
+                                <h3>Trivia: Mitos y Verdades</h3>
+                                <p>Activamos conocimientos previos con un juego interactivo para derribar mitos.</p>
+                                 <p class="duration">Duración: 5 min</p>
+                            </div>
+                             <div class="resource-buttons">
+                                <a href="https://elmejorequipo.github.io/talleres/trivia.html" target="_blank" class="btn-resource btn-activity">Iniciar Juego</a>
+                            </div>
                         </div>
                     </div>
                 </details>
@@ -205,19 +258,29 @@
                     <summary>Misión 2: Trazar el Mapa <span class="achievement-badge">Logro desbloqueado!</span></summary>
                     <div class="activities-container">
                         <div class="activity-card">
-                            <h3>El "Norte": Perfil de Salida</h3>
-                            <p>Descubrimos por qué el Perfil de Salida es el punto de partida incuestionable de toda planificación y evaluación.</p>
-                            <p class="duration">Duración: 10 min</p>
+                            <div>
+                                <h3>El "Norte": Perfil de Salida</h3>
+                                <p>Descubrimos por qué el Perfil de Salida es el punto de partida de toda planificación.</p>
+                                <p class="duration">Duración: 10 min</p>
+                            </div>
+                            <div class="resource-buttons">
+                                <a href="https://gamma.app/docs/El-Norte-es-el-Perfil-de-Salida-gd82doc127hk7wk" target="_blank" class="btn-resource btn-presentation">Abrir Presentación</a>
+                                <a href="https://wayground.com/join?gc=56059996" target="_blank" class="btn-resource btn-activity">Iniciar Actividad</a>
+                            </div>
                         </div>
                         <div class="activity-card">
-                            <h3>Del Perfil al Criterio</h3>
-                            <p>Aprendemos a "traducir" la gran visión del perfil en Criterios de Evaluación observables para las 4 dimensiones.</p>
-                             <p class="duration">Duración: 10 min</p>
+                            <div>
+                                <h3>Del Perfil al Criterio</h3>
+                                <p>Aprendemos a "traducir" la gran visión del perfil en Criterios de Evaluación observables.</p>
+                                 <p class="duration">Duración: 10 min</p>
+                            </div>
                         </div>
                          <div class="activity-card">
-                            <h3>El ADN del Registro: Indicadores</h3>
-                            <p>¡Manos a la obra! En equipos, creamos indicadores claros y medibles que serán la evidencia real de nuestro registro.</p>
-                             <p class="duration">Duración: 15 min</p>
+                             <div>
+                                <h3>El ADN del Registro: Indicadores</h3>
+                                <p>En equipos, creamos indicadores claros que serán la evidencia real de nuestro registro.</p>
+                                 <p class="duration">Duración: 15 min</p>
+                            </div>
                         </div>
                     </div>
                 </details>
@@ -226,14 +289,18 @@
                     <summary>Misión 3: La Caja de Herramientas <span class="achievement-badge">Logro desbloqueado!</span></summary>
                     <div class="activities-container">
                         <div class="activity-card">
-                            <h3>Técnica e Instrumento Correcto</h3>
-                            <p>Exploramos la caja de herramientas del evaluador. ¿Cuándo usar una rúbrica, una lista de cotejo o una prueba? ¡La decisión es clave!</p>
-                            <p class="duration">Duración: 15 min</p>
+                            <div>
+                                <h3>Técnica e Instrumento Correcto</h3>
+                                <p>Exploramos cuándo usar una rúbrica, lista de cotejo o prueba. ¡La decisión es clave!</p>
+                                <p class="duration">Duración: 15 min</p>
+                            </div>
                         </div>
                         <div class="activity-card">
-                            <h3>Instrumentos en Acción</h3>
-                            <p>Materializamos el proceso analizando ejemplos de instrumentos bien diseñados, viendo cómo cada parte conecta con el plan.</p>
-                             <p class="duration">Duración: 15 min</p>
+                            <div>
+                                <h3>Instrumentos en Acción</h3>
+                                <p>Analizamos ejemplos de instrumentos bien diseñados, viendo cómo cada parte conecta con el plan.</p>
+                                 <p class="duration">Duración: 15 min</p>
+                            </div>
                         </div>
                     </div>
                 </details>
@@ -242,14 +309,18 @@
                     <summary>Misión 4: Sellar el Compromiso <span class="achievement-badge">Logro desbloqueado!</span></summary>
                     <div class="activities-container">
                         <div class="activity-card">
-                            <h3>Recapitulando el Camino</h3>
-                            <p>Anclamos el aprendizaje con una infografía visual que resume la ruta del evaluador experto en 5 pasos infalibles.</p>
-                             <p class="duration">Duración: 5 min</p>
+                            <div>
+                                <h3>Recapitulando el Camino</h3>
+                                <p>Anclamos el aprendizaje con una infografía visual que resume la ruta del evaluador experto.</p>
+                                 <p class="duration">Duración: 5 min</p>
+                            </div>
                         </div>
                         <div class="activity-card">
-                            <h3>Nuestro Muro del Compromiso</h3>
-                            <p>Transformamos la reflexión en acción. Cada participante compartirá un compromiso personal para construir juntos una cultura de evaluación que transforma.</p>
-                             <p class="duration">Duración: 10 min</p>
+                            <div>
+                                <h3>Nuestro Muro del Compromiso</h3>
+                                <p>Transformamos la reflexión en acción con un compromiso personal y visible.</p>
+                                 <p class="duration">Duración: 10 min</p>
+                            </div>
                         </div>
                     </div>
                 </details>
