@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taller: De la Visión a la Evidencia</title>
+    <meta name="description" content="Guía interactiva para el taller sobre el sistema de evaluación rigurosa, dirigido a docentes de los niveles inicial, primario y secundario.">
+    <meta name="keywords" content="evaluación, taller para docentes, sistema de evaluación, Bolivia, pedagogía, Don Bosco">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        :root {
+            --color-primario: #005A9C; /* Azul Salesiano */
+            --color-secundario: #FFC72C; /* Amarillo Salesiano */
+            --color-fondo: #f4f7fa;
+            --color-texto: #333333;
+            --color-blanco: #ffffff;
+            --sombra-suave: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--color-blanco);
+            border-radius: 15px;
+            box-shadow: var(--sombra-suave);
+            overflow: hidden;
+        }
+
+        header {
+            background-color: var(--color-primario);
+            color: var(--color-blanco);
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        header p {
+            margin: 5px 0 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        main {
+            padding: 20px;
+        }
+
+        .progress-bar {
+            display: flex;
+            width: 100%;
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .progress-segment {
+            width: 25%;
+            background-color: var(--color-secundario);
+            transition: width 0.5s ease-in-out;
+        }
+
+        .phase-accordion details {
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            overflow: hidden;
+        }
+
+        .phase-accordion summary {
+            background-color: var(--color-blanco);
+            color: var(--color-primario);
+            font-size: 1.3rem;
+            font-weight: 600;
+            padding: 15px 20px;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .phase-accordion summary:hover {
+            background-color: #f0f5fc;
+        }
+
+        .phase-accordion summary::after {
+            content: '➕';
+            font-size: 1.5rem;
+            transition: transform 0.3s ease-out;
+        }
+
+        .phase-accordion details[open] summary {
+            background-color: var(--color-primario);
+            color: var(--color-blanco);
+        }
+
+        .phase-accordion details[open] summary::after {
+            content: '➖';
+            transform: rotate(180deg);
+        }
+        
+        .achievement-badge {
+            font-size: 0.8rem;
+            background-color: var(--color-secundario);
+            color: var(--color-texto);
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .activities-container {
+            padding: 20px;
+            background-color: var(--color-fondo);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .activity-card {
+            background-color: var(--color-blanco);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--color-secundario);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        }
+
+        .activity-card h3 {
+            margin-top: 0;
+            color: var(--color-primario);
+            font-size: 1.1rem;
+        }
+        
+        .activity-card .duration {
+            font-weight: 600;
+            color: #555;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>De la Visión a la Evidencia</h1>
+            <p>El Camino del Evaluador Riguroso y Creativo</p>
+        </header>
+
+        <main>
+            <div class="progress-bar" title="Progreso de la Misión">
+                <div class="progress-segment"></div>
+                <div class="progress-segment"></div>
+                <div class="progress-segment"></div>
+                <div class="progress-segment"></div>
+            </div>
+
+            <div class="phase-accordion">
+                <details>
+                    <summary>Misión 1: Conectar y Activar <span class="achievement-badge">Logro desbloqueado!</span></summary>
+                    <div class="activities-container">
+                        <div class="activity-card">
+                            <h3>Bienvenida e Impacto Inicial</h3>
+                            <p>Captamos la atención y establecemos un marco de propósito compartido con un mensaje potente sobre el poder de la evaluación.</p>
+                            <p class="duration">Duración: 5 min</p>
+                        </div>
+                        <div class="activity-card">
+                            <h3>Trivia: Mitos y Verdades</h3>
+                            <p>Activamos los conocimientos previos con un juego interactivo. ¡Prepara tu celular para participar y derribar mitos!</p>
+                             <p class="duration">Duración: 5 min</p>
+                        </div>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Misión 2: Trazar el Mapa <span class="achievement-badge">Logro desbloqueado!</span></summary>
+                    <div class="activities-container">
+                        <div class="activity-card">
+                            <h3>El "Norte": Perfil de Salida</h3>
+                            <p>Descubrimos por qué el Perfil de Salida es el punto de partida incuestionable de toda planificación y evaluación.</p>
+                            <p class="duration">Duración: 10 min</p>
+                        </div>
+                        <div class="activity-card">
+                            <h3>Del Perfil al Criterio</h3>
+                            <p>Aprendemos a "traducir" la gran visión del perfil en Criterios de Evaluación observables para las 4 dimensiones.</p>
+                             <p class="duration">Duración: 10 min</p>
+                        </div>
+                         <div class="activity-card">
+                            <h3>El ADN del Registro: Indicadores</h3>
+                            <p>¡Manos a la obra! En equipos, creamos indicadores claros y medibles que serán la evidencia real de nuestro registro.</p>
+                             <p class="duration">Duración: 15 min</p>
+                        </div>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Misión 3: La Caja de Herramientas <span class="achievement-badge">Logro desbloqueado!</span></summary>
+                    <div class="activities-container">
+                        <div class="activity-card">
+                            <h3>Técnica e Instrumento Correcto</h3>
+                            <p>Exploramos la caja de herramientas del evaluador. ¿Cuándo usar una rúbrica, una lista de cotejo o una prueba? ¡La decisión es clave!</p>
+                            <p class="duration">Duración: 15 min</p>
+                        </div>
+                        <div class="activity-card">
+                            <h3>Instrumentos en Acción</h3>
+                            <p>Materializamos el proceso analizando ejemplos de instrumentos bien diseñados, viendo cómo cada parte conecta con el plan.</p>
+                             <p class="duration">Duración: 15 min</p>
+                        </div>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Misión 4: Sellar el Compromiso <span class="achievement-badge">Logro desbloqueado!</span></summary>
+                    <div class="activities-container">
+                        <div class="activity-card">
+                            <h3>Recapitulando el Camino</h3>
+                            <p>Anclamos el aprendizaje con una infografía visual que resume la ruta del evaluador experto en 5 pasos infalibles.</p>
+                             <p class="duration">Duración: 5 min</p>
+                        </div>
+                        <div class="activity-card">
+                            <h3>Nuestro Muro del Compromiso</h3>
+                            <p>Transformamos la reflexión en acción. Cada participante compartirá un compromiso personal para construir juntos una cultura de evaluación que transforma.</p>
+                             <p class="duration">Duración: 10 min</p>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Creado con el Asesor Pedagógico Salesiano &copy; 2025</p>
+        </footer>
+    </div>
+
+</body>
+</html>
