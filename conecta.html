@@ -85,9 +85,16 @@
             border-radius: 8px;
             min-height: 80px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             transition: background-color 0.3s, border-color 0.3s;
+        }
+        
+        .drop-zone .profile-text {
+            font-weight: 600;
+            color: var(--color-primario);
+            margin-bottom: 5px;
         }
 
         .drop-zone.drag-over {
@@ -105,13 +112,9 @@
             border-color: var(--color-incorrecto);
         }
         
-        .drop-zone p {
-            font-style: italic;
-            color: #6c757d;
-        }
-        
         .drop-zone .draggable-item {
              cursor: default;
+             margin-top: 10px;
         }
 
         .controls {
@@ -155,7 +158,6 @@
             min-height: 30px;
         }
         
-        /* Responsive for mobile */
         @media (max-width: 768px) {
             .game-board {
                 grid-template-columns: 1fr;
@@ -172,28 +174,28 @@
     <div class="container">
         <header>
             <h1>Actividad: Conecta el Criterio</h1>
-            <p>Arrastra cada <strong>Perfil de Salida</strong> y suéltalo sobre el <strong>Criterio de Evaluación</strong> que le corresponde.</p>
+            <p>Arrastra cada <strong>Criterio de Evaluación</strong> y suéltalo sobre el <strong>Perfil de Salida</strong> que le corresponde.</p>
         </header>
 
         <div class="game-board">
-            <div class="column" id="profiles-column">
-                <h2>Perfiles de Salida (Arrastra desde aquí)</h2>
-                <div class="draggable-item" draggable="true" data-pair="1">Produce textos literarios de forma creativa.</div>
-                <div class="draggable-item" draggable="true" data-pair="2">Resuelve problemas matemáticos del contexto.</div>
-                <div class="draggable-item" draggable="true" data-pair="3">Analiza críticamente procesos históricos.</div>
-                <div class="draggable-item" draggable="true" data-pair="4">Promueve el cuidado de la Madre Tierra.</div>
-                <div class="draggable-item" draggable="true" data-pair="5">Expresa su identidad cultural con arte.</div>
-                <div class="draggable-item" draggable="true" data-pair="6">Ejecuta música de forma colaborativa.</div>
-            </div>
-
             <div class="column" id="criteria-column">
-                <h2>Criterios de Evaluación (Suelta aquí)</h2>
-                <div class="drop-zone" data-pair="5"><p>Crea una obra artística utilizando técnicas de su región.</p></div>
-                <div class="drop-zone" data-pair="3"><p>Contrasta diversas fuentes sobre un hecho histórico.</p></div>
-                <div class="drop-zone" data-pair="6"><p>Demuestra escucha activa al interpretar una pieza en grupo.</p></div>
-                <div class="drop-zone" data-pair="1"><p>Escribe cuentos cortos que exploran sus emociones.</p></div>
-                <div class="drop-zone" data-pair="4"><p>Propone acciones sustentables para reducir residuos.</p></div>
-                <div class="drop-zone" data-pair="2"><p>Aplica operaciones con decimales a presupuestos familiares.</p></div>
+                <h2>Criterios de Evaluación (Arrastra desde aquí)</h2>
+                <div class="draggable-item" draggable="true" data-pair="1">Escribe cuentos cortos que exploran sus emociones.</div>
+                <div class="draggable-item" draggable="true" data-pair="2">Aplica operaciones con decimales a presupuestos.</div>
+                <div class="draggable-item" draggable="true" data-pair="3">Contrasta diversas fuentes sobre un hecho histórico.</div>
+                <div class="draggable-item" draggable="true" data-pair="4">Propone acciones sustentables para reducir residuos.</div>
+                <div class="draggable-item" draggable="true" data-pair="5">Crea una obra artística utilizando técnicas de su región.</div>
+                <div class="draggable-item" draggable="true" data-pair="6">Demuestra escucha activa al interpretar una pieza en grupo.</div>
+            </div>
+            
+            <div class="column" id="profiles-column">
+                <h2>Perfiles de Salida (Suelta aquí)</h2>
+                <div class="drop-zone" data-pair="5"><p class="profile-text">Expresa su identidad cultural con arte.</p></div>
+                <div class="drop-zone" data-pair="3"><p class="profile-text">Analiza críticamente procesos históricos.</p></div>
+                <div class="drop-zone" data-pair="6"><p class="profile-text">Ejecuta música de forma colaborativa.</p></div>
+                <div class="drop-zone" data-pair="1"><p class="profile-text">Produce textos literarios de forma creativa.</p></div>
+                <div class="drop-zone" data-pair="4"><p class="profile-text">Promueve el cuidado de la Madre Tierra.</p></div>
+                <div class="drop-zone" data-pair="2"><p class="profile-text">Resuelve problemas matemáticos del contexto.</p></div>
             </div>
         </div>
 
@@ -206,52 +208,61 @@
     </div>
 
     <script>
-        const draggables = document.querySelectorAll('.draggable-item');
-        const dropZones = document.querySelectorAll('.drop-zone');
-        const profilesColumn = document.getElementById('profiles-column');
-
-        let draggedItem = null;
-
-        draggables.forEach(item => {
-            item.addEventListener('dragstart', (e) => {
-                draggedItem = e.target;
-                setTimeout(() => e.target.classList.add('dragging'), 0);
-            });
-
-            item.addEventListener('dragend', () => {
-                draggedItem.classList.remove('dragging');
-                draggedItem = null;
-            });
+        document.addEventListener('DOMContentLoaded', () => {
+            addDragAndDropListeners();
         });
 
-        dropZones.forEach(zone => {
-            zone.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                zone.classList.add('drag-over');
+        function addDragAndDropListeners() {
+            const draggables = document.querySelectorAll('.draggable-item');
+            const dropZones = document.querySelectorAll('.drop-zone');
+            
+            let draggedItem = null;
+
+            draggables.forEach(item => {
+                item.addEventListener('dragstart', (e) => {
+                    draggedItem = e.target;
+                    setTimeout(() => e.target.classList.add('dragging'), 0);
+                });
+
+                item.addEventListener('dragend', () => {
+                    if (draggedItem) { // Check if it hasn't been dropped
+                       draggedItem.classList.remove('dragging');
+                    }
+                });
             });
 
-            zone.addEventListener('dragleave', () => {
-                zone.classList.remove('drag-over');
-            });
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    zone.classList.add('drag-over');
+                });
 
-            zone.addEventListener('drop', (e) => {
-                e.preventDefault();
-                zone.classList.remove('drag-over');
-                
-                // If zone already has an item, return it to the profiles column
-                if (zone.children.length > 0 && zone.firstChild.classList.contains('draggable-item')) {
-                    profilesColumn.appendChild(zone.firstChild);
-                }
-                
-                if (draggedItem) {
-                    zone.innerHTML = ''; // Clear the placeholder text
-                    zone.appendChild(draggedItem);
-                }
+                zone.addEventListener('dragleave', () => {
+                    zone.classList.remove('drag-over');
+                });
+
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    zone.classList.remove('drag-over');
+                    
+                    const criteriaColumn = document.getElementById('criteria-column');
+                    if (zone.children.length > 1 && zone.lastChild.classList.contains('draggable-item')) {
+                        criteriaColumn.appendChild(zone.lastChild);
+                    }
+                    
+                    if (draggedItem) {
+                        draggedItem.classList.remove('dragging');
+                        zone.appendChild(draggedItem);
+                        draggedItem = null;
+                    }
+                });
             });
-        });
+        }
 
         function checkAnswers() {
             let correctCount = 0;
+            const dropZones = document.querySelectorAll('.drop-zone');
+
             dropZones.forEach(zone => {
                 zone.classList.remove('correct', 'incorrect');
                 const droppedItem = zone.querySelector('.draggable-item');
@@ -280,58 +291,38 @@
         }
 
         function resetGame() {
-            profilesColumn.innerHTML = '<h2>Perfiles de Salida (Arrastra desde aquí)</h2>';
-            const originalDraggables = [
-                { text: 'Produce textos literarios de forma creativa.', pair: 1 },
-                { text: 'Resuelve problemas matemáticos del contexto.', pair: 2 },
-                { text: 'Analiza críticamente procesos históricos.', pair: 3 },
-                { text: 'Promueve el cuidado de la Madre Tierra.', pair: 4 },
-                { text: 'Expresa su identidad cultural con arte.', pair: 5 },
-                { text: 'Ejecuta música de forma colaborativa.', pair: 6 }
+            const criteriaColumn = document.getElementById('criteria-column');
+            const dropZones = document.querySelectorAll('.drop-zone');
+
+            criteriaColumn.innerHTML = '<h2>Criterios de Evaluación (Arrastra desde aquí)</h2>';
+            const originalCriteria = [
+                { text: 'Escribe cuentos cortos que exploran sus emociones.', pair: 1 },
+                { text: 'Aplica operaciones con decimales a presupuestos.', pair: 2 },
+                { text: 'Contrasta diversas fuentes sobre un hecho histórico.', pair: 3 },
+                { text: 'Propone acciones sustentables para reducir residuos.', pair: 4 },
+                { text: 'Crea una obra artística utilizando técnicas de su región.', pair: 5 },
+                { text: 'Demuestra escucha activa al interpretar una pieza en grupo.', pair: 6 }
             ];
 
-            originalDraggables.forEach(itemData => {
+            originalCriteria.forEach(itemData => {
                  const newItem = document.createElement('div');
                  newItem.className = 'draggable-item';
                  newItem.draggable = true;
                  newItem.setAttribute('data-pair', itemData.pair);
                  newItem.textContent = itemData.text;
-                 profilesColumn.appendChild(newItem);
+                 criteriaColumn.appendChild(newItem);
             });
             
-            // Re-add event listeners to new elements
-            const newDraggables = document.querySelectorAll('.draggable-item');
-            newDraggables.forEach(item => {
-                 item.addEventListener('dragstart', (e) => {
-                    draggedItem = e.target;
-                    setTimeout(() => e.target.classList.add('dragging'), 0);
-                });
-
-                item.addEventListener('dragend', () => {
-                    draggedItem.classList.remove('dragging');
-                    draggedItem = null;
-                });
-            });
-
-
             dropZones.forEach(zone => {
-                zone.innerHTML = `<p>${getOriginalCriteraText(zone.getAttribute('data-pair'))}</p>`;
+                // Remove any dropped item
+                if (zone.children.length > 1) {
+                    zone.removeChild(zone.lastChild);
+                }
                 zone.classList.remove('correct', 'incorrect');
             });
             
             document.getElementById('feedback-area').innerHTML = '';
-        }
-
-        function getOriginalCriteraText(pair) {
-            const criteria = {
-                '1': 'Escribe cuentos cortos que exploran sus emociones.',
-                '2': 'Aplica operaciones con decimales a presupuestos familiares.',
-                '3': 'Contrasta diversas fuentes sobre un hecho histórico.',
-                '4': 'Propone acciones sustentables para reducir residuos.',
-                '5': 'Crea una obra artística utilizando técnicas de su región.',
-                '6': 'Demuestra escucha activa al interpretar una pieza en grupo.'
-            };
-            return criteria[pair];
+            addDragAndDropListeners();
         }
 
     </script>
