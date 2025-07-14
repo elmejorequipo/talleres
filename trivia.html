@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivia: Mitos y Verdades de la Evaluación</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        :root {
+            --color-primario: #005A9C; /* Azul Salesiano */
+            --color-secundario: #FFC72C; /* Amarillo Salesiano */
+            --color-fondo: #f4f7fa;
+            --color-texto: #333333;
+            --color-blanco: #ffffff;
+            --color-correcto: #28a745;
+            --color-incorrecto: #dc3545;
+            --sombra-suave: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+        }
+
+        header {
+            background-color: var(--color-primario);
+            color: var(--color-blanco);
+            padding: 20px;
+            text-align: center;
+            border-radius: 15px 15px 0 0;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .trivia-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .trivia-card {
+            background-color: var(--color-blanco);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: var(--sombra-suave);
+            transition: transform 0.3s;
+        }
+
+        .trivia-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--color-primario);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .options button {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 10px 30px;
+            border: 2px solid var(--color-primario);
+            background-color: var(--color-blanco);
+            color: var(--color-primario);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .options button:hover {
+            background-color: var(--color-primario);
+            color: var(--color-blanco);
+        }
+        
+        .options button.correct {
+            background-color: var(--color-correcto);
+            border-color: var(--color-correcto);
+            color: var(--color-blanco);
+        }
+
+        .options button.incorrect {
+            background-color: var(--color-incorrecto);
+            border-color: var(--color-incorrecto);
+            color: var(--color-blanco);
+        }
+
+        .feedback {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #e7f3fe;
+            border-left: 5px solid var(--color-secundario);
+        }
+        
+        .feedback.visible {
+            display: block;
+        }
+
+        .feedback strong {
+            color: var(--color-primario);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Trivia: Mitos y Verdades de la Evaluación</h1>
+        </header>
+
+        <div class="trivia-grid">
+            <div class="trivia-card">
+                <p class="question">1. "Evaluar es exactamente lo mismo que poner una nota (calificar)."</p>
+                <div class="options">
+                    <button onclick="checkAnswer(this, 'mito')">Mito</button>
+                    <button onclick="checkAnswer(this, 'mito')">Verdad</button>
+                </div>
+                <div class="feedback">
+                    <strong>Respuesta: Mito.</strong><br>
+                    ¡Este es el mito más grande! Poner una nota es solo el final de la película; la evaluación es la película entera. Evaluar es observar, dialogar, y tomar decisiones para MEJORAR el aprendizaje.
+                </div>
+            </div>
+
+            <div class="trivia-card">
+                <p class="question">2. "La dimensión más importante y la que define la aprobación es el SABER."</p>
+                <div class="options">
+                    <button onclick="checkAnswer(this, 'mito')">Mito</button>
+                    <button onclick="checkAnswer(this, 'mito')">Verdad</button>
+                </div>
+                <div class="feedback">
+                    <strong>Respuesta: Mito.</strong><br>
+                    ¡Cuidado con esta trampa! Nuestro Modelo Educativo nos pide una mirada integral. El SER, el HACER y el DECIDIR son tan fundamentales como el Saber. No formamos solo cabezas que almacenan datos.
+                </div>
+            </div>
+
+            <div class="trivia-card">
+                <p class="question">3. "La autoevaluación es un requisito formal que no tiene mucho valor real."</p>
+                <div class="options">
+                    <button onclick="checkAnswer(this, 'mito')">Mito</button>
+                    <button onclick="checkAnswer(this, 'mito')">Verdad</button>
+                </div>
+                <div class="feedback">
+                    <strong>Respuesta: Mito.</strong><br>
+                    ¡Al contrario! Su verdadero poder está en desarrollar la metacognición. Es enseñar al estudiante a ser protagonista de su aprendizaje: a reconocer sus logros e identificar sus desafíos.
+                </div>
+            </div>
+            
+            <div class="trivia-card">
+                <p class="question">4. "Con una buena prueba objetiva, ya he evaluado todo lo necesario."</p>
+                <div class="options">
+                    <button onclick="checkAnswer(this, 'mito')">Mito</button>
+                    <button onclick="checkAnswer(this, 'mito')">Verdad</button>
+                </div>
+                <div class="feedback">
+                    <strong>Respuesta: Mito.</strong><br>
+                     Una prueba es excelente para una parte del Saber, pero ¿y las habilidades (Hacer) o las actitudes (Ser)? Necesitamos una 'caja de herramientas' variada: rúbricas, listas de cotejo, etc.
+                </div>
+            </div>
+
+            <div class="trivia-card">
+                <p class="question">5. "La evaluación se planifica DESPUÉS de haber terminado de enseñar el tema."</p>
+                <div class="options">
+                    <button onclick="checkAnswer(this, 'mito')">Mito</button>
+                    <button onclick="checkAnswer(this, 'mito')">Verdad</button>
+                </div>
+                <div class="feedback">
+                    <strong>Respuesta: Mito.</strong><br>
+                    ¡Este es un error clásico! La evaluación no es el último paso, se diseña JUNTO con la planificación. Debemos saber qué y cómo vamos a evaluar desde el principio, porque eso guía toda nuestra enseñanza.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkAnswer(button, correctAnswer) {
+            const card = button.closest('.trivia-card');
+            const options = card.querySelector('.options');
+            const feedback = card.querySelector('.feedback');
+            const buttons = options.querySelectorAll('button');
+
+            const userAnswer = button.textContent.toLowerCase();
+
+            if (userAnswer === correctAnswer) {
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+                // Find and highlight the correct button
+                buttons.forEach(btn => {
+                    if (btn.textContent.toLowerCase() === correctAnswer) {
+                        btn.classList.add('correct');
+                    }
+                });
+            }
+
+            // Disable all buttons in this card after answering
+            buttons.forEach(btn => {
+                btn.disabled = true;
+            });
+            
+            feedback.classList.add('visible');
+        }
+    </script>
+</body>
+</html>
