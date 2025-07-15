@@ -92,8 +92,8 @@
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
                 height: '390', width: '640', 
-                videoId: 'e-k2g9g2LPA', // <-- ID del video Correcto
-                playerVars: {'playsinline': 1, 'rel': 0},
+                videoId: 'e-k2g9g2LPA', // ID del video
+                playerVars: {'playsinline': 1, 'rel': 0, 'origin': window.location.origin },
                 events: {'onStateChange': onPlayerStateChange}
             });
         }
