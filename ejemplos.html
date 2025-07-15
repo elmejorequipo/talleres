@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jornada de Formación Salesiana</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --color-primario: #005A9C; /* Azul Salesiano */
+            --color-secundario: #FFC72C; /* Amarillo Salesiano */
+            --color-fondo: #f4f7fa;
+            --color-texto: #333;
+            --color-blanco: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            overscroll-behavior: none;
+        }
+
+        main {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+        }
+
+        .slide {
+            height: 100vh;
+            scroll-snap-align: start;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+            position: relative;
+        }
+
+        .slide-content {
+            max-width: 700px;
+        }
+
+        .slide h1 {
+            font-size: 3.5rem;
+            color: var(--color-primario);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .slide h2 {
+            font-size: 2.5rem;
+            color: var(--color-primario);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .slide p {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+        
+        .slide .highlight {
+            color: var(--color-primario);
+            font-weight: 600;
+        }
+        
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-secundario);
+        }
+
+        #slide1 {
+            background-color: var(--color-wht);
+        }
+
+        /* Nav Dots */
+        .slide-nav {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .slide-nav a {
+            width: 12px;
+            height: 12px;
+            background-color: #ccc;
+            border-radius: 50%;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .slide-nav a:hover {
+            transform: scale(1.2);
+        }
+
+        .slide-nav a.active {
+            background-color: var(--color-primario);
+            transform: scale(1.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slide h1 { font-size: 2.5rem; }
+            .slide h2 { font-size: 2rem; }
+            .slide p { font-size: 1rem; }
+            .slide-nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="slide-nav" id="slide-nav"></nav>
+
+    <main id="presentation-main">
+        <section id="slide1" class="slide">
+            <div class="slide-content">
+                <p style="color: var(--color-secundario); font-weight: 600;">Jornada de Formación Salesiana</p>
+                <h1>De la Visión a la Evidencia</h1>
+                <p>El Camino del Evaluador Salesiano</p>
+            </div>
+        </section>
+
+        <section id="slide2" class="slide">
+            <div class="slide-content">
+                <span class="slide-number">01</span>
+                <h2>El Norte: El Perfil de Salida</h2>
+                <p>Todo comienza con nuestra promesa a largo plazo. No nos preguntamos "¿qué voy a enseñar?", sino <span class="highlight">"¿qué persona queremos formar?"</span>. Esta visión es nuestra guía inalterable.</p>
+            </div>
+        </section>
+
+        <section id="slide3" class="slide">
+            <div class="slide-content">
+                 <span class="slide-number">02</span>
+                <h2>Las Señales: Los Criterios</h2>
+                <p>"Traducimos" la gran visión del perfil en metas observables para las 4 dimensiones (Ser, Saber, Hacer y Decidir). Son las <span class="highlight">señales que nos indican</span> que vamos en la dirección correcta.</p>
+            </div>
+        </section>
+
+        <section id="slide4" class="slide">
+            <div class="slide-content">
+                 <span class="slide-number">03</span>
+                <h2>El ADN: Los Indicadores</h2>
+                <p>Hacemos lo observable, medible. El indicador es la <span class="highlight">evidencia concreta y la acción específica</span> que anotaremos en nuestro registro. Si no se puede ver, oír o medir, no es un indicador.</p>
+            </div>
+        </section>
+
+        <section id="slide5" class="slide">
+            <div class="slide-content">
+                 <span class="slide-number">04</span>
+                <h2>Las Herramientas: Los Instrumentos</h2>
+                <p>Elegimos la herramienta correcta para el trabajo correcto. Seleccionamos la <span class="highlight">rúbrica, lista de cotejo, portafolio o prueba</span> que mejor recoja la evidencia que nuestro indicador necesita.</p>
+            </div>
+        </section>
+
+        <section id="slide6" class="slide">
+            <div class="slide-content">
+                 <span class="slide-number">05</span>
+                <h2>La Colaboración: El Equipo</h2>
+                <p>Este viaje es más fácil con un aliado. El <span class="highlight">Asesor Pedagógico Salesiano</span> y sus expertos (Paola, Beatriz, Karina, Luis y Percy) están diseñados para acompañarte en cada paso de este camino.</p>
+            </div>
+        </section>
+        
+        <section id="slide7" class="slide">
+            <div class="slide-content">
+                <span class="slide-number">06</span>
+                <h2>¡Ahora te Toca a Ti!</h2>
+                <p>Tienes el mapa y las herramientas. Te invitamos a aplicar este camino en tu planificación para crear una <span class="highlight">evaluación más justa, formativa y con el corazón de Don Bosco</span>.</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.slide');
+            const navContainer = document.getElementById('slide-nav');
+
+            // Crear los puntos de navegación
+            sections.forEach((section, index) => {
+                if(index > 0) { // No crear punto para el slide de título
+                    const anchor = document.createElement('a');
+                    anchor.href = `#${section.id}`;
+                    anchor.dataset.targetId = section.id;
+                    navContainer.appendChild(anchor);
+                }
+            });
+
+            const navLinks = navContainer.querySelectorAll('a');
+
+            // Interseption Observer para resaltar el punto activo
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.dataset.targetId === entry.target.id);
+                        });
+                    }
+                });
+            }, { threshold: 0.7 });
+
+            sections.forEach(section => {
+                if(section.id !== 'slide1') {
+                    observer.observe(section);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
