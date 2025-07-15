@@ -26,7 +26,6 @@
         .phase-accordion details[open] summary{background-color:var(--prm);color:var(--wht)}
         .phase-accordion summary::after{content:'➕';font-size:1.5rem;transition:transform .3s ease-out}
         .phase-accordion details[open] summary::after{content:'➖';transform:rotate(180deg)}
-        .achievement-badge{font-size:.8rem;background-color:var(--sec);color:var(--txt);padding:3px 8px;border-radius:12px;font-weight:600;margin-left:10px}
         .activities-container{padding:20px;background-color:var(--bg);display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
         .activity-card{background-color:var(--wht);border-radius:10px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.08);border-left:5px solid var(--sec);transition:transform .3s,box-shadow .3s;display:flex;flex-direction:column;justify-content:space-between}
         .activity-card:hover{transform:translateY(-5px);box-shadow:0 6px 20px rgba(0,0,0,.12)}
@@ -56,7 +55,6 @@
     </style>
 </head>
 <body>
-
     <div class="container">
         <header>
             <h1>Jornada de Formación Salesiana</h1>
@@ -94,7 +92,7 @@
                     <div class="activities-container">
                         <div class="activity-card">
                             <div><h3>El "Norte": Perfil de Salida</h3><p>Descubrimos el punto de partida de toda planificación.</p></div>
-                            <div class="resource-buttons"><a href="https://gamma.app/docs/El-Norte-es-el-Perfil-de-Salida-gd82doc127hk7wk" target="_blank" class="btn-resource btn-presentation">Presentación</a><a href="https://wayground.com/join?gc=261366" target="_blank" class="btn-resource btn-activity">Actividad</a></div>
+                            <div class="resource-buttons"><a href="https://gamma.app/docs/El-Norte-es-el-Perfil-de-Salida-gd82doc127hk7wk" target="_blank" class="btn-resource btn-presentation">Presentación</a><a href="https://wayground.com/join?gc=56059996" target="_blank" class="btn-resource btn-activity">Actividad</a></div>
                             <div class="task-completion"><input type="checkbox" id="task3" class="task-checkbox"><label for="task3">Marcar como completada</label></div>
                         </div>
                         <div class="activity-card">
@@ -120,7 +118,7 @@
                         </div>
                         <div class="activity-card">
                             <div><h3>Instrumentos en Acción</h3><p>Analizamos ejemplos de instrumentos bien diseñados.</p></div>
-                             <div class="resource-buttons"><a href="#" target="_blank" class="btn-resource btn-presentation">Ver Ejemplos</a></div>
+                             <div class="resource-buttons"><a href="https://elmejorequipo.github.io/talleres/ejemplos.html" target="_blank" class="btn-resource btn-presentation">Ver Ejemplos</a></div>
                             <div class="task-completion"><input type="checkbox" id="task7" class="task-checkbox"><label for="task7">Marcar como completada</label></div>
                         </div>
                     </div>
@@ -131,33 +129,17 @@
                     <div class="activities-container">
                         <div class="activity-card">
                             <div><h3>Recapitulando el Camino</h3><p>Anclamos el aprendizaje con una infografía visual.</p></div>
-                            <div class="resource-buttons"><a href="#" target="_blank" class="btn-resource btn-presentation">Ver Infografía</a></div>
+                            <div class="resource-buttons"><a href="https://elmejorequipo.github.io/talleres/infografia.html" target="_blank" class="btn-resource btn-presentation">Ver Infografía</a></div>
                             <div class="task-completion"><input type="checkbox" id="task8" class="task-checkbox"><label for="task8">Marcar como completada</label></div>
                         </div>
                         <div class="activity-card">
                              <div><h3>Nuestro Muro del Compromiso</h3><p>Transforma la reflexión en acción y obtén tu certificado.</p></div>
                             <div class="commitment-form">
-                                <div class="form-group">
-                                    <label for="fullName">Nombre Completo:</label>
-                                    <input type="text" id="fullName" placeholder="TODO EN MAYÚSCULAS">
-                                </div>
-                                <div class="form-group">
-                                    <label for="level">Nivel:</label>
-                                    <select id="level">
-                                        <option value="Inicial">Inicial</option>
-                                        <option value="Primaria">Primaria</option>
-                                        <option value="Secundaria">Secundaria</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="course">Curso:</label>
-                                    <input type="text" id="course" placeholder="Ej: 6to de Primaria 'A'">
-                                </div>
+                                <div class="form-group"><label for="fullName">Nombre Completo:</label><input type="text" id="fullName" placeholder="TODO EN MAYÚSCULAS"></div>
+                                <div class="form-group"><label for="level">Nivel:</label><select id="level"><option value="Inicial">Inicial</option><option value="Primaria">Primaria</option><option value="Secundaria">Secundaria</option></select></div>
+                                <div class="form-group"><label for="course">Curso:</label><input type="text" id="course" placeholder="Ej: 6to de Primaria 'A'"></div>
                             </div>
-                            <div class="task-completion">
-                                <input type="checkbox" id="task9" class="task-checkbox">
-                                <label for="task9">He completado mi compromiso</label>
-                            </div>
+                            <div class="task-completion"><input type="checkbox" id="task9" class="task-checkbox"><label for="task9">He completado mi compromiso</label></div>
                         </div>
                     </div>
                 </details>
@@ -168,8 +150,7 @@
     </div>
 
     <div id="certificate-template">
-        <div class="cert-header">Certificado de Participación</div>
-        <div class="cert-subtitle">otorgado a:</div>
+        <div class="cert-header">Certificado de Participación</div><div class="cert-subtitle">otorgado a:</div>
         <div class="cert-body">
             <div id="cert-name">NOMBRE DEL DOCENTE</div>
             <p>Por haber completado con éxito la <strong>Jornada de Formación Salesiana: "De la Visión a la Evidencia"</strong>, demostrando un firme compromiso con la excelencia y la rigurosidad en la evaluación, pilares del carisma de Don Bosco.</p>
@@ -191,13 +172,11 @@
             function updateProgress() {
                 const checkedTasks = document.querySelectorAll('.task-checkbox:checked').length;
                 const percentage = totalTasks > 0 ? (checkedTasks / totalTasks) * 100 : 0;
-                
                 progressBar.style.width = percentage + '%';
                 progressText.textContent = `Progreso del Taller: ${Math.round(percentage)}%`;
-
                 if (percentage === 100) {
                     progressText.textContent = '¡Taller Completado!';
-                    progressBar.style.backgroundColor = '#28a745'; // Green for complete
+                    progressBar.style.backgroundColor = '#28a745';
                 } else {
                     progressBar.style.backgroundColor = 'var(--sec)';
                 }
@@ -205,18 +184,14 @@
 
             function saveState() {
                 const states = {};
-                checkboxes.forEach(cb => {
-                    states[cb.id] = cb.checked;
-                });
+                checkboxes.forEach(cb => { states[cb.id] = cb.checked; });
                 localStorage.setItem('tallerProgreso', JSON.stringify(states));
             }
 
             function loadState() {
                 const savedStates = JSON.parse(localStorage.getItem('tallerProgreso'));
                 if (savedStates) {
-                    checkboxes.forEach(cb => {
-                        cb.checked = savedStates[cb.id] || false;
-                    });
+                    checkboxes.forEach(cb => { cb.checked = savedStates[cb.id] || false; });
                 }
                 updateProgress();
             }
@@ -224,7 +199,6 @@
             async function generateCertificate() {
                 const finalTaskCheckbox = document.getElementById('task9');
                 if (!finalTaskCheckbox.checked) return;
-
                 const checkedCount = document.querySelectorAll('.task-checkbox:checked').length;
                 if (checkedCount < totalTasks) {
                     alert('¡Felicidades por tu compromiso! Para generar el certificado, por favor, asegúrate de marcar todas las tareas anteriores como completadas.');
@@ -233,7 +207,6 @@
                     updateProgress();
                     return;
                 }
-
                 const fullName = document.getElementById('fullName').value.toUpperCase();
                 if (!fullName) {
                     alert('Por favor, ingresa tu nombre completo para el certificado.');
@@ -242,30 +215,17 @@
                     updateProgress();
                     return;
                 }
-                
-                // Populate and show certificate template
                 const certNameElement = document.getElementById('cert-name');
                 const certDateElement = document.getElementById('cert-date');
                 const certificateElement = document.getElementById('certificate-template');
-                
                 certNameElement.textContent = fullName;
                 certDateElement.textContent = new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
                 certificateElement.style.display = 'block';
-
-                // Use html2canvas to capture the element
                 const canvas = await html2canvas(certificateElement);
                 const imgData = canvas.toDataURL('image/png');
-
-                // Hide template again
                 certificateElement.style.display = 'none';
-
-                // Use jsPDF to create and download PDF
                 const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF({
-                    orientation: 'landscape',
-                    unit: 'px',
-                    format: [800, 565]
-                });
+                const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [800, 565] });
                 pdf.addImage(imgData, 'PNG', 0, 0, 800, 565);
                 pdf.save('Certificado_Jornada_Salesiana.pdf');
             }
@@ -280,9 +240,8 @@
                 });
             });
 
-            loadState(); // Load progress on page load
+            loadState();
         });
     </script>
-
 </body>
 </html>
