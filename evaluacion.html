@@ -3,330 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taller: De la Visión a la Evidencia</title>
-    <meta name="description" content="Guía interactiva para el taller sobre el sistema de evaluación rigurosa, dirigido a docentes de los niveles inicial, primario y secundario.">
-    <meta name="keywords" content="evaluación, taller para docentes, sistema de evaluación, Bolivia, pedagogía, Don Bosco">
+    <title>Jornada de Formación Salesiana</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
-        :root {
-            --color-primario: #005A9C; /* Azul Salesiano */
-            --color-secundario: #FFC72C; /* Amarillo Salesiano */
-            --color-fondo: #f4f7fa;
-            --color-texto: #333333;
-            --color-blanco: #ffffff;
-            --sombra-suave: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--color-fondo);
-            color: var(--color-texto);
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background-color: var(--color-blanco);
-            border-radius: 15px;
-            box-shadow: var(--sombra-suave);
-            overflow: hidden;
-        }
-
-        header {
-            background-color: var(--color-primario);
-            color: var(--color-blanco);
-            padding: 30px 20px;
-            text-align: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.2rem;
-            font-weight: 700;
-        }
-
-        header p {
-            margin: 5px 0 0;
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-        
-        main {
-            padding: 20px;
-        }
-
-        .progress-bar {
-            display: flex;
-            width: 100%;
-            height: 10px;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-bottom: 30px;
-        }
-
-        .progress-segment {
-            width: 25%;
-            background-color: var(--color-secundario);
-            transition: width 0.5s ease-in-out;
-        }
-
-        .phase-accordion details {
-            margin-bottom: 15px;
-            border-radius: 10px;
-            border: 1px solid #ddd;
-            overflow: hidden;
-        }
-
-        .phase-accordion summary {
-            background-color: var(--color-blanco);
-            color: var(--color-primario);
-            font-size: 1.3rem;
-            font-weight: 600;
-            padding: 15px 20px;
-            cursor: pointer;
-            list-style: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background-color 0.3s;
-        }
-
-        .phase-accordion summary:hover {
-            background-color: #f0f5fc;
-        }
-
-        .phase-accordion details[open] summary {
-            background-color: var(--color-primario);
-            color: var(--color-blanco);
-        }
-
-        .phase-accordion summary::after {
-            content: '➕';
-            font-size: 1.5rem;
-            transition: transform 0.3s ease-out;
-        }
-
-        .phase-accordion details[open] summary::after {
-            content: '➖';
-            transform: rotate(180deg);
-        }
-        
-        .achievement-badge {
-            font-size: 0.8rem;
-            background-color: var(--color-secundario);
-            color: var(--color-texto);
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-weight: 600;
-            margin-left: 10px;
-        }
-
-        .activities-container {
-            padding: 20px;
-            background-color: var(--color-fondo);
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .activity-card {
-            background-color: var(--color-blanco);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            border-left: 5px solid var(--color-secundario);
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        
-        .activity-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-        }
-
-        .activity-card h3 {
-            margin-top: 0;
-            color: var(--color-primario);
-            font-size: 1.1rem;
-        }
-        
-        .activity-card .duration {
-            font-weight: 600;
-            color: #555;
-            margin-top: 10px;
-        }
-        
-        .resource-buttons {
-            margin-top: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .btn-resource {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-block;
-            padding: 8px 15px;
-            border-radius: 5px;
-            text-align: center;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-
-        .btn-presentation {
-            background-color: var(--color-primario);
-            color: var(--color-blanco);
-        }
-        
-        .btn-presentation:hover {
-            background-color: #004a80;
-            transform: scale(1.03);
-        }
-
-        .btn-activity {
-            background-color: var(--color-secundario);
-            color: var(--color-texto);
-        }
-
-        .btn-activity:hover {
-            background-color: #e6b325;
-            transform: scale(1.03);
-        }
-
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 0.9rem;
-            color: #777;
-        }
-
+        :root{--prm:#005A9C;--sec:#FFC72C;--bg:#f4f7fa;--txt:#333;--wht:#fff;--shw:0 4px 15px rgba(0,0,0,0.1)}
+        body{font-family:'Poppins',sans-serif;background-color:var(--bg);color:var(--txt);line-height:1.6;margin:0;padding:20px}
+        .container{max-width:900px;margin:0 auto;background-color:var(--wht);border-radius:15px;box-shadow:var(--shw);overflow:hidden}
+        header{background-color:var(--prm);color:var(--wht);padding:30px 20px;text-align:center}
+        header h1{margin:0 0 10px 0;font-size:2.5rem;font-weight:700}
+        header h2{margin:0;font-size:1.8rem;font-weight:600;opacity:0.95}
+        header p{margin:10px 0 0;font-size:1.1rem;opacity:0.9}
+        main{padding:20px}
+        .progress-container{margin-bottom:30px}
+        .progress-bar-wrapper{width:100%;background-color:#e0e0e0;border-radius:50px;overflow:hidden}
+        .progress-bar{height:20px;width:0%;background-color:var(--sec);border-radius:50px;transition:width .5s ease-in-out;text-align:center;color:var(--txt);font-weight:600}
+        .progress-label{text-align:center;font-weight:600;color:var(--prm);margin-top:5px}
+        .phase-accordion details{margin-bottom:15px;border-radius:10px;border:1px solid #ddd;overflow:hidden}
+        .phase-accordion summary{background-color:var(--wht);color:var(--prm);font-size:1.3rem;font-weight:600;padding:15px 20px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;transition:background-color .3s}
+        .phase-accordion summary:hover{background-color:#f0f5fc}
+        .phase-accordion details[open] summary{background-color:var(--prm);color:var(--wht)}
+        .phase-accordion summary::after{content:'➕';font-size:1.5rem;transition:transform .3s ease-out}
+        .phase-accordion details[open] summary::after{content:'➖';transform:rotate(180deg)}
+        .achievement-badge{font-size:.8rem;background-color:var(--sec);color:var(--txt);padding:3px 8px;border-radius:12px;font-weight:600;margin-left:10px}
+        .activities-container{padding:20px;background-color:var(--bg);display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+        .activity-card{background-color:var(--wht);border-radius:10px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.08);border-left:5px solid var(--sec);transition:transform .3s,box-shadow .3s;display:flex;flex-direction:column;justify-content:space-between}
+        .activity-card:hover{transform:translateY(-5px);box-shadow:0 6px 20px rgba(0,0,0,.12)}
+        .activity-card h3{margin-top:0;color:var(--prm);font-size:1.1rem}
+        .activity-card .duration{font-weight:600;color:#555;margin-top:10px}
+        .task-completion{margin-top:15px;padding-top:15px;border-top:1px solid #eee;display:flex;align-items:center;cursor:pointer}
+        .task-completion input[type=checkbox]{width:20px;height:20px;margin-right:10px;cursor:pointer}
+        .task-completion label{font-weight:600;color:var(--prm);cursor:pointer}
+        .resource-buttons{margin-top:15px;display:flex;flex-direction:column;gap:10px}
+        .btn-resource{font-family:'Poppins',sans-serif;font-weight:600;text-decoration:none;display:inline-block;padding:8px 15px;border-radius:5px;text-align:center;transition:background-color .3s,transform .2s}
+        .btn-presentation{background-color:var(--prm);color:var(--wht)}
+        .btn-presentation:hover{background-color:#004a80;transform:scale(1.03)}
+        .btn-activity{background-color:var(--sec);color:var(--txt)}
+        .btn-activity:hover{background-color:#e6b325;transform:scale(1.03)}
+        .commitment-form .form-group{margin-bottom:15px}
+        .commitment-form label{display:block;margin-bottom:5px;font-weight:600}
+        .commitment-form input,.commitment-form select{width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;box-sizing:border-box}
+        footer{text-align:center;padding:20px;font-size:.9rem;color:#777}
+        #certificate-template{display:none;width:800px;height:565px;padding:40px;box-sizing:border-box;background-color:var(--wht);border:10px solid var(--prm);position:relative;text-align:center}
+        #certificate-template .cert-header{font-size:3rem;font-weight:700;color:var(--prm)}
+        #certificate-template .cert-subtitle{font-size:1.2rem;color:var(--txt);margin-top:-10px}
+        #certificate-template .cert-body{margin:60px 0}
+        #certificate-template .cert-body p{font-size:1.1rem}
+        #certificate-template #cert-name{font-size:2.2rem;font-weight:700;color:var(--prm);border-bottom:2px solid var(--sec);display:inline-block;padding-bottom:5px}
+        #certificate-template .cert-footer{position:absolute;bottom:40px;width:100%;left:0;display:flex;justify-content:space-around;font-size:.9rem}
+        #certificate-template .cert-footer .line{border-top:1px solid var(--txt);padding-top:5px}
     </style>
 </head>
 <body>
 
     <div class="container">
         <header>
-            <h1>De la Visión a la Evidencia</h1>
+            <h1>Jornada de Formación Salesiana</h1>
+            <h2>De la Visión a la Evidencia</h2>
             <p>El Camino del Evaluador Riguroso y Creativo</p>
         </header>
 
         <main>
-            <div class="progress-bar" title="Progreso de la Misión">
-                <div class="progress-segment"></div>
-                <div class="progress-segment"></div>
-                <div class="progress-segment"></div>
-                <div class="progress-segment"></div>
+            <div class="progress-container">
+                <div class="progress-label" id="progress-text">Progreso del Taller: 0%</div>
+                <div class="progress-bar-wrapper">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
             </div>
 
             <div class="phase-accordion">
                 <details>
-                    <summary>Misión 1: Conectar y Activar <span class="achievement-badge">Logro desbloqueado!</span></summary>
+                    <summary>Misión 1: Conectar y Activar</summary>
                     <div class="activities-container">
                         <div class="activity-card">
-                            <div>
-                                <h3>Bienvenida e Impacto Inicial</h3>
-                                <p>Captamos la atención con un mensaje potente sobre el poder de la evaluación.</p>
-                                <p class="duration">Duración: 5 min</p>
-                            </div>
-                            <div class="resource-buttons">
-                                <a href="https://gamma.app/docs/La-Evaluacion-yvjhqvklt7jkzrp" target="_blank" class="btn-resource btn-presentation">Abrir Presentación</a>
-                            </div>
+                            <div><h3>Bienvenida e Impacto Inicial</h3><p>Captamos la atención con un mensaje potente.</p></div>
+                            <div class="resource-buttons"><a href="https://gamma.app/docs/La-Evaluacion-yvjhqvklt7jkzrp" target="_blank" class="btn-resource btn-presentation">Abrir Presentación</a></div>
+                            <div class="task-completion"><input type="checkbox" id="task1" class="task-checkbox"><label for="task1">Marcar como completada</label></div>
                         </div>
                         <div class="activity-card">
-                             <div>
-                                <h3>Trivia: Mitos y Verdades</h3>
-                                <p>Activamos conocimientos previos con un juego interactivo para derribar mitos.</p>
-                                 <p class="duration">Duración: 5 min</p>
-                            </div>
-                             <div class="resource-buttons">
-                                <a href="https://elmejorequipo.github.io/talleres/trivia.html" target="_blank" class="btn-resource btn-activity">Iniciar Juego</a>
-                            </div>
+                            <div><h3>Trivia: Mitos y Verdades</h3><p>Activamos conocimientos previos con un juego.</p></div>
+                            <div class="resource-buttons"><a href="https://elmejorequipo.github.io/talleres/trivia.html" target="_blank" class="btn-resource btn-activity">Iniciar Juego</a></div>
+                            <div class="task-completion"><input type="checkbox" id="task2" class="task-checkbox"><label for="task2">Marcar como completada</label></div>
                         </div>
                     </div>
                 </details>
 
                 <details>
-                    <summary>Misión 2: Trazar el Mapa <span class="achievement-badge">Logro desbloqueado!</span></summary>
+                    <summary>Misión 2: Trazar el Mapa</summary>
                     <div class="activities-container">
                         <div class="activity-card">
-                            <div>
-                                <h3>El "Norte": Perfil de Salida</h3>
-                                <p>Descubrimos por qué el Perfil de Salida es el punto de partida de toda planificación.</p>
-                                <p class="duration">Duración: 10 min</p>
-                            </div>
-                            <div class="resource-buttons">
-                                <a href="https://gamma.app/docs/El-Norte-es-el-Perfil-de-Salida-gd82doc127hk7wk" target="_blank" class="btn-resource btn-presentation">Abrir Presentación</a>
-                                <a href="https://wayground.com/join?gc=56059996" target="_blank" class="btn-resource btn-activity">Iniciar Actividad</a>
-                            </div>
+                            <div><h3>El "Norte": Perfil de Salida</h3><p>Descubrimos el punto de partida de toda planificación.</p></div>
+                            <div class="resource-buttons"><a href="https://gamma.app/docs/El-Norte-es-el-Perfil-de-Salida-gd82doc127hk7wk" target="_blank" class="btn-resource btn-presentation">Presentación</a><a href="https://wayground.com/join?gc=56059996" target="_blank" class="btn-resource btn-activity">Actividad</a></div>
+                            <div class="task-completion"><input type="checkbox" id="task3" class="task-checkbox"><label for="task3">Marcar como completada</label></div>
                         </div>
                         <div class="activity-card">
-                            <div>
-                                <h3>Del Perfil al Criterio</h3>
-                                <p>Aprendemos a "traducir" la gran visión del perfil en Criterios de Evaluación observables.</p>
-                                 <p class="duration">Duración: 10 min</p>
-                            </div>
-                             <div class="resource-buttons">
-                                <a href="https://gamma.app/docs/Del-Perfil-al-Criterio-Construyendo-el-Puente-sp218zqdcjahgse" target="_blank" class="btn-resource btn-presentation">Abrir Presentación</a>
-                                <a href="https://elmejorequipo.github.io/talleres/conecta.html" target="_blank" class="btn-resource btn-activity">Iniciar Actividad</a>
-                            </div>
+                            <div><h3>Del Perfil al Criterio</h3><p>Aprendemos a "traducir" la visión en Criterios observables.</p></div>
+                            <div class="resource-buttons"><a href="https://gamma.app/docs/Del-Perfil-al-Criterio-Construyendo-el-Puente-sp218zqdcjahgse" target="_blank" class="btn-resource btn-presentation">Presentación</a><a href="https://elmejorequipo.github.io/talleres/conecta.html" target="_blank" class="btn-resource btn-activity">Actividad</a></div>
+                            <div class="task-completion"><input type="checkbox" id="task4" class="task-checkbox"><label for="task4">Marcar como completada</label></div>
                         </div>
-                         <div class="activity-card">
-                             <div>
-                                <h3>El ADN del Registro: Indicadores</h3>
-                                <p>En equipos, creamos indicadores claros que serán la evidencia real de nuestro registro.</p>
-                                 <p class="duration">Duración: 15 min</p>
-                            </div>
+                        <div class="activity-card">
+                            <div><h3>El ADN del Registro: Indicadores</h3><p>En equipos, creamos indicadores claros y medibles.</p></div>
+                            <div class="resource-buttons"><a href="https://character.ai/chat/0kYN93wDwulJnLuLZQIhgKKI0-mDvGegL23Bh-oG4kQ" target="_blank" class="btn-resource btn-activity">Hablar con el Prof. Jirafales</a></div>
+                            <div class="task-completion"><input type="checkbox" id="task5" class="task-checkbox"><label for="task5">Marcar como completada</label></div>
                         </div>
                     </div>
                 </details>
 
                 <details>
-                    <summary>Misión 3: La Caja de Herramientas <span class="achievement-badge">Logro desbloqueado!</span></summary>
+                    <summary>Misión 3: La Caja de Herramientas</summary>
                     <div class="activities-container">
                         <div class="activity-card">
-                            <div>
-                                <h3>Técnica e Instrumento Correcto</h3>
-                                <p>Exploramos cuándo usar una rúbrica, lista de cotejo o prueba. ¡La decisión es clave!</p>
-                                <p class="duration">Duración: 15 min</p>
-                            </div>
-                            <div class="resource-buttons">
-                                <a href="https://elmejorequipo.github.io/talleres/videoquiz.html" target="_blank" class="btn-resource btn-activity">Iniciar Video-Quiz</a>
-                            </div>
+                            <div><h3>Técnica e Instrumento Correcto</h3><p>Exploramos cuándo usar cada instrumento.</p></div>
+                            <div class="resource-buttons"><a href="https://elmejorequipo.github.io/talleres/videoquiz.html" target="_blank" class="btn-resource btn-activity">Iniciar Video-Quiz</a></div>
+                            <div class="task-completion"><input type="checkbox" id="task6" class="task-checkbox"><label for="task6">Marcar como completada</label></div>
                         </div>
                         <div class="activity-card">
-                            <div>
-                                <h3>Instrumentos en Acción</h3>
-                                <p>Analizamos ejemplos de instrumentos bien diseñados, viendo cómo cada parte conecta con el plan.</p>
-                                 <p class="duration">Duración: 15 min</p>
-                            </div>
+                            <div><h3>Instrumentos en Acción</h3><p>Analizamos ejemplos de instrumentos bien diseñados.</p></div>
+                             <div class="resource-buttons"><a href="#" target="_blank" class="btn-resource btn-presentation">Ver Ejemplos</a></div>
+                            <div class="task-completion"><input type="checkbox" id="task7" class="task-checkbox"><label for="task7">Marcar como completada</label></div>
                         </div>
                     </div>
                 </details>
 
                 <details>
-                    <summary>Misión 4: Sellar el Compromiso <span class="achievement-badge">Logro desbloqueado!</span></summary>
+                    <summary>Misión 4: Sellar el Compromiso</summary>
                     <div class="activities-container">
                         <div class="activity-card">
-                            <div>
-                                <h3>Recapitulando el Camino</h3>
-                                <p>Anclamos el aprendizaje con una infografía visual que resume la ruta del evaluador experto.</p>
-                                 <p class="duration">Duración: 5 min</p>
-                            </div>
+                            <div><h3>Recapitulando el Camino</h3><p>Anclamos el aprendizaje con una infografía visual.</p></div>
+                            <div class="resource-buttons"><a href="#" target="_blank" class="btn-resource btn-presentation">Ver Infografía</a></div>
+                            <div class="task-completion"><input type="checkbox" id="task8" class="task-checkbox"><label for="task8">Marcar como completada</label></div>
                         </div>
                         <div class="activity-card">
-                            <div>
-                                <h3>Nuestro Muro del Compromiso</h3>
-                                <p>Transformamos la reflexión en acción con un compromiso personal y visible.</p>
-                                 <p class="duration">Duración: 10 min</p>
+                             <div><h3>Nuestro Muro del Compromiso</h3><p>Transforma la reflexión en acción y obtén tu certificado.</p></div>
+                            <div class="commitment-form">
+                                <div class="form-group">
+                                    <label for="fullName">Nombre Completo:</label>
+                                    <input type="text" id="fullName" placeholder="TODO EN MAYÚSCULAS">
+                                </div>
+                                <div class="form-group">
+                                    <label for="level">Nivel:</label>
+                                    <select id="level">
+                                        <option value="Inicial">Inicial</option>
+                                        <option value="Primaria">Primaria</option>
+                                        <option value="Secundaria">Secundaria</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="course">Curso:</label>
+                                    <input type="text" id="course" placeholder="Ej: 6to de Primaria 'A'">
+                                </div>
+                            </div>
+                            <div class="task-completion">
+                                <input type="checkbox" id="task9" class="task-checkbox">
+                                <label for="task9">He completado mi compromiso</label>
                             </div>
                         </div>
                     </div>
@@ -334,10 +164,125 @@
             </div>
         </main>
         
-        <footer>
-            <p>Creado con el Asesor Pedagógico Salesiano &copy; 2025</p>
-        </footer>
+        <footer><p>Creado con el Asesor Pedagógico Salesiano &copy; 2025</p></footer>
     </div>
+
+    <div id="certificate-template">
+        <div class="cert-header">Certificado de Participación</div>
+        <div class="cert-subtitle">otorgado a:</div>
+        <div class="cert-body">
+            <div id="cert-name">NOMBRE DEL DOCENTE</div>
+            <p>Por haber completado con éxito la <strong>Jornada de Formación Salesiana: "De la Visión a la Evidencia"</strong>, demostrando un firme compromiso con la excelencia y la rigurosidad en la evaluación, pilares del carisma de Don Bosco.</p>
+            <p><em>"Una educación sin afecto es como un cuerpo sin alma." - Don Bosco</em></p>
+        </div>
+        <div class="cert-footer">
+            <div class="signature"><p class="line">Facilitador</p></div>
+            <div class="date"><p class="line" id="cert-date"></p></div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('.task-checkbox');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const totalTasks = checkboxes.length;
+
+            function updateProgress() {
+                const checkedTasks = document.querySelectorAll('.task-checkbox:checked').length;
+                const percentage = totalTasks > 0 ? (checkedTasks / totalTasks) * 100 : 0;
+                
+                progressBar.style.width = percentage + '%';
+                progressText.textContent = `Progreso del Taller: ${Math.round(percentage)}%`;
+
+                if (percentage === 100) {
+                    progressText.textContent = '¡Taller Completado!';
+                    progressBar.style.backgroundColor = '#28a745'; // Green for complete
+                } else {
+                    progressBar.style.backgroundColor = 'var(--sec)';
+                }
+            }
+
+            function saveState() {
+                const states = {};
+                checkboxes.forEach(cb => {
+                    states[cb.id] = cb.checked;
+                });
+                localStorage.setItem('tallerProgreso', JSON.stringify(states));
+            }
+
+            function loadState() {
+                const savedStates = JSON.parse(localStorage.getItem('tallerProgreso'));
+                if (savedStates) {
+                    checkboxes.forEach(cb => {
+                        cb.checked = savedStates[cb.id] || false;
+                    });
+                }
+                updateProgress();
+            }
+
+            async function generateCertificate() {
+                const finalTaskCheckbox = document.getElementById('task9');
+                if (!finalTaskCheckbox.checked) return;
+
+                const checkedCount = document.querySelectorAll('.task-checkbox:checked').length;
+                if (checkedCount < totalTasks) {
+                    alert('¡Felicidades por tu compromiso! Para generar el certificado, por favor, asegúrate de marcar todas las tareas anteriores como completadas.');
+                    finalTaskCheckbox.checked = false;
+                    saveState();
+                    updateProgress();
+                    return;
+                }
+
+                const fullName = document.getElementById('fullName').value.toUpperCase();
+                if (!fullName) {
+                    alert('Por favor, ingresa tu nombre completo para el certificado.');
+                    finalTaskCheckbox.checked = false;
+                    saveState();
+                    updateProgress();
+                    return;
+                }
+                
+                // Populate and show certificate template
+                const certNameElement = document.getElementById('cert-name');
+                const certDateElement = document.getElementById('cert-date');
+                const certificateElement = document.getElementById('certificate-template');
+                
+                certNameElement.textContent = fullName;
+                certDateElement.textContent = new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+                certificateElement.style.display = 'block';
+
+                // Use html2canvas to capture the element
+                const canvas = await html2canvas(certificateElement);
+                const imgData = canvas.toDataURL('image/png');
+
+                // Hide template again
+                certificateElement.style.display = 'none';
+
+                // Use jsPDF to create and download PDF
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({
+                    orientation: 'landscape',
+                    unit: 'px',
+                    format: [800, 565]
+                });
+                pdf.addImage(imgData, 'PNG', 0, 0, 800, 565);
+                pdf.save('Certificado_Jornada_Salesiana.pdf');
+            }
+
+            checkboxes.forEach(cb => {
+                cb.addEventListener('change', () => {
+                    saveState();
+                    updateProgress();
+                    if (cb.id === 'task9') {
+                        generateCertificate();
+                    }
+                });
+            });
+
+            loadState(); // Load progress on page load
+        });
+    </script>
 
 </body>
 </html>
