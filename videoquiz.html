@@ -91,7 +91,8 @@
 
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
-                height: '390', width: '640', videoId: 'HQ5V5AmP1Kk',
+                height: '390', width: '640', 
+                videoId: 'e-k2g9g2LPA', // <-- ¡ID DEL VIDEO CORREGIDO!
                 playerVars: {'playsinline': 1, 'rel': 0},
                 events: {'onStateChange': onPlayerStateChange}
             });
@@ -158,12 +159,12 @@
             options.forEach(opt => {
                 opt.disabled = true;
                 if (opt.textContent === questionData.a) {
-                    opt.classList.add('correct'); // Siempre mostrar la correcta
+                    opt.classList.add('correct');
                 }
             });
 
             if (!isCorrect) {
-                button.classList.add('incorrect'); // Marcar la incorrecta si se eligió
+                button.classList.add('incorrect');
             }
 
             const feedbackContainer = document.getElementById('feedback-container');
@@ -183,7 +184,6 @@
             player.playVideo();
         }
 
-        // Inicializar la barra de progreso al cargar la página
         window.onload = updateProgressAndScore;
     </script>
 </body>
