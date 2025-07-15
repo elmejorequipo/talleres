@@ -11,7 +11,7 @@
         .container{max-width:800px;margin:20px auto}
         header{text-align:center;margin-bottom:30px}
         header h1{color:var(--prm);font-size:2.2rem}
-        header p{font-size:1.1rem}
+        header p{font-size:1.1rem;max-width:600px;margin:10px auto}
         .video-container{position:relative;width:100%;padding-bottom:56.25%;height:0;background-color:#000;border-radius:15px;overflow:hidden;box-shadow:var(--shw);margin-bottom:20px}
         .video-container iframe{position:absolute;top:0;left:0;width:100%;height:100%}
         .quiz-section{margin-top:40px;padding:25px;background-color:var(--wht);border-radius:15px;box-shadow:var(--shw)}
@@ -24,6 +24,7 @@
         .progress-bar-container{width:100%;background-color:#e9ecef;border-radius:50px}
         .progress-bar{height:15px;width:0%;background-color:var(--sec);border-radius:50px;transition:width .5s ease-in-out}
         .quiz-card .question{font-size:1.2rem;font-weight:600;color:var(--prm);margin-bottom:20px}
+        .quiz-card .timestamp{font-size:0.9rem;font-weight:400;color:#6c757d;display:block;margin-top:-15px;margin-bottom:15px;}
         .options-grid{display:grid;grid-template-columns:1fr;gap:10px}
         @media (min-width:600px){.options-grid{grid-template-columns:1fr 1fr}}
         .option{display:block;width:100%;padding:12px;font-family:'Poppins',sans-serif;font-size:1rem;text-align:left;background-color:#f8f9fa;border:2px solid #dee2e6;border-radius:8px;cursor:pointer;transition:background-color .3s,border-color .3s}
@@ -42,7 +43,7 @@
     <div class="container">
         <header>
             <h1>Misión 3: La Caja de Herramientas</h1>
-            <p>Observa con atención el video. Cuando estés listo, empieza el quiz para poner a prueba tus conocimientos.</p>
+            <p>Observa con atención el video. Cuando llegues al tiempo indicado en cada pregunta, pausa el video y responde.</p>
         </header>
 
         <div class="video-container">
@@ -67,6 +68,7 @@
 
                 <div class="quiz-card">
                     <p id="question-text" class="question"></p>
+                    <span id="timestamp-text" class="timestamp"></span>
                     <div id="options-container" class="options-grid"></div>
                     <div id="feedback-container" class="feedback hidden">
                         <strong id="feedback-title"></strong><br>
@@ -84,11 +86,11 @@
 
     <script>
         const quizData = [
-            {q: "Si buscas que tus estudiantes hagan metacognición y reflexionen, ¿qué instrumento 'filosófico' es tu mejor aliado?", o: ["Diario de Aprendizaje", "Rúbrica", "Porfolio", "Lista de Cotejo"], a: "Diario de Aprendizaje", f: "El Diario es ideal para la autoevaluación y reflexionar sobre qué se ha aprendido y las dificultades."},
-            {q: "Para ver la evolución completa de un proyecto, ¿qué instrumento que recoge 'evidencias' te sirve?", o: ["Prueba Objetiva", "Porfolio", "Rúbrica", "Diario de Aprendizaje"], a: "Porfolio", f: "El Porfolio es la 'carpeta de evidencias' por excelencia para mostrar el progreso y el proceso completo."},
-            {q: "Para que los estudiantes conozcan los 'niveles de desempeño' desde el principio, ¿qué instrumento 'tan clarito' deberías usar?", o: ["Escala de Valoración", "Porfolio", "Rúbrica", "Diario de Aprendizaje"], a: "Rúbrica", f: "La Rúbrica es la reina de la claridad. Guía el aprendizaje y hace la evaluación transparente y objetiva."},
-            {q: "Para verificar rápidamente si se cumplieron pasos obligatorios (SÍ/NO), ¿qué 'prima' de la Rúbrica es la más eficiente?", o: ["Lista de Cotejo", "Rúbrica", "Escala de Valoración", "Porfolio"], a: "Lista de Cotejo", f: "La Lista de Cotejo es perfecta para verificar la presencia o ausencia de tareas de forma rápida y directa."},
-            {q: "Si necesitas medir el 'grado' de una actitud (Siempre, A veces, Nunca), ¿qué instrumento te permite medir en un 'rango'?", o: ["Lista de Cotejo", "Prueba Objetiva", "Escala de Valoración", "Diario de Aprendizaje"], a: "Escala de Valoración", f: "La Escala de Valoración es ideal para medir la frecuencia o intensidad de una conducta, permitiendo matices."}
+            {time: "1:05", q: "Si buscas que tus estudiantes hagan metacognición y reflexionen, ¿qué instrumento 'filosófico' es tu mejor aliado?", o: ["Diario de Aprendizaje", "Rúbrica", "Porfolio", "Lista de Cotejo"], a: "Diario de Aprendizaje", f: "El Diario es ideal para la autoevaluación y reflexionar sobre qué se ha aprendido y las dificultades."},
+            {time: "1:50", q: "Para ver la evolución completa de un proyecto, ¿qué instrumento que recoge 'evidencias' te sirve?", o: ["Prueba Objetiva", "Porfolio", "Rúbrica", "Diario de Aprendizaje"], a: "Porfolio", f: "El Porfolio es la 'carpeta de evidencias' por excelencia para mostrar el progreso y el proceso completo."},
+            {time: "2:25", q: "Para que los estudiantes conozcan los 'niveles de desempeño' desde el principio, ¿qué instrumento 'tan clarito' deberías usar?", o: ["Escala de Valoración", "Porfolio", "Rúbrica", "Diario de Aprendizaje"], a: "Rúbrica", f: "La Rúbrica es la reina de la claridad. Guía el aprendizaje y hace la evaluación transparente y objetiva."},
+            {time: "3:08", q: "Para verificar rápidamente si se cumplieron pasos obligatorios (SÍ/NO), ¿qué 'prima' de la Rúbrica es la más eficiente?", o: ["Lista de Cotejo", "Rúbrica", "Escala de Valoración", "Porfolio"], a: "Lista de Cotejo", f: "La Lista de Cotejo es perfecta para verificar la presencia o ausencia de tareas de forma rápida y directa."},
+            {time: "3:15", q: "Si necesitas medir el 'grado' de una actitud (Siempre, A veces, Nunca), ¿qué instrumento te permite medir en un 'rango'?", o: ["Lista de Cotejo", "Prueba Objetiva", "Escala de Valoración", "Diario de Aprendizaje"], a: "Escala de Valoración", f: "La Escala de Valoración es ideal para medir la frecuencia o intensidad de una conducta, permitiendo matices."}
         ];
 
         let currentQuestionIndex = 0;
@@ -111,6 +113,7 @@
         function displayQuestion() {
             const questionData = quizData[currentQuestionIndex];
             document.getElementById('question-text').textContent = questionData.q;
+            document.getElementById('timestamp-text').textContent = `(Referencia en el video - min ${questionData.time})`;
             const optionsContainer = document.getElementById('options-container');
             optionsContainer.innerHTML = '';
 
