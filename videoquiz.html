@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Quiz: La Herramienta Correcta</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        :root {
+            --color-primario: #005A9C;
+            --color-secundario: #FFC72C;
+            --color-fondo: #f4f7fa;
+            --color-texto: #333333;
+            --color-blanco: #ffffff;
+            --color-correcto: #28a745;
+            --color-incorrecto: #dc3545;
+            --sombra-suave: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            color: var(--color-primario);
+            font-size: 2.2rem;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            background-color: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--sombra-suave);
+            margin-bottom: 40px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .quiz-card {
+            background-color: var(--color-blanco);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--sombra-suave);
+        }
+
+        .quiz-card .question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--color-primario);
+            margin-bottom: 20px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+        
+        @media (min-width: 600px) {
+            .options-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .option {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            text-align: left;
+            background-color: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .option:hover {
+            background-color: #e9ecef;
+            border-color: #adb5bd;
+        }
+
+        .option.correct {
+            background-color: #d4edda;
+            border-color: var(--color-correcto);
+            font-weight: 600;
+        }
+
+        .option.incorrect {
+            background-color: #f8d7da;
+            border-color: var(--color-incorrecto);
+        }
+
+        .feedback {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #e7f3fe;
+            border-left: 5px solid var(--color-secundario);
+        }
+        
+        .feedback.visible {
+            display: block;
+        }
+        
+        .feedback strong {
+            color: var(--color-primario);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Misión 3: La Caja de Herramientas</h1>
+            <p>Primero, mira el video. Luego, responde las preguntas para descubrir qué instrumento es el ideal para cada situación.</p>
+        </header>
+
+        <div class="video-container">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/PQ6UuUYq2NY?si=f77gPAH366RFFzHt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+
+        <div class="quiz-card">
+            <p class="question">1. Si buscas que tus estudiantes hagan **metacognición** y reflexionen sobre su propio aprendizaje (00:36), ¿qué instrumento, descrito como "muy filosófico", es tu mejor aliado?</p>
+            <div class="options-grid">
+                <button class="option" onclick="checkAnswer(this, true)">Diario de Aprendizaje</button>
+                <button class="option" onclick="checkAnswer(this, false)">Rúbrica</button>
+                <button class="option" onclick="checkAnswer(this, false)">Porfolio</button>
+                <button class="option" onclick="checkAnswer(this, false)">Lista de Cotejo</button>
+            </div>
+            <div class="feedback">
+                <strong>¡Correcto! El Diario de Aprendizaje.</strong><br>
+                Este instrumento es ideal para la autoevaluación y la metacognición. Como dice el video, obliga al estudiante a reflexionar sobre qué ha aprendido y qué dificultades tiene, fomentando el "aprender a aprender".
+            </div>
+        </div>
+
+        <div class="quiz-card">
+            <p class="question">2. Para ver la evolución completa de un proyecto (bocetos, pruebas, obra final), ¿qué instrumento, que parece tener "Síndrome de Diógenes" (01:30), te permitiría recoger todas las evidencias del proceso?</p>
+            <div class="options-grid">
+                <button class="option" onclick="checkAnswer(this, false)">Prueba Objetiva</button>
+                <button class="option" onclick="checkAnswer(this, true)">Porfolio</button>
+                <button class="option" onclick="checkAnswer(this, false)">Rúbrica</button>
+                <button class="option" onclick="checkAnswer(this, false)">Diario de Aprendizaje</button>
+            </div>
+            <div class="feedback">
+                <strong>¡Exacto! El Porfolio.</strong><br>
+                Es la "carpeta de evidencias" por excelencia. Permite recopilar una variedad de trabajos a lo largo del tiempo, mostrando el progreso y el proceso completo, no solo una foto del resultado final.
+            </div>
+        </div>
+
+        <div class="quiz-card">
+            <p class="question">3. Si quieres que tus estudiantes conozcan desde el principio los "niveles de desempeño" y "aspectos a valorar" (01:53) en una exposición oral, ¿qué instrumento "tan clarito" deberías usar?</p>
+            <div class="options-grid">
+                <button class="option" onclick="checkAnswer(this, false)">Escala de Valoración</button>
+                <button class="option" onclick="checkAnswer(this, false)">Porfolio</button>
+                <button class="option" onclick="checkAnswer(this, true)">Rúbrica</button>
+                <button class="option" onclick="checkAnswer(this, false)">Diario de Aprendizaje</button>
+            </div>
+            <div class="feedback">
+                <strong>¡Perfecto! La Rúbrica.</strong><br>
+                Es la reina de la claridad. Al detallar los descriptores para cada nivel de desempeño (Ej: Excelente, Bueno, Regular), guía el aprendizaje del estudiante y hace la evaluación transparente y objetiva, ¡sin sorpresas!
+            </div>
+        </div>
+
+        <div class="quiz-card">
+            <p class="question">4. Para verificar rápidamente si se cumplieron pasos obligatorios (ej: ¿Se puso la bata?), ¿qué "prima" de la Rúbrica (03:02), que funciona con un simple SÍ/NO, es la más eficiente?</p>
+            <div class="options-grid">
+                <button class="option" onclick="checkAnswer(this, true)">Lista de Comprobación / Cotejo</button>
+                <button class="option" onclick="checkAnswer(this, false)">Rúbrica</button>
+                <button class="option" onclick="checkAnswer(this, false)">Escala de Valoración</button>
+                <button class="option" onclick="checkAnswer(this, false)">Porfolio</button>
+            </div>
+            <div class="feedback">
+                <strong>¡Muy bien! La Lista de Comprobación o Cotejo.</strong><br>
+                Es una herramienta dicotómica (Sí/No, Logrado/No logrado) perfecta para verificar la presencia o ausencia de tareas o pasos específicos de forma rápida y directa.
+            </div>
+        </div>
+        
+        <div class="quiz-card">
+            <p class="question">5. Si necesitas medir el **grado** de una actitud (ej: Siempre, A veces, Nunca), ¿qué instrumento te permite medir en un "rango" y no solo con un sí/no (03:02)?</p>
+            <div class="options-grid">
+                <button class="option" onclick="checkAnswer(this, false)">Lista de Cotejo</button>
+                <button class="option" onclick="checkAnswer(this, false)">Prueba Objetiva</button>
+                <button class="option" onclick="checkAnswer(this, true)">Escala de Valoración</button>
+                <button class="option" onclick="checkAnswer(this, false)">Diario de Aprendizaje</button>
+            </div>
+            <div class="feedback">
+                <strong>¡Correcto! La Escala de Valoración.</strong><br>
+                Es la herramienta perfecta cuando necesitas medir la frecuencia o la intensidad de una conducta o actitud. Va más allá del sí/no, permitiendo matices y grados de consecución.
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function checkAnswer(button, isCorrect) {
+            const card = button.closest('.quiz-card');
+            const options = card.querySelectorAll('.option');
+            const feedback = card.querySelector('.feedback');
+
+            // Disable all buttons in this card
+            options.forEach(opt => {
+                opt.disabled = true;
+            });
+
+            if (isCorrect) {
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+                // Highlight the correct one
+                options.forEach(opt => {
+                    if (opt.onclick.toString().includes('true')) {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+            
+            feedback.classList.add('visible');
+        }
+    </script>
+
+</body>
+</html>
