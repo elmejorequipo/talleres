@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cápsula 1: El Fundamento de la Evaluación</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        :root{--prm:#005A9C;--sec:#FFC72C;--bg:#f4f7fa;--txt:#333;--wht:#fff;--shw:0 4px 15px rgba(0,0,0,0.08);--shw-deep:0 8px 25px rgba(0,0,0,.15)}
+        body{font-family:'Poppins',sans-serif;background-color:var(--bg);color:var(--txt);line-height:1.6;margin:0;padding:20px}
+        .container{max-width:850px;margin:20px auto}
+        header{text-align:center;margin-bottom:30px;padding:20px;background:var(--wht);border-radius:12px;box-shadow:var(--shw)}
+        header .main-title{color:var(--prm);font-size:1.8rem;font-weight:700;margin:0}
+        header .subtitle{font-size:1.2rem;font-weight:600;margin:5px 0}
+        .progress-container{margin-bottom:30px;background:var(--wht);padding:10px;border-radius:12px}
+        .progress-bar-wrapper{width:100%;background-color:#e0e0e0;border-radius:50px;overflow:hidden}
+        .progress-bar{height:20px;width:0%;background-color:var(--sec);border-radius:50px;transition:width .5s ease-in-out;text-align:center;color:var(--txt);font-weight:600}
+        h2.section-title{text-align:center;color:var(--prm);border-bottom:3px solid var(--sec);padding-bottom:10px;margin-top:40px}
+        .flip-card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;perspective:1000px}
+        .flip-card{background-color:transparent;height:180px;cursor:pointer}
+        .flip-card-inner{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d;box-shadow:var(--shw)}
+        .flip-card:hover .flip-card-inner{transform:rotateY(180deg)}
+        .flip-card-front,.flip-card-back{position:absolute;width:100%;height:100%;-webkit-backface-visibility:hidden;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;text-align:center;padding:15px;box-sizing:border-box;border-radius:12px}
+        .flip-card-front{background-color:var(--prm);color:var(--wht)}
+        .flip-card-front h4{font-size:1.4rem}
+        .flip-card-back{background-color:var(--sec);color:var(--txt);transform:rotateY(180deg)}
+        .interactive-flow{background:var(--wht);padding:25px;border-radius:12px;box-shadow:var(--shw);margin-top:20px}
+        .step{margin-bottom:25px}
+        .step h3{color:var(--prm)}
+        .step button{font-family:'Poppins',sans-serif;padding:10px 15px;margin:5px;border:2px solid var(--prm);background:var(--wht);color:var(--prm);border-radius:8px;font-weight:600;cursor:pointer;transition:all .3s}
+        .step button:hover,.step button.active{background:var(--prm);color:var(--wht);transform:scale(1.05)}
+        .hidden{display:none}
+        .step-content{margin-top:15px;padding:15px;background:#f9f9f9;border-left:4px solid var(--sec);border-radius:4px}
+        .step-content textarea{width:95%;height:60px;padding:10px;border:1px solid #ccc;border-radius:4px;margin-top:10px}
+        .verb-list{padding-left:20px;columns:2;-webkit-columns:2;-moz-columns:2}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <p class="main-title">Jornada de Formación Salesiana</p>
+            <h1 class="subtitle">Cápsula 1: El Fundamento de la Evaluación</h1>
+        </header>
+
+        <div class="progress-container">
+            <div class="progress-bar-wrapper"><div id="progress-bar" class="progress-bar"></div></div>
+        </div>
+
+        <h2 class="section-title">1. El Corazón de la Evaluación</h2>
+        <p style="text-align: center;">Haz clic en cada tarjeta para descubrir las 5 características esenciales de la evaluación según nuestra normativa.</p>
+        <div class="flip-card-grid">
+            <div class="flip-card" onclick="updateProgress(20)"><div class="flip-card-inner">
+                <div class="flip-card-front"><h4>Integral y Holística</h4></div>
+                <div class="flip-card-back"><p>Valora todas las dimensiones del ser humano: Ser, Saber, Hacer y Decidir.</p></div>
+            </div></div>
+            <div class="flip-card" onclick="updateProgress(40)"><div class="flip-card-inner">
+                <div class="flip-card-front"><h4>Orientadora</h4></div>
+                <div class="flip-card-back"><p>La información que nos da sirve para ajustar y mejorar nuestra práctica pedagógica.</p></div>
+            </div></div>
+            <div class="flip-card" onclick="updateProgress(60)"><div class="flip-card-inner">
+                <div class="flip-card-front"><h4>Flexible</h4></div>
+                <div class="flip-card-back"><p>Nos permite usar una variedad de estrategias e instrumentos según la necesidad.</p></div>
+            </div></div>
+            <div class="flip-card" onclick="updateProgress(80)"><div class="flip-card-inner">
+                <div class="flip-card-front"><h4>Dialógica</h4></div>
+                <div class="flip-card-back"><p>Promueve el diálogo para analizar y valorar los procesos educativos entre todos los actores.</p></div>
+            </div></div>
+             <div class="flip-card" onclick="updateProgress(100)"><div class="flip-card-inner">
+                <div class="flip-card-front"><h4>Transparente</h4></div>
+                <div class="flip-card-back"><p>Los procesos son abiertos y la información es accesible para todos.</p></div>
+            </div></div>
+        </div>
+
+        <h2 class="section-title">2. El Flujo Estratégico Interactivo</h2>
+        <div class="interactive-flow">
+            <div class="step">
+                <h3>Paso 1: Selecciona un Nivel para ver un Perfil de Salida de ejemplo</h3>
+                <button onclick="showStepContent('step1', 'Inicial', this)">Inicial</button>
+                <button onclick="showStepContent('step1', 'Primaria', this)">Primaria</button>
+                <button onclick="showStepContent('step1', 'Secundaria', this)">Secundaria</button>
+                <div id="step1-content" class="step-content hidden">
+                    <h4>Perfil de Salida Seleccionado:</h4>
+                    <p id="profile-text"></p>
+                </div>
+            </div>
+            <div id="step2-container" class="step hidden">
+                <h3>Paso 2: ¡Tu Turno! "Traduce" el Perfil en Criterios de Evaluación</h3>
+                <p>Basado en el perfil anterior, escribe un criterio para cada dimensión.</p>
+                <div class="step-content">
+                    <label><strong>Dimensión del SER:</strong></label><br><textarea placeholder="Ej: Demuestra respeto por la diversidad..."></textarea><br>
+                    <label><strong>Dimensión del SABER:</strong></label><br><textarea placeholder="Ej: Explica la multicausalidad de un hecho..."></textarea><br>
+                    <label><strong>Dimensión del HACER:</strong></label><br><textarea placeholder="Ej: Contrasta información de diferentes fuentes..."></textarea><br>
+                    <label><strong>Dimensión del DECIDIR:</strong></label><br><textarea placeholder="Ej: Asume una postura fundamentada sobre..."></textarea><br>
+                    <button onclick="showStepContent('step2', null, this)">¡Criterios Listos!</button>
+                </div>
+            </div>
+            <div id="step3-container" class="step hidden">
+                <h3>Paso 3: El ADN de la Evaluación - ¡Crea tu Indicador!</h3>
+                <p>Recuerda la regla de oro: <strong>Verbo de Acción Observable + Contenido Específico.</strong></p>
+                <div class="step-content">
+                    <p><strong>Verbos recomendados (Observables):</strong></p>
+                    <ul class="verb-list">
+                        <li>Identifica</li><li>Compara</li><li>Resuelve</li><li>Construye</li><li>Propone</li><li>Demuestra</li><li>Elabora</li><li>Justifica</li><li>Organiza</li><li>Redacta</li><li>Diseña</li><li>Argumenta</li>
+                    </ul>
+                    <label><strong>Escribe aquí un indicador claro para tu criterio del HACER:</strong></label><br>
+                    <textarea placeholder="Ej: Elabora un cuadro comparativo con 3 similitudes y 3 diferencias..."></textarea>
+                    <p><strong>¡Felicidades!</strong> Has completado el flujo estratégico. Ya estás listo para la Parte 2, donde construiremos los instrumentos para medir estos indicadores.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    let progress = 0;
+    const progressBar = document.getElementById('progress-bar');
+    const step2 = document.getElementById('step2-container');
+    const step3 = document.getElementById('step3-container');
+
+    function updateProgress(value) {
+        if (value > progress) {
+            progress = value;
+            progressBar.style.width = progress + '%';
+            progressBar.textContent = progress + '%';
+        }
+    }
+
+    function showStepContent(step, level, button) {
+        if (step === 'step1') {
+            const profileText = document.getElementById('profile-text');
+            const contentDiv = document.getElementById('step1-content');
+            const profiles = {
+                'Inicial': 'Manifiesta curiosidad y explora su entorno a través del juego y los sentidos.',
+                'Primaria': 'Resuelve problemas de su entorno aplicando saberes y conocimientos matemáticos.',
+                'Secundaria': 'Analiza críticamente los procesos históricos y su influencia en el presente.'
+            };
+            profileText.textContent = profiles[level];
+            contentDiv.classList.remove('hidden');
+            
+            // Activate button
+            document.querySelectorAll('#step1-container button').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            step2.classList.remove('hidden');
+        } else if (step === 'step2') {
+            step3.classList.remove('hidden');
+            button.textContent = "¡Completado!";
+            button.disabled = true;
+        }
+    }
+</script>
+</body>
+</html>
