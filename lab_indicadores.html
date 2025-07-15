@@ -54,91 +54,89 @@
     </div>
 
        <script>
-        // --- ¡IMPORTANTE! Pega tu API Key aquí ---
-        // La clave API que estaba en tu código original ya ha sido pegada aquí.
-        const API_KEY = "AIzaSyCC67AzMViGmuq_VU2jzRjITcJTjOcgD7g"; 
+    // --- ¡IMPORTANTE! Pega tu NUEVA API Key aquí ---
+    const API_KEY = "AIzaSyDY4869kZbb9D625RGtdFNTaCE7etFL9dA"; 
+    
+    // Volvemos al endpoint más común para JS del lado del cliente, combinado con la nueva clave.
+    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`;
+
+    function openTab(evt, tabName) {
+        let i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; }
+        tablinks = document.getElementsByClassName("tab-button");
+        for (i = 0; i < tablinks.length; i++) { tablinks[i].className = tablinks[i].className.replace(" active", "");}
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    async function callGeminiAPI(prompt, outputElement) {
+        outputElement.innerHTML = '<div class="loader">🧠 Pensando...</div>';
         
-        // --- URL CORREGIDA ---
-        // Hemos cambiado "v1beta" por "v1" y asegurado el modelo "gemini-pro".
-        const API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-preview-0514:generateContent?key=${API_KEY}`;
-
-        function openTab(evt, tabName) {
-            let i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tab-button");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.className += " active";
+        if (API_KEY === "AQUÍ_VA_TU_NUEVA_CLAVE_DE_API" || !API_KEY) {
+            outputElement.innerText = "Error: Por favor, introduce tu nueva API Key en el código para activar la aplicación.";
+            return;
         }
 
-        async function callGeminiAPI(prompt, outputElement) {
-            outputElement.innerHTML = '<div class="loader">🧠 Pensando...</div>';
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: prompt }] }]
+                })
+            });
+
+            if (!response.ok) {
+                // Obtener más detalles del error si están disponibles
+                const errorData = await response.json().catch(() => null);
+                console.error("Respuesta de error de la API:", errorData);
+                throw new Error(`Error de API: ${response.status} ${response.statusText}`);
+            }
+
+            const data = await response.json();
             
-            // Esta verificación es por si borras la clave sin querer.
-            if (API_KEY === "AQUÍ_VA_TU_API_KEY" || !API_KEY) {
-                outputElement.innerText = "Error: Por favor, introduce tu API Key de Google AI Studio en el código para activar la aplicación.";
-                return;
-            }
-
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: prompt }] }]
-                    })
-                });
-
-                // Si la respuesta no es OK (ej: 404, 500, etc.), mostramos un error más claro.
-                if (!response.ok) {
-                    // El response.status nos dirá el código exacto (400, 404, etc.)
-                    throw new Error(`Error de API: ${response.status}`); 
-                }
-
-                const data = await response.json();
-                
-                // Verificamos si la respuesta de Gemini contiene texto.
-                if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
-                    const resultText = data.candidates[0].content.parts[0].text;
-                    outputElement.innerText = resultText.trim();
+            if (data.candidates && data.candidates.length > 0 && data.candidates[0].content) {
+                const resultText = data.candidates[0].content.parts[0].text;
+                outputElement.innerText = resultText.trim();
+            } else {
+                console.warn("Respuesta de la API recibida pero sin contenido válido:", data);
+                if (data.promptFeedback) {
+                     outputElement.innerText = `La IA no pudo procesar la solicitud debido a un bloqueo. Razón: ${data.promptFeedback.blockReason}. Intenta con otra frase.`;
                 } else {
-                    // Esto puede ocurrir si el modelo devuelve una respuesta vacía por filtros de seguridad, etc.
-                    outputElement.innerText = "La IA devolvió una respuesta vacía. Intenta con una pregunta diferente o revisa los filtros de seguridad en tu API.";
+                    outputElement.innerText = "La IA devolvió una respuesta inesperada. Revisa la consola.";
                 }
-
-            } catch (error) {
-                console.error("Error al llamar a la API de Gemini:", error);
-                // El mensaje de error ahora mostrará el código de estado (ej: 404).
-                outputElement.innerText = `Hubo un error al conectar con la IA (${error.message}). Revisa la consola para más detalles.`;
             }
-        }
 
-        function runValidator() {
-            const userInput = document.getElementById('validator-input').value;
-            const outputElement = document.getElementById('validator-output');
-            const prompt = `Actúa como un coach pedagógico boliviano experto en evaluación. Evalúa el siguiente indicador de evaluación: "${userInput}". Tu feedback debe ser breve, constructivo y en segunda persona (ej: 'Tu indicador...'). Enfócate en si es observable, específico y si usa un verbo de acción. Si no es bueno, sugiere una mejora clara.`;
-            callGeminiAPI(prompt, outputElement);
+        } catch (error) {
+            console.error("Error completo al llamar a la API de Gemini:", error);
+            outputElement.innerText = `Hubo un error crítico al conectar con la IA (${error.message}). Revisa la consola para más detalles.`;
         }
+    }
 
-        function runGenerator() {
-            const userInput = document.getElementById('generator-input').value;
-            const outputElement = document.getElementById('generator-output');
-            const prompt = `Actúa como un experto en el Modelo Educativo de Bolivia. Genera 3 indicadores de evaluación observables y prácticos para el siguiente criterio: "${userInput}". Preséntalos como una lista numerada.`;
-            callGeminiAPI(prompt, outputElement);
-        }
+    // El resto de las funciones (runValidator, runGenerator, runAssistant) permanecen igual...
 
-        function runAssistant() {
-            const userInput = document.getElementById('assistant-input').value;
-            const dimension = document.getElementById('assistant-dimension').value;
-            const outputElement = document.getElementById('assistant-output');
-            const prompt = `Actúa como un Asesor Pedagógico Salesiano experto. Para el criterio "${userInput}" y la dimensión del "${dimension}", necesito que me asesores. Sugiere un indicador de evaluación claro y observable. Luego, recomienda el instrumento de evaluación más adecuado para medir ese indicador y explica en una frase por qué es la mejor opción. Formatea tu respuesta con títulos en negrita para 'Indicador Sugerido' e 'Instrumento Recomendado'.`;
-            callGeminiAPI(prompt, outputElement);
-        }
-    </script>
+    function runValidator() {
+        const userInput = document.getElementById('validator-input').value;
+        const outputElement = document.getElementById('validator-output');
+        const prompt = `Actúa como un coach pedagógico boliviano experto en evaluación. Evalúa el siguiente indicador de evaluación: "${userInput}". Tu feedback debe ser breve, constructivo y en segunda persona (ej: 'Tu indicador...'). Enfócate en si es observable, específico y si usa un verbo de acción. Si no es bueno, sugiere una mejora clara.`;
+        callGeminiAPI(prompt, outputElement);
+    }
+
+    function runGenerator() {
+        const userInput = document.getElementById('generator-input').value;
+        const outputElement = document.getElementById('generator-output');
+        const prompt = `Actúa como un experto en el Modelo Educativo de Bolivia. Genera 3 indicadores de evaluación observables y prácticos para el siguiente criterio: "${userInput}". Preséntalos como una lista numerada.`;
+        callGeminiAPI(prompt, outputElement);
+    }
+
+    function runAssistant() {
+        const userInput = document.getElementById('assistant-input').value;
+        const dimension = document.getElementById('assistant-dimension').value;
+        const outputElement = document.getElementById('assistant-output');
+        const prompt = `Actúa como un Asesor Pedagógico Salesiano experto. Para el criterio "${userInput}" y la dimensión del "${dimension}", necesito que me asesores. Sugiere un indicador de evaluación claro y observable. Luego, recomienda el instrumento de evaluación más adecuado para medir ese indicador y explica en una frase por qué es la mejor opción. Formatea tu respuesta con títulos en negrita para 'Indicador Sugerido' e 'Instrumento Recomendado'.`;
+        callGeminiAPI(prompt, outputElement);
+    }
+</script>
 </body>
 </html>
