@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorio de Indicadores con IA</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        :root{--prm:#005A9C;--sec:#FFC72C;--bg:#f4f7fa;--txt:#333;--wht:#fff;--shw:0 4px 15px rgba(0,0,0,0.1)}body{font-family:'Poppins',sans-serif;background-color:var(--bg);color:var(--txt);margin:0;padding:20px}.container{max-width:800px;margin:20px auto;background:var(--wht);border-radius:15px;box-shadow:var(--shw);overflow:hidden}header{background:var(--prm);color:var(--wht);padding:30px 20px;text-align:center}header h1{margin:0;font-size:2rem}main{padding:25px}.tabs{display:flex;border-bottom:2px solid #ddd}.tab-button{padding:10px 20px;cursor:pointer;background:none;border:none;font-family:'Poppins',sans-serif;font-size:1rem;font-weight:600;color:#aaa;position:relative;transition:color .3s}.tab-button.active{color:var(--prm)}.tab-button.active::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:3px;background:var(--prm)}.tab-content{display:none;padding-top:20px}.tab-content.active{display:block}h3{color:var(--prm)}textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid #ccc;font-family:'Poppins',sans-serif;font-size:1rem;margin-top:10px;box-sizing:border-box}button.action-btn{font-family:'Poppins',sans-serif;font-size:1rem;font-weight:600;padding:12px 30px;border:none;border-radius:50px;cursor:pointer;background:var(--sec);color:var(--txt);margin-top:20px;transition:transform .2s}.action-btn:hover{transform:scale(1.05)}.result-box{margin-top:20px;padding:20px;border-radius:8px;background:#e7f3fe;border-left:5px solid var(--prm);min-height:50px;white-space:pre-wrap}.loader{text-align:center;font-weight:600;color:var(--prm)}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Laboratorio de Indicadores con IA</h1>
+        </header>
+        <main>
+            <div class="tabs">
+                <button class="tab-button active" onclick="openTab(event, 'Validator')">🔎 Validador</button>
+                <button class="tab-button" onclick="openTab(event, 'Generator')">💡 Generador</button>
+                <button class="tab-button" onclick="openTab(event, 'Assistant')">🛠️ Asistente</button>
+            </div>
+
+            <div id="Validator" class="tab-content active">
+                <h3>1. El Validador de Indicadores</h3>
+                <p>Escribe un indicador de evaluación y la IA te dará feedback para mejorarlo.</p>
+                <textarea id="validator-input" rows="3" placeholder="Ej: El estudiante comprenderá el ciclo del agua."></textarea>
+                <button class="action-btn" onclick="runValidator()">Validar Indicador</button>
+                <div class="result-box" id="validator-output">El feedback aparecerá aquí...</div>
+            </div>
+
+            <div id="Generator" class="tab-content">
+                <h3>2. El Generador de Indicadores</h3>
+                <p>Escribe un Criterio de Evaluación y la IA te sugerirá indicadores listos para usar.</p>
+                <textarea id="generator-input" rows="3" placeholder="Ej: Aplica los principios de la palanca en diseños simples."></textarea>
+                <button class="action-btn" onclick="runGenerator()">Generar Indicadores</button>
+                <div class="result-box" id="generator-output">Las sugerencias aparecerán aquí...</div>
+            </div>
+
+            <div id="Assistant" class="tab-content">
+                <h3>3. El Asistente de Evaluación Completo</h3>
+                <p>Introduce un criterio, elige la dimensión y la IA te sugerirá un indicador Y el instrumento ideal para medirlo.</p>
+                <textarea id="assistant-input" rows="3" placeholder="Ej: Promueve una cultura de paz en el aula."></textarea>
+                <select id="assistant-dimension">
+                    <option value="Ser">Dimensión del Ser</option>
+                    <option value="Saber">Dimensión del Saber</option>
+                    <option value="Hacer">Dimensión del Hacer</option>
+                    <option value="Decidir">Dimensión del Decidir</option>
+                </select>
+                <button class="action-btn" onclick="runAssistant()">Obtener Asesoría</button>
+                <div class="result-box" id="assistant-output">La asesoría completa aparecerá aquí...</div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // --- ¡IMPORTANTE! Pega tu API Key aquí ---
+        const API_KEY = "AIzaSyB..._yT65Y_lA5x_K1o"; 
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`;
+
+        function openTab(evt, tabName) {
+            let i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        async function callGeminiAPI(prompt, outputElement) {
+            outputElement.innerHTML = '<div class="loader">🧠 Pensando...</div>';
+            
+            if (API_KEY === "AQUÍ_VA_TU_API_KEY") {
+                outputElement.innerText = "Error: Por favor, introduce tu API Key de Google AI Studio en el código para activar la aplicación.";
+                return;
+            }
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }]
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error de API: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const resultText = data.candidates[0].content.parts[0].text;
+                outputElement.innerText = resultText;
+            } catch (error) {
+                console.error("Error al llamar a la API de Gemini:", error);
+                outputElement.innerText = "Hubo un error al conectar con la IA. Revisa la consola para más detalles.";
+            }
+        }
+
+        function runValidator() {
+            const userInput = document.getElementById('validator-input').value;
+            const outputElement = document.getElementById('validator-output');
+            const prompt = `Actúa como un coach pedagógico boliviano experto en evaluación. Evalúa el siguiente indicador de evaluación: "${userInput}". Tu feedback debe ser breve, constructivo y en segunda persona (ej: 'Tu indicador...'). Enfócate en si es observable, específico y si usa un verbo de acción. Si no es bueno, sugiere una mejora clara.`;
+            callGeminiAPI(prompt, outputElement);
+        }
+
+        function runGenerator() {
+            const userInput = document.getElementById('generator-input').value;
+            const outputElement = document.getElementById('generator-output');
+            const prompt = `Actúa como un experto en el Modelo Educativo de Bolivia. Genera 3 indicadores de evaluación observables y prácticos para el siguiente criterio: "${userInput}". Preséntalos como una lista numerada.`;
+            callGeminiAPI(prompt, outputElement);
+        }
+
+        function runAssistant() {
+            const userInput = document.getElementById('assistant-input').value;
+            const dimension = document.getElementById('assistant-dimension').value;
+            const outputElement = document.getElementById('assistant-output');
+            const prompt = `Actúa como un Asesor Pedagógico Salesiano experto. Para el criterio "${userInput}" y la dimensión del "${dimension}", necesito que me asesores. Sugiere un indicador de evaluación claro y observable. Luego, recomienda el instrumento de evaluación más adecuado para medir ese indicador y explica en una frase por qué es la mejor opción. Formatea tu respuesta con títulos en negrita para 'Indicador Sugerido' e 'Instrumento Recomendado'.`;
+            callGeminiAPI(prompt, outputElement);
+        }
+    </script>
+</body>
+</html>
