@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jornada de Formación Salesiana</title>
+    <title>El Camino del Evaluador Salesiano</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
@@ -13,6 +13,8 @@
             --color-fondo: #f4f7fa;
             --color-texto: #333;
             --color-blanco: #ffffff;
+            --color-correcto: #28a745;
+            --color-incorrecto: #dc3545;
         }
 
         * {
@@ -50,14 +52,20 @@
         }
 
         .slide-content {
-            max-width: 700px;
+            max-width: 800px;
         }
-
-        .slide h1 {
+        
+        .slide-title h1 {
             font-size: 3.5rem;
             color: var(--color-primario);
             margin-bottom: 10px;
             font-weight: 700;
+        }
+
+        .slide-title p {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            font-weight: 400;
         }
 
         .slide h2 {
@@ -80,18 +88,20 @@
         
         .slide-number {
             position: absolute;
-            top: 20px;
-            left: 20px;
+            top: 30px;
+            left: 30px;
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--color-secundario);
+            background-color: var(--color-primario);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
         }
 
-        #slide1 {
-            background-color: var(--color-wht);
-        }
-
-        /* Nav Dots */
         .slide-nav {
             position: fixed;
             top: 50%;
@@ -118,13 +128,87 @@
             background-color: var(--color-primario);
             transform: scale(1.5);
         }
+        
+        .button-container {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .button {
+             display: inline-block;
+             padding: 15px 30px;
+             background-color: var(--color-secundario);
+             color: var(--color-primario);
+             text-decoration: none;
+             font-weight: 600;
+             border-radius: 50px;
+             transition: transform 0.2s;
+        }
+        .button:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Quiz Styles */
+        .quiz-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            width: 100%;
+        }
+        .quiz-item {
+            background: var(--color-blanco);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .quiz-item p {
+            font-size: 1rem;
+            font-weight: 600;
+            min-height: 60px;
+        }
+        .quiz-options {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .quiz-options button {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            border: 2px solid var(--color-primario);
+            background: none;
+            color: var(--color-primario);
+        }
+         .quiz-options button:hover:not(:disabled) {
+             background: var(--color-primario);
+             color: var(--color-blanco);
+         }
+        .quiz-options button.correct {
+            background-color: var(--color-correcto);
+            border-color: var(--color-correcto);
+            color: white;
+        }
+        .quiz-options button.incorrect {
+            background-color: var(--color-incorrecto);
+            border-color: var(--color-incorrecto);
+            color: white;
+        }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .slide h1 { font-size: 2.5rem; }
+            .slide-title h1 { font-size: 2.5rem; }
             .slide h2 { font-size: 2rem; }
             .slide p { font-size: 1rem; }
             .slide-nav { display: none; }
+            .slide-number { width: 40px; height: 40px; font-size: 1.2rem; top: 20px; left: 20px;}
+            .button-container { flex-direction: column; }
+            .quiz-container { grid-template-columns: 1fr; }
+            .quiz-item p { min-height: auto; margin-bottom: 10px;}
         }
     </style>
 </head>
@@ -134,96 +218,185 @@
 
     <main id="presentation-main">
         <section id="slide1" class="slide">
-            <div class="slide-content">
+            <div class="slide-content slide-title">
                 <p style="color: var(--color-secundario); font-weight: 600;">Jornada de Formación Salesiana</p>
                 <h1>De la Visión a la Evidencia</h1>
-                <p>El Camino del Evaluador Salesiano</p>
+                <p>Una guía detallada para construir una evaluación formativa, justa y con propósito.</p>
             </div>
         </section>
 
         <section id="slide2" class="slide">
             <div class="slide-content">
                 <span class="slide-number">01</span>
-                <h2>El Norte: El Perfil de Salida</h2>
-                <p>Todo comienza con nuestra promesa a largo plazo. No nos preguntamos "¿qué voy a enseñar?", sino <span class="highlight">"¿qué persona queremos formar?"</span>. Esta visión es nuestra guía inalterable.</p>
+                <h2>Nuestro Propósito</h2>
+                <p>Hoy iniciamos un viaje para transformar nuestra mirada sobre la evaluación. Pasaremos de verla como un simple acto de calificar a concebirla como la <span class="highlight">herramienta más poderosa</span> para acompañar, guiar y potenciar el aprendizaje de cada uno de nuestros estudiantes.</p>
             </div>
         </section>
 
         <section id="slide3" class="slide">
             <div class="slide-content">
-                 <span class="slide-number">02</span>
-                <h2>Las Señales: Los Criterios</h2>
-                <p>"Traducimos" la gran visión del perfil en metas observables para las 4 dimensiones (Ser, Saber, Hacer y Decidir). Son las <span class="highlight">señales que nos indican</span> que vamos en la dirección correcta.</p>
+                <span class="slide-number">02</span>
+                <h2>El Camino del Evaluador</h2>
+                <p>Para lograrlo, seguiremos un camino lógico y coherente en 4 grandes etapas. Cada una construye sobre la anterior, asegurando que nuestra evaluación final esté <span class="highlight">perfectamente alineada</span> con nuestras metas más profundas.</p>
             </div>
         </section>
-
+        
         <section id="slide4" class="slide">
             <div class="slide-content">
-                 <span class="slide-number">03</span>
-                <h2>El ADN: Los Indicadores</h2>
-                <p>Hacemos lo observable, medible. El indicador es la <span class="highlight">evidencia concreta y la acción específica</span> que anotaremos en nuestro registro. Si no se puede ver, oír o medir, no es un indicador.</p>
+                <span class="slide-number">03</span>
+                <h2>Paso 1: El Perfil de Salida</h2>
+                <p>Es nuestro <span class="highlight">"Norte"</span>, nuestra estrella guía. Antes de planificar cualquier actividad, respondemos a la pregunta: <span class="highlight">"¿Qué tipo de persona, con qué habilidades y valores, queremos formar al final del ciclo?"</span>. Esta visión define todo lo que haremos después.</p>
             </div>
         </section>
 
         <section id="slide5" class="slide">
             <div class="slide-content">
-                 <span class="slide-number">04</span>
-                <h2>Las Herramientas: Los Instrumentos</h2>
-                <p>Elegimos la herramienta correcta para el trabajo correcto. Seleccionamos la <span class="highlight">rúbrica, lista de cotejo, portafolio o prueba</span> que mejor recoja la evidencia que nuestro indicador necesita.</p>
+                <span class="slide-number">04</span>
+                <h2>Paso 2: Los Criterios</h2>
+                <p>Son las <span class="highlight">"grandes señales"</span> en nuestro camino. Desglosamos la gran visión del Perfil de Salida en metas concretas y observables para cada una de las 4 dimensiones: <span class="highlight">Ser, Saber, Hacer y Decidir</span>.</p>
             </div>
         </section>
 
         <section id="slide6" class="slide">
             <div class="slide-content">
-                 <span class="slide-number">05</span>
-                <h2>La Colaboración: El Equipo</h2>
-                <p>Este viaje es más fácil con un aliado. El <span class="highlight">Asesor Pedagógico Salesiano</span> y sus expertos (Paola, Beatriz, Karina, Luis y Percy) están diseñados para acompañarte en cada paso de este camino.</p>
+                <span class="slide-number">05</span>
+                <h2>Paso 3: Los Indicadores</h2>
+                <p>Este es el <span class="highlight">"ADN"</span> de nuestro registro. Un indicador es una <span class="highlight">acción 100% observable</span> que demuestra que se está cumpliendo un criterio. Si no se puede ver, oír o medir, no es un buen indicador.</p>
             </div>
         </section>
         
         <section id="slide7" class="slide">
             <div class="slide-content">
-                <span class="slide-number">06</span>
+                 <span class="slide-number">06</span>
+                <h2>Indicador: El Verbo es la Clave</h2>
+                <p><strong>Evita verbos abstractos</strong> como <span style="text-decoration: line-through;">comprender o saber</span>. <br><strong>Usa verbos de acción concretos</strong> como <span class="highlight">explica, construye, compara, resuelve</span>.</p>
+            </div>
+        </section>
+
+        <section id="slide8" class="slide">
+            <div class="slide-content">
+                 <span class="slide-number">07</span>
+                <h2>Paso 4: Los Instrumentos</h2>
+                <p>Son nuestra <span class="highlight">"caja de herramientas"</span>. La clave es elegir la herramienta correcta para el trabajo correcto, la que mejor recoja la evidencia que nuestro indicador necesita.</p>
+            </div>
+        </section>
+        
+         <section id="slide9" class="slide">
+            <div class="slide-content">
+                 <span class="slide-number">08</span>
+                <h2>Rúbrica vs. Lista de Cotejo</h2>
+                <p>Usa una <span class="highlight">Lista de Cotejo</span> para verificar tareas (Sí/No). <br> Usa una <span class="highlight">Rúbrica Analítica</span> para evaluar la <span class="highlight">calidad</span> de un trabajo, describiendo diferentes niveles de desempeño.</p>
+                <div class="button-container">
+                    <a href="https://docs.google.com/spreadsheets/d/1dZQBiFrSGEj0tQIaQEaPByKG7QDIXVPz1wJmlubVUrw/edit?usp=sharing" target="_blank" class="button">Ejemplo: Lista de Cotejo</a>
+                    <a href="https://docs.google.com/spreadsheets/d/1H3n9uwUnE6ZawFR7hrlERUMhy7ibXIV-sZ6wsnJWS08/edit?usp=sharing" target="_blank" class="button">Ejemplo: Rúbrica</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="slide10" class="slide">
+            <div class="slide-content">
+                 <span class="slide-number">09</span>
+                <h2>Nuestro Aliado Digital</h2>
+                <p>Con el <span class="highlight">Asesor Pedagógico Salesiano</span>, podemos co-crear PDCs, diseñar guías, entrenar habilidades y construir instrumentos de forma ágil y colaborativa.</p>
+                <div class="button-container">
+                    <a href="https://elmejorequipo.github.io/asistentepedagogicodb/index.html" target="_blank" class="button">Instalar mi Asesor</a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="slide11" class="slide">
+            <div class="slide-content">
+                <span class="slide-number">10</span>
+                 <h2>Comprobación Rápida</h2>
+                 <div class="quiz-container">
+                    <div class="quiz-item" id="q1">
+                        <p>1. Un buen indicador puede usar verbos como "comprender" o "saber".</p>
+                        <div class="quiz-options">
+                            <button onclick="checkQuizAnswer(this, 'Falso')">Verdadero</button>
+                            <button onclick="checkQuizAnswer(this, 'Falso')">Falso</button>
+                        </div>
+                    </div>
+                    <div class="quiz-item" id="q2">
+                        <p>2. El Perfil de Salida es el primer paso y la guía de toda la planificación evaluativa.</p>
+                        <div class="quiz-options">
+                            <button onclick="checkQuizAnswer(this, 'Verdadero')">Verdadero</button>
+                            <button onclick="checkQuizAnswer(this, 'Verdadero')">Falso</button>
+                        </div>
+                    </div>
+                    <div class="quiz-item" id="q3">
+                        <p>3. Para evaluar la CALIDAD de un ensayo, ¿qué instrumento es el más adecuado?</p>
+                        <div class="quiz-options">
+                            <button onclick="checkQuizAnswer(this, 'Rúbrica Analítica')">Lista de Cotejo</button>
+                            <button onclick="checkQuizAnswer(this, 'Rúbrica Analítica')">Rúbrica Analítica</button>
+                        </div>
+                    </div>
+                    <div class="quiz-item" id="q4">
+                        <p>4. ¿Qué dimensión se enfoca en la aplicación de habilidades y técnicas?</p>
+                         <div class="quiz-options">
+                            <button onclick="checkQuizAnswer(this, 'Hacer')">Ser</button>
+                            <button onclick="checkQuizAnswer(this, 'Hacer')">Hacer</button>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </section>
+        
+        <section id="slide12" class="slide">
+            <div class="slide-content">
+                <span class="slide-number">11</span>
                 <h2>¡Ahora te Toca a Ti!</h2>
-                <p>Tienes el mapa y las herramientas. Te invitamos a aplicar este camino en tu planificación para crear una <span class="highlight">evaluación más justa, formativa y con el corazón de Don Bosco</span>.</p>
+                <p>Has recorrido el camino completo. Te invitamos a aplicar esta metodología en tu planificación para construir una <span class="highlight">evaluación más justa, formativa y con el corazón de Don Bosco</span>. ¡Gracias por tu compromiso!</p>
             </div>
         </section>
     </main>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const sections = document.querySelectorAll('.slide');
+            const mainContainer = document.getElementById('presentation-main');
+            const sections = mainContainer.querySelectorAll('.slide');
             const navContainer = document.getElementById('slide-nav');
 
-            // Crear los puntos de navegación
-            sections.forEach((section, index) => {
-                if(index > 0) { // No crear punto para el slide de título
-                    const anchor = document.createElement('a');
-                    anchor.href = `#${section.id}`;
-                    anchor.dataset.targetId = section.id;
-                    navContainer.appendChild(anchor);
-                }
+            sections.forEach((section) => {
+                const anchor = document.createElement('a');
+                anchor.href = `#${section.id}`;
+                anchor.dataset.targetId = section.id;
+                navContainer.appendChild(anchor);
             });
 
             const navLinks = navContainer.querySelectorAll('a');
 
-            // Interseption Observer para resaltar el punto activo
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
+                        const targetId = entry.target.id;
                         navLinks.forEach(link => {
-                            link.classList.toggle('active', link.dataset.targetId === entry.target.id);
+                            link.classList.toggle('active', link.dataset.targetId === targetId);
                         });
                     }
                 });
-            }, { threshold: 0.7 });
+            }, { root: mainContainer, threshold: 0.7 });
 
             sections.forEach(section => {
-                if(section.id !== 'slide1') {
-                    observer.observe(section);
-                }
+                observer.observe(section);
             });
         });
+
+        function checkQuizAnswer(button, correctAnswer) {
+            const optionsDiv = button.parentElement;
+            const buttons = optionsDiv.querySelectorAll('button');
+            const userAnswer = button.textContent;
+
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === correctAnswer) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (userAnswer !== correctAnswer) {
+                button.classList.add('incorrect');
+            }
+        }
     </script>
 
 </body>
