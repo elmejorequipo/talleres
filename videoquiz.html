@@ -3,255 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Quiz: La Herramienta Correcta</title>
+    <title>Video Quiz Interactivo: La Herramienta Correcta</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
-        :root {
-            --color-primario: #005A9C;
-            --color-secundario: #FFC72C;
-            --color-fondo: #f4f7fa;
-            --color-texto: #333333;
-            --color-blanco: #ffffff;
-            --color-correcto: #28a745;
-            --color-incorrecto: #dc3545;
-            --sombra-suave: 0 4px 15px rgba(0, 0, 0, 0.08);
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--color-fondo);
-            color: var(--color-texto);
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        header h1 {
-            color: var(--color-primario);
-            font-size: 2.2rem;
-        }
-        
-        header p {
-            font-size: 1.1rem;
-        }
-
-        .video-container {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            height: 0;
-            background-color: #000;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: var(--sombra-suave);
-            margin-bottom: 40px;
-        }
-
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .quiz-card {
-            background-color: var(--color-blanco);
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: var(--sombra-suave);
-        }
-
-        .quiz-card .question {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--color-primario);
-            margin-bottom: 20px;
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-        }
-        
-        @media (min-width: 600px) {
-            .options-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .option {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            text-align: left;
-            background-color: #f8f9fa;
-            border: 2px solid #dee2e6;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s, border-color 0.3s;
-        }
-
-        .option:hover {
-            background-color: #e9ecef;
-            border-color: #adb5bd;
-        }
-
-        .option.correct {
-            background-color: #d4edda;
-            border-color: var(--color-correcto);
-            font-weight: 600;
-        }
-
-        .option.incorrect {
-            background-color: #f8d7da;
-            border-color: var(--color-incorrecto);
-        }
-
-        .feedback {
-            display: none;
-            margin-top: 15px;
-            padding: 15px;
-            border-radius: 8px;
-            background-color: #e7f3fe;
-            border-left: 5px solid var(--color-secundario);
-        }
-        
-        .feedback.visible {
-            display: block;
-        }
-        
-        .feedback strong {
-            color: var(--color-primario);
-        }
-
+        :root{--prm:#005A9C;--sec:#FFC72C;--bg:#f4f7fa;--txt:#333;--wht:#fff;--corr:#28a745;--incorr:#dc3545;--shw:0 4px 15px rgba(0,0,0,.08)}
+        body{font-family:'Poppins',sans-serif;background-color:var(--bg);color:var(--txt);line-height:1.6;margin:0;padding:20px}
+        .container{max-width:800px;margin:20px auto}
+        header{text-align:center;margin-bottom:30px}
+        header h1{color:var(--prm);font-size:2.2rem}
+        header p{font-size:1.1rem}
+        .progress-section{margin:20px 0;padding:15px;background-color:var(--wht);border-radius:10px;box-shadow:var(--shw)}
+        .progress-info{display:flex;justify-content:space-between;font-weight:600;margin-bottom:8px}
+        .progress-bar-container{width:100%;background-color:#e9ecef;border-radius:50px}
+        .progress-bar{height:15px;width:0%;background-color:var(--sec);border-radius:50px;transition:width .5s ease-in-out}
+        .video-container{position:relative;width:100%;padding-bottom:56.25%;height:0;background-color:#000;border-radius:15px;overflow:hidden;box-shadow:var(--shw);margin-bottom:40px}
+        #player{position:absolute;top:0;left:0;width:100%;height:100%}
+        #quiz-modal{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:1000}
+        .quiz-card{background-color:var(--wht);border-radius:10px;padding:25px;width:90%;max-width:600px;box-shadow:0 5px 25px rgba(0,0,0,.2)}
+        .quiz-card .question{font-size:1.2rem;font-weight:600;color:var(--prm);margin-bottom:20px}
+        .options-grid{display:grid;grid-template-columns:1fr;gap:10px}
+        @media (min-width:600px){.options-grid{grid-template-columns:1fr 1fr}}
+        .option{display:block;width:100%;padding:12px;font-family:'Poppins',sans-serif;font-size:1rem;text-align:left;background-color:#f8f9fa;border:2px solid #dee2e6;border-radius:8px;cursor:pointer;transition:background-color .3s,border-color .3s}
+        .option:hover:not(:disabled){background-color:#e9ecef;border-color:#adb5bd}
+        .option.correct{background-color:#d4edda;border-color:var(--corr);font-weight:600}
+        .option.incorrect{background-color:#f8d7da;border-color:var(--incorr)}
+        .feedback{display:none;margin-top:15px;padding:15px;border-radius:8px;background-color:#e7f3fe;border-left:5px solid var(--sec)}
+        .feedback.visible{display:block}
+        .feedback strong{color:var(--prm)}
+        #next-button{font-family:'Poppins',sans-serif;font-size:1rem;font-weight:600;padding:10px 25px;border:none;border-radius:50px;cursor:pointer;background:var(--prm);color:var(--wht);margin-top:20px;float:right;display:none}
+        #next-button:hover{background-color:#004a80}
     </style>
 </head>
 <body>
-
     <div class="container">
         <header>
             <h1>Misión 3: La Caja de Herramientas</h1>
-            <p>Primero, mira el video. Luego, responde las preguntas para descubrir qué instrumento es el ideal para cada situación.</p>
+            <p>El video se pausará para hacerte preguntas. ¡Responde para continuar!</p>
         </header>
 
+        <div class="progress-section">
+            <div class="progress-info">
+                <span id="progress-text">Progreso: 0/5</span>
+                <span id="score-text">Puntaje: 0</span>
+            </div>
+            <div class="progress-bar-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+        </div>
+
         <div class="video-container">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/PQ6UuUYq2NY?si=f77gPAH366RFFzHt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <div id="player"></div>
         </div>
+    </div>
 
+    <div id="quiz-modal">
         <div class="quiz-card">
-            <p class="question">1. Si buscas que tus estudiantes hagan **metacognición** y reflexionen sobre su propio aprendizaje (00:36), ¿qué instrumento, descrito como "muy filosófico", es tu mejor aliado?</p>
-            <div class="options-grid">
-                <button class="option" onclick="checkAnswer(this, true)">Diario de Aprendizaje</button>
-                <button class="option" onclick="checkAnswer(this, false)">Rúbrica</button>
-                <button class="option" onclick="checkAnswer(this, false)">Porfolio</button>
-                <button class="option" onclick="checkAnswer(this, false)">Lista de Cotejo</button>
+            <p id="question-text" class="question"></p>
+            <div id="options-container" class="options-grid"></div>
+            <div id="feedback-container" class="feedback">
+                <strong id="feedback-title"></strong><br>
+                <span id="feedback-text"></span>
             </div>
-            <div class="feedback">
-                <strong>¡Correcto! El Diario de Aprendizaje.</strong><br>
-                Este instrumento es ideal para la autoevaluación y la metacognición. Como dice el video, obliga al estudiante a reflexionar sobre qué ha aprendido y qué dificultades tiene, fomentando el "aprender a aprender".
-            </div>
+            <button id="next-button" onclick="continueVideo()">Continuar Video</button>
         </div>
-
-        <div class="quiz-card">
-            <p class="question">2. Para ver la evolución completa de un proyecto (bocetos, pruebas, obra final), ¿qué instrumento, que parece tener "Síndrome de Diógenes" (01:30), te permitiría recoger todas las evidencias del proceso?</p>
-            <div class="options-grid">
-                <button class="option" onclick="checkAnswer(this, false)">Prueba Objetiva</button>
-                <button class="option" onclick="checkAnswer(this, true)">Porfolio</button>
-                <button class="option" onclick="checkAnswer(this, false)">Rúbrica</button>
-                <button class="option" onclick="checkAnswer(this, false)">Diario de Aprendizaje</button>
-            </div>
-            <div class="feedback">
-                <strong>¡Exacto! El Porfolio.</strong><br>
-                Es la "carpeta de evidencias" por excelencia. Permite recopilar una variedad de trabajos a lo largo del tiempo, mostrando el progreso y el proceso completo, no solo una foto del resultado final.
-            </div>
-        </div>
-
-        <div class="quiz-card">
-            <p class="question">3. Si quieres que tus estudiantes conozcan desde el principio los "niveles de desempeño" y "aspectos a valorar" (01:53) en una exposición oral, ¿qué instrumento "tan clarito" deberías usar?</p>
-            <div class="options-grid">
-                <button class="option" onclick="checkAnswer(this, false)">Escala de Valoración</button>
-                <button class="option" onclick="checkAnswer(this, false)">Porfolio</button>
-                <button class="option" onclick="checkAnswer(this, true)">Rúbrica</button>
-                <button class="option" onclick="checkAnswer(this, false)">Diario de Aprendizaje</button>
-            </div>
-            <div class="feedback">
-                <strong>¡Perfecto! La Rúbrica.</strong><br>
-                Es la reina de la claridad. Al detallar los descriptores para cada nivel de desempeño (Ej: Excelente, Bueno, Regular), guía el aprendizaje del estudiante y hace la evaluación transparente y objetiva, ¡sin sorpresas!
-            </div>
-        </div>
-
-        <div class="quiz-card">
-            <p class="question">4. Para verificar rápidamente si se cumplieron pasos obligatorios (ej: ¿Se puso la bata?), ¿qué "prima" de la Rúbrica (03:02), que funciona con un simple SÍ/NO, es la más eficiente?</p>
-            <div class="options-grid">
-                <button class="option" onclick="checkAnswer(this, true)">Lista de Comprobación / Cotejo</button>
-                <button class="option" onclick="checkAnswer(this, false)">Rúbrica</button>
-                <button class="option" onclick="checkAnswer(this, false)">Escala de Valoración</button>
-                <button class="option" onclick="checkAnswer(this, false)">Porfolio</button>
-            </div>
-            <div class="feedback">
-                <strong>¡Muy bien! La Lista de Comprobación o Cotejo.</strong><br>
-                Es una herramienta dicotómica (Sí/No, Logrado/No logrado) perfecta para verificar la presencia o ausencia de tareas o pasos específicos de forma rápida y directa.
-            </div>
-        </div>
-        
-        <div class="quiz-card">
-            <p class="question">5. Si necesitas medir el **grado** de una actitud (ej: Siempre, A veces, Nunca), ¿qué instrumento te permite medir en un "rango" y no solo con un sí/no (03:02)?</p>
-            <div class="options-grid">
-                <button class="option" onclick="checkAnswer(this, false)">Lista de Cotejo</button>
-                <button class="option" onclick="checkAnswer(this, false)">Prueba Objetiva</button>
-                <button class="option" onclick="checkAnswer(this, true)">Escala de Valoración</button>
-                <button class="option" onclick="checkAnswer(this, false)">Diario de Aprendizaje</button>
-            </div>
-            <div class="feedback">
-                <strong>¡Correcto! La Escala de Valoración.</strong><br>
-                Es la herramienta perfecta cuando necesitas medir la frecuencia o la intensidad de una conducta o actitud. Va más allá del sí/no, permitiendo matices y grados de consecución.
-            </div>
-        </div>
-
     </div>
 
     <script>
-        function checkAnswer(button, isCorrect) {
-            const card = button.closest('.quiz-card');
-            const options = card.querySelectorAll('.option');
-            const feedback = card.querySelector('.feedback');
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-            // Disable all buttons in this card
-            options.forEach(opt => {
-                opt.disabled = true;
+        var player;
+        var videoTimer;
+        
+        const quizData = [
+            {time: 65, q: "Si buscas que tus estudiantes hagan metacognición y reflexionen, ¿qué instrumento 'filosófico' es tu mejor aliado?", o: ["Diario de Aprendizaje", "Rúbrica", "Porfolio", "Lista de Cotejo"], a: "Diario de Aprendizaje", f: "El Diario es ideal para la autoevaluación y reflexionar sobre qué se ha aprendido y las dificultades."},
+            {time: 110, q: "Para ver la evolución completa de un proyecto, ¿qué instrumento que recoge 'evidencias' te sirve?", o: ["Prueba Objetiva", "Porfolio", "Rúbrica", "Diario de Aprendizaje"], a: "Porfolio", f: "El Porfolio es la 'carpeta de evidencias' por excelencia para mostrar el progreso y el proceso completo."},
+            {time: 145, q: "Para que los estudiantes conozcan los 'niveles de desempeño' desde el principio, ¿qué instrumento 'tan clarito' deberías usar?", o: ["Escala de Valoración", "Porfolio", "Rúbrica", "Diario de Aprendizaje"], a: "Rúbrica", f: "La Rúbrica es la reina de la claridad. Guía el aprendizaje y hace la evaluación transparente y objetiva."},
+            {time: 188, q: "Para verificar rápidamente si se cumplieron pasos obligatorios (SÍ/NO), ¿qué 'prima' de la Rúbrica es la más eficiente?", o: ["Lista de Cotejo", "Rúbrica", "Escala de Valoración", "Porfolio"], a: "Lista de Cotejo", f: "La Lista de Cotejo es perfecta para verificar la presencia o ausencia de tareas de forma rápida y directa."},
+            {time: 195, q: "Si necesitas medir el 'grado' de una actitud (Siempre, A veces, Nunca), ¿qué instrumento te permite medir en un 'rango'?", o: ["Lista de Cotejo", "Prueba Objetiva", "Escala de Valoración", "Diario de Aprendizaje"], a: "Escala de Valoración", f: "La Escala de Valoración es ideal para medir la frecuencia o intensidad de una conducta, permitiendo matices."}
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answeredQuestions = 0;
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '390', width: '640', videoId: 'HQ5V5AmP1Kk',
+                playerVars: {'playsinline': 1, 'rel': 0},
+                events: {'onStateChange': onPlayerStateChange}
+            });
+        }
+
+        function updateProgressAndScore() {
+            const progressText = document.getElementById('progress-text');
+            const scoreText = document.getElementById('score-text');
+            const progressBar = document.getElementById('progress-bar');
+            
+            progressText.textContent = `Progreso: ${answeredQuestions}/${quizData.length}`;
+            scoreText.textContent = `Puntaje: ${score}`;
+            progressBar.style.width = `${(answeredQuestions / quizData.length) * 100}%`;
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.PLAYING) {
+                videoTimer = setInterval(checkVideoTime, 500);
+            } else {
+                clearInterval(videoTimer);
+            }
+        }
+
+        function checkVideoTime() {
+            if (currentQuestionIndex >= quizData.length) {
+                clearInterval(videoTimer);
+                return;
+            }
+            if (player.getCurrentTime() >= quizData[currentQuestionIndex].time) {
+                player.pauseVideo();
+                showQuizModal();
+            }
+        }
+
+        function showQuizModal() {
+            const modal = document.getElementById('quiz-modal');
+            const questionData = quizData[currentQuestionIndex];
+            document.getElementById('question-text').textContent = questionData.q;
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            questionData.o.forEach(optionText => {
+                const button = document.createElement('button');
+                button.className = 'option';
+                button.textContent = optionText;
+                button.onclick = () => handleAnswer(button, optionText);
+                optionsContainer.appendChild(button);
             });
 
-            if (isCorrect) {
-                button.classList.add('correct');
-            } else {
-                button.classList.add('incorrect');
-                // Highlight the correct one
-                options.forEach(opt => {
-                    if (opt.onclick.toString().includes('true')) {
-                        opt.classList.add('correct');
-                    }
-                });
-            }
-            
-            feedback.classList.add('visible');
+            document.getElementById('feedback-container').classList.remove('visible');
+            document.getElementById('next-button').style.display = 'none';
+            modal.style.display = 'flex';
         }
-    </script>
 
+        function handleAnswer(button, selectedAnswer) {
+            const questionData = quizData[currentQuestionIndex];
+            const isCorrect = selectedAnswer === questionData.a;
+
+            if (isCorrect) {
+                score++;
+            }
+
+            const options = document.querySelectorAll('.option');
+            options.forEach(opt => {
+                opt.disabled = true;
+                if (opt.textContent === questionData.a) {
+                    opt.classList.add('correct'); // Siempre mostrar la correcta
+                }
+            });
+
+            if (!isCorrect) {
+                button.classList.add('incorrect'); // Marcar la incorrecta si se eligió
+            }
+
+            const feedbackContainer = document.getElementById('feedback-container');
+            document.getElementById('feedback-title').textContent = isCorrect ? '¡Correcto!' : 'Respuesta Correcta:';
+            document.getElementById('feedback-text').textContent = questionData.f;
+            feedbackContainer.classList.add('visible');
+            
+            document.getElementById('next-button').style.display = 'block';
+            
+            answeredQuestions++;
+            updateProgressAndScore();
+        }
+
+        function continueVideo() {
+            document.getElementById('quiz-modal').style.display = 'none';
+            currentQuestionIndex++;
+            player.playVideo();
+        }
+
+        // Inicializar la barra de progreso al cargar la página
+        window.onload = updateProgressAndScore;
+    </script>
 </body>
 </html>
