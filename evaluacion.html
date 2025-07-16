@@ -53,8 +53,10 @@
         .commitment-form .form-group{margin-bottom:15px}
         .commitment-form label{display:block;margin-bottom:5px;font-weight:600}
         .commitment-form input,.commitment-form select{width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;box-sizing:border-box}
-        .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;box-sizing:border-box}
-        .modal-content{background:var(--wht);padding:30px;border-radius:15px;box-shadow:0 5px 25px rgba(0,0,0,.2);width:100%;max-width:500px;text-align:center}
+        .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;box-sizing:border-box;opacity:0;visibility:hidden;transition:opacity .3s, visibility .3s}
+        .modal.visible{opacity:1;visibility:visible}
+        .modal-content{background:var(--wht);padding:30px;border-radius:15px;box-shadow:0 5px 25px rgba(0,0,0,.2);width:100%;max-width:500px;text-align:center;transform:scale(.9);transition:transform .3s}
+        .modal.visible .modal-content{transform:scale(1)}
         .modal-content h2{color:var(--prm)}
         .modal-content .data-confirm p{background:#eee;padding:10px;border-radius:5px;text-align:left}
         .modal-content .modal-buttons{display:flex;justify-content:space-around;margin-top:20px}
@@ -170,7 +172,7 @@
         </main>
     </div>
 
-    <section class="ad-section">
+    <div class="ad-section">
         <h2>Continúa tu Formación</h2>
         <div class="ad-container">
             <div class="ad-card">
@@ -179,29 +181,226 @@
                 <a href="https://academia.dbeduca.org.bo/" target="_blank">Más Información</a>
             </div>
             <div class="ad-card">
-                <h3>Asistente Pedagógico</h3>
+                <h3>Asistente Pedagógico IA</h3>
                 <p>Descubre a tu nuevo aliado IA para la planificación, creación de materiales y evaluación en el aula.</p>
                 <a href="https://elmejorequipo.github.io/asistentepedagogicodb/index.html" target="_blank">Probar Ahora</a>
             </div>
         </div>
-    </section>
-
-    <footer><p>Creado con el Asesor Pedagógico Salesiano &copy; 2025</p></footer>
+        <footer><p>Creado con el Asesor Pedagógico Salesiano &copy; 2025</p></footer>
+    </div>
     
     <div id="confirmation-modal" class="modal">
         <div class="modal-content">
-             </div>
+            <h2>¡Felicidades, has completado la jornada!</h2>
+            <p>Por favor, confirma que tus datos para el certificado son correctos:</p>
+            <div class="data-confirm">
+                <p><strong>Nombre:</strong> <span id="confirm-name"></span></p>
+                <p><strong>Nivel:</strong> <span id="confirm-level"></span></p>
+                <p><strong>Curso:</strong> <span id="confirm-course"></span></p>
+            </div>
+            <div class="modal-buttons">
+                <button id="edit-data-btn">Editar Datos</button>
+                <button id="confirm-download-btn">Descargar Certificado</button>
+            </div>
+        </div>
     </div>
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // ... Script sin cambios ...
-             const taskCodes = {
+
+            // --- ¡IMPORTANTE! DEFINE AQUÍ TUS CÓDIGOS SECRETOS ---
+            const taskCodes = {
                 task2: "82639",
                 task3: "17593",
-                task4: "91524"
-                // El código de la tarea final ahora no se define aquí
+                task4: "44827"
             };
+            
+            const allCheckboxes = Array.from(document.querySelectorAll('.task-checkbox'));
+            const finalTaskCheckbox = document.getElementById('task5');
+            const prerequisiteCheckboxes = allCheckboxes.filter(cb => cb.id !== 'task5');
+            const totalTasks = allCheckboxes.length;
+            const welcomeModal = document.getElementById('welcome-modal');
+
+            // --- Lógica de la Ventana de Bienvenida ---
+            if (!localStorage.getItem('welcomeShownV2')) {
+                welcomeModal.classList.add('visible');
+            }
+            document.getElementById('welcome-modal-btn').addEventListener('click', () => {
+                welcomeModal.classList.remove('visible');
+                localStorage.setItem('welcomeShownV2', 'true');
+            });
+
+
+            function checkPrerequisites() {
+                const allPrerequisitesMet = prerequisiteCheckboxes.every(cb => cb.checked);
+                const finalTaskWrapper = finalTaskCheckbox.closest('.task-checkbox-wrapper');
+                
+                if (allPrerequisitesMet) {
+                    finalTaskCheckbox.disabled = false;
+                    finalTaskWrapper.classList.remove('locked');
+                } else {
+                    finalTaskCheckbox.disabled = true;
+                    finalTaskWrapper.classList.add('locked');
+                }
+            }
+
+            function updateProgress() {
+                const checkedTasks = document.querySelectorAll('.task-checkbox:checked').length;
+                const percentage = totalTasks > 0 ? (checkedTasks / totalTasks) * 100 : 0;
+                document.getElementById('progress-bar').style.width = percentage + '%';
+                document.getElementById('progress-text').textContent = `Progreso del Taller: ${Math.round(percentage)}%`;
+                if (percentage === 100) {
+                     document.getElementById('progress-text').textContent = '¡Taller Completado!';
+                     document.getElementById('progress-bar').style.backgroundColor = 'var(--corr)';
+                } else {
+                     document.getElementById('progress-bar').style.backgroundColor = 'var(--sec)';
+                }
+            }
+
+            function saveState() {
+                const states = {};
+                allCheckboxes.forEach(cb => {
+                    states[cb.id] = { checked: cb.checked, disabled: cb.disabled };
+                });
+                localStorage.setItem('tallerProgresoV5', JSON.stringify(states));
+            }
+
+            function loadState() {
+                const savedStates = JSON.parse(localStorage.getItem('tallerProgresoV5'));
+                if (savedStates) {
+                    allCheckboxes.forEach(cb => {
+                        const state = savedStates[cb.id];
+                        if (state) {
+                            cb.checked = state.checked;
+                            cb.disabled = state.disabled;
+                            const container = cb.closest('.task-completion');
+                            const lockContainer = container.querySelector('.lock-container');
+                            if (lockContainer && !cb.disabled) {
+                                lockContainer.style.display = 'none';
+                            }
+                            if(!container.querySelector('.task-checkbox').disabled){
+                                container.querySelector('.task-checkbox-wrapper').classList.remove('locked');
+                            }
+                        }
+                    });
+                }
+                updateProgress();
+                checkPrerequisites();
+            }
+
+            document.querySelectorAll('.lock-container button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const container = button.closest('.task-completion');
+                    const taskId = container.dataset.taskId;
+                    const input = container.querySelector('input[type="text"]');
+                    const checkbox = document.getElementById(taskId);
+
+                    if (input.value.trim() === taskCodes[taskId]) {
+                        checkbox.disabled = false;
+                        container.querySelector('.lock-container').style.display = 'none';
+                        container.querySelector('.task-checkbox-wrapper').classList.remove('locked');
+                        alert('¡Código correcto! Tarea desbloqueada.');
+                        saveState();
+                    } else {
+                        alert('Código incorrecto. ¡Revisa el recurso de la actividad!');
+                        input.value = '';
+                    }
+                });
+            });
+
+            allCheckboxes.forEach(cb => {
+                cb.addEventListener('change', () => {
+                    updateProgress();
+                    checkPrerequisites();
+                    saveState();
+                    if (cb.id === 'task5' && cb.checked) {
+                        triggerCertificateFlow();
+                    }
+                });
+            });
+
+            function triggerCertificateFlow() {
+                const fullName = document.getElementById('fullName').value.trim().toUpperCase();
+                if (!fullName) {
+                    alert('Por favor, ingresa tu nombre completo para el certificado.');
+                    finalTaskCheckbox.checked = false;
+                    saveState();
+                    updateProgress();
+                    return;
+                }
+                
+                document.getElementById('confirm-name').textContent = fullName;
+                document.getElementById('confirm-level').textContent = document.getElementById('level').value;
+                document.getElementById('confirm-course').textContent = document.getElementById('course').value;
+                document.getElementById('confirmation-modal').style.display = 'flex';
+            }
+
+            document.getElementById('edit-data-btn').addEventListener('click', () => {
+                document.getElementById('confirmation-modal').style.display = 'none';
+            });
+
+            document.getElementById('confirm-download-btn').addEventListener('click', generateCertificate);
+
+            async function generateCertificate() {
+                 const modal = document.getElementById('confirmation-modal');
+                 modal.innerHTML = '<h2>Generando tu certificado...</h2><p>Por favor, espera un momento.</p>';
+                
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({orientation: 'landscape', unit: 'px', format: [800, 565]});
+                
+                const certificateHTML = `
+                    <div style="width:800px; height:565px; padding:40px; box-sizing:border-box; background-color:var(--wht); border:10px solid var(--prm); position:relative; text-align:center; font-family:'Poppins', sans-serif;">
+                        <img src="https://sdb.bo/sdb/wp-content/uploads/2021/12/SALECIANOS-VERTICAL-2.png" style="position:absolute; top:30px; left:40px; height:80px; opacity:0.1;">
+                        <div style="font-size:3rem; font-weight:700; color:var(--prm);">Certificado de Participación</div>
+                        <div style="font-size:1.2rem; color:var(--txt); margin-top:-10px;">otorgado a:</div>
+                        <div style="margin:60px 0;">
+                            <div style="font-size:2.2rem; font-weight:700; color:var(--prm); border-bottom:2px solid var(--sec); display:inline-block; padding-bottom:5px;">${document.getElementById('confirm-name').textContent}</div>
+                            <p style="font-size:1.1rem; margin: 20px 40px 0;">Por haber completado con éxito la <strong>Jornada de Formación Salesiana: "De la Visión a la Evidencia"</strong>, demostrando un firme compromiso con la excelencia y la rigurosidad en la evaluación, pilares del carisma de Don Bosco.</p>
+                            <p style="font-size:0.9rem; font-style:italic; margin-top:30px;">"Una educación sin afecto es como un cuerpo sin alma." - Don Bosco</p>
+                        </div>
+                        <div style="position:absolute; bottom:40px; width:100%; left:0; display:flex; justify-content:space-around; font-size:.9rem; color:var(--txt);">
+                            <div style="width:200px; border-top:1px solid var(--txt); padding-top:5px;">Facilitador</div>
+                            <div style="width:200px; border-top:1px solid var(--txt); padding-top:5px;">${new Date().toLocaleDateString('es-ES', {year:'numeric',month:'long',day:'numeric'})}</div>
+                        </div>
+                    </div>
+                `;
+
+                const certContainer = document.createElement('div');
+                certContainer.style.position = 'absolute';
+                certContainer.style.left = '-9999px';
+                certContainer.innerHTML = certificateHTML;
+                document.body.appendChild(certContainer);
+
+                const canvas = await html2canvas(certContainer.firstChild, {scale: 2});
+                const imgData = canvas.toDataURL('image/png');
+                
+                document.body.removeChild(certContainer);
+
+                pdf.addImage(imgData, 'PNG', 0, 0, 800, 565);
+                pdf.save('Certificado_Jornada_Salesiana.pdf');
+                
+                setTimeout(() => {
+                    const originalModalContent = `
+                        <h2>¡Felicidades, has completado la jornada!</h2>
+                        <p>Por favor, confirma que tus datos para el certificado son correctos:</p>
+                        <div class="data-confirm">
+                            <p><strong>Nombre:</strong> <span id="confirm-name"></span></p>
+                            <p><strong>Nivel:</strong> <span id="confirm-level"></span></p>
+                            <p><strong>Curso:</strong> <span id="confirm-course"></span></p>
+                        </div>
+                        <div class="modal-buttons">
+                            <button id="edit-data-btn">Editar Datos</button>
+                            <button id="confirm-download-btn">Descargar Certificado</button>
+                        </div>
+                    `;
+                    modal.innerHTML = originalModalContent;
+                    document.getElementById('edit-data-btn').addEventListener('click', () => { modal.style.display = 'none'; });
+                    document.getElementById('confirm-download-btn').addEventListener('click', generateCertificate);
+                    modal.style.display = 'none';
+                }, 1000);
+            }
+
+            loadState();
         });
     </script>
 </body>
