@@ -31,6 +31,8 @@
         #feedback-area{margin-top:20px;font-size:1.3rem;font-weight:600;min-height:30px}
         .confetti{position:absolute;width:10px;height:10px;background-color:var(--prm);opacity:0;border-radius:50%}
         .confetti.yellow{background-color:var(--sec)}
+        .secret-code-box{margin-top:15px; font-size: 1rem; font-weight: normal; padding: 15px; background: #e7f3fe; border-radius: 8px;}
+        .secret-code-box .secret-code{font-size:2rem;font-weight:700;background:var(--wht);color:var(--prm);padding:5px 15px;border-radius:8px;display:inline-block;margin-top:10px; border: 2px dashed var(--prm);}
         @media (max-width:768px){.game-board{grid-template-columns:1fr};header h1{font-size:1.8rem}}
     </style>
 </head>
@@ -157,7 +159,14 @@
 
             const feedbackArea = document.getElementById('feedback-area');
             if(correctCount === gameData.length) {
-                feedbackArea.innerHTML = `¡EXCELENTE! ✨ Has logrado ${correctCount} de ${gameData.length} aciertos.`;
+                let successMessage = `¡EXCELENTE! ✨ Has logrado ${correctCount} de ${gameData.length} aciertos.`;
+                let codeMessage = `
+                    <div class="secret-code-box">
+                        <p>Anota el siguiente código para desbloquear esta tarea en la página principal:</p>
+                        <div class="secret-code">88462</div>
+                    </div>
+                `;
+                feedbackArea.innerHTML = successMessage + codeMessage;
                 feedbackArea.style.color = 'var(--corr)';
                 triggerConfetti();
             } else {
