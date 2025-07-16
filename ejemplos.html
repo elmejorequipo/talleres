@@ -3,42 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Camino del Evaluador Salesiano</title>
+    <title>Jornada de Formación Salesiana: La Guía de Evaluación</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-        :root {--prm: #005A9C;--sec: #FFC72C;--bg: #f4f7fa;--txt: #333;--wht: #ffffff;--corr: #28a745;--incorr: #dc3545;}
-        * {margin: 0; padding: 0; box-sizing: border-box;}
-        html {scroll-behavior: smooth;}
-        body {font-family: 'Poppins', sans-serif; background-color: var(--bg); color: var(--txt); overscroll-behavior: none;}
-        main {height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory;}
-        .slide {height: 100vh; scroll-snap-align: start; display: flex; align-items: center; justify-content: center; text-align: center; padding: 40px 80px; position: relative; background: var(--wht);}
-        .slide:nth-child(odd) {background: var(--bg);}
-        .slide-content {max-width: 850px; text-align: left;}
-        .slide-title h1 {font-size: 3.5rem; color: var(--prm); margin-bottom: 10px; font-weight: 700; text-align:center;}
-        .slide-title p {font-size: 1.3rem; line-height: 1.7; font-weight: 400; text-align:center;}
-        .slide h2 {font-size: 2rem; color: var(--prm); margin-bottom: 20px; font-weight: 600; border-bottom:3px solid var(--sec); padding-bottom:10px;}
-        .slide h3 {font-size: 1.4rem; color: var(--prm); margin-top:20px; margin-bottom:10px;}
-        .slide p, .slide li {font-size: 1.1rem; line-height: 1.8; font-weight: 400;}
-        .slide ul {padding-left: 25px;}
-        .highlight {color: var(--prm); font-weight: 600;}
-        blockquote{margin:15px 0;padding:15px;background:#e7f3fe;border-left:5px solid var(--prm);font-style:italic}
-        .slide-nav {position: fixed; top: 50%; right: 20px; transform: translateY(-50%); display: flex; flex-direction: column; gap: 15px;}
-        .slide-nav a {width: 12px; height: 12px; background-color: #ccc; border-radius: 50%; transition: all 0.3s;}
-        .slide-nav a:hover {transform: scale(1.2);}
-        .slide-nav a.active {background-color: var(--prm); transform: scale(1.5);}
+        :root{--prm:#005A9C;--sec:#FFC72C;--bg:#f4f7fa;--txt:#333;--wht:#ffffff;--shw:0 4px 15px rgba(0,0,0,0.08);}
+        *{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:'Poppins',sans-serif;background-color:var(--bg);color:var(--txt);overscroll-behavior:none}
+        .progress-container{position:fixed;top:0;left:0;width:100%;height:8px;z-index:1000}
+        #progress-bar{height:8px;width:0%;background-color:var(--sec);transition:width .2s ease-out}
+        main{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory}
+        .slide{height:100vh;scroll-snap-align:start;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px 80px;position:relative;background:var(--wht)}
+        .slide:nth-child(even){background:var(--bg)}
+        .slide-content{max-width:850px;text-align:left;height:85vh;overflow-y:auto;padding-right:15px;}
+        .slide-title h1{font-size:3.5rem;color:var(--prm);margin-bottom:10px;font-weight:700;text-align:center}
+        .slide-title p{font-size:1.3rem;line-height:1.7;font-weight:400;text-align:center}
+        .slide h2{font-size:2rem;color:var(--prm);margin-bottom:20px;font-weight:600;border-bottom:3px solid var(--sec);padding-bottom:10px}
+        .slide h3{font-size:1.4rem;color:var(--prm);margin-top:20px;margin-bottom:10px}
+        .slide p,.slide li{font-size:1.1rem;line-height:1.8;font-weight:400}
+        .slide ul{padding-left:25px; margin-bottom: 15px;}
+        .highlight{color:var(--prm);font-weight:600}
+        blockquote{margin:20px 0;padding:15px;background:#e7f3fe;border-left:5px solid var(--prm);font-style:italic}
+        .case-study{background:#fff9e6;border:2px solid var(--sec);padding:20px;margin-top:20px;border-radius:10px}
+        .case-study h4{color:var(--prm);margin-top:0}
         table{width:100%;border-collapse:collapse;margin-top:20px;font-size:0.9rem;}
         th,td{border:1px solid #ddd;padding:8px;text-align:left;vertical-align:top}
         th{background-color:#f2f2f2;font-weight:600}
         .final-code{background:var(--corr);color:var(--wht);text-align:center;padding:20px;border-radius:12px;margin-top:20px}
-        .final-code h3{margin-top:0; color:var(--wht)}
+        .final-code h3{margin-top:0;color:var(--wht)}
         .final-code .secret-code{font-size:2.5rem;font-weight:700;background:var(--wht);color:var(--prm);padding:5px 20px;border-radius:8px;display:inline-block;margin-top:10px}
-        @media (max-width: 768px) {.slide{padding:40px 20px;}.slide-nav{display:none;}}
+        @media (max-width:768px){.slide{padding:40px 20px}.slide-title h1{font-size:2.5rem}.slide h2{font-size:1.8rem}.slide p,.slide li{font-size:1rem}}
     </style>
 </head>
 <body>
-    <nav class="slide-nav" id="slide-nav"></nav>
+    <div class="progress-container"><div id="progress-bar"></div></div>
     <main id="presentation-main">
-        <section id="slide1" class="slide">
+        <section class="slide">
             <div class="slide-content slide-title">
                 <p style="color: var(--color-secundario); font-weight: 600;">Jornada de Formación Salesiana</p>
                 <h1>De la Visión a la Evidencia</h1>
@@ -46,65 +46,85 @@
             </div>
         </section>
 
-        <section id="slide2" class="slide">
+        <section class="slide">
             <div class="slide-content">
                 <h2>PARTE 1: El Fundamento Estratégico</h2>
-                <p>En esta primera parte, construiremos los cimientos de nuestra práctica. No hablaremos de notas, sino del <span class="highlight">corazón de la evaluación</span>: su propósito. Anclaremos nuestra práctica en la normativa vigente para asegurar un proceso justo y transparente.</p>
-                <blockquote>"El objetivo de la evaluación es contribuir al desarrollo integral y holístico de las y los estudiantes."<br>- <cite>Reglamento de Evaluación, Art. 4</cite></blockquote>
+                <h3>Capítulo 1: El Corazón de Nuestra Misión</h3>
+                <p>La evaluación es un proceso de valoración, análisis y reflexión crítica que nos permite "identificar logros, capacidades, cualidades, potencialidades, limitaciones y dificultades en los procesos educativos".</p>
+                [cite_start]<blockquote>"El objetivo de la evaluación es contribuir al desarrollo integral y holístico de las y los estudiantes." [cite: 228]</blockquote>
+                [cite_start]<p>Sus características esenciales son: ser <strong>Integral, Orientadora, Flexible, Dialógica y Transparente</strong>. [cite: 234]</p>
             </div>
         </section>
 
-        <section id="slide3" class="slide">
+        <section class="slide">
             <div class="slide-content">
-                <h2>El Flujo: Del Perfil al Indicador</h2>
-                <p>Toda evaluación con propósito sigue una ruta lógica:</p>
-                <ul>
-                    <li><strong>Perfil de Salida (El Norte):</strong> Describe las capacidades que queremos formar. Es nuestra gran meta.</li>
-                    <li><strong>Criterios de Evaluación (Las Señales):</strong> "Traducimos" el perfil en metas observables para las 4 dimensiones (Ser, Saber, Hacer, Decidir).</li>
-                    <li><strong>Indicadores (El ADN):</strong> Es la evidencia específica y medible. Su regla de oro es: <span class="highlight">Verbo Observable + Contenido</span>.</li>
-                </ul>
+                <h2>Capítulo 2: El Flujo: Del Perfil al Indicador</h2>
+                <p><strong>1. [cite_start]Perfil de Salida (Nuestro Norte):</strong> Es la descripción de las "capacidades, cualidades y potencialidades alcanzadas por las y los estudiantes, al concluir un determinado año de escolaridad"[cite: 722]. Es nuestra gran meta.</p>
+                <p><strong>2. [cite_start]Criterios de Evaluación (Las Señales):</strong> Es la "traducción" del perfil a metas observables para las 4 dimensiones (Ser, Saber, Hacer, Decidir)[cite: 76].</p>
+                <p><strong>3. Indicadores (El ADN):</strong> Es la evidencia específica y medible que nos dice si un criterio se está logrando. Una vez que tienes un indicador claro y observable (ej: 'Elabora un cuadro comparativo...'), este se convierte en la **columna vertebral de tu registro pedagógico**. Es la evidencia específica que buscarás y calificarás. Tal como veremos en la Parte 3, este indicador se anota en tu cuaderno para registrar el logro del estudiante.</p>
+                 <div class="case-study">
+                    <h4>Caso de Uso: Creando el Flujo Completo</h4>
+                    <p><strong>Perfil de Salida (Sociales):</strong> "Analiza críticamente los procesos históricos y su influencia en el presente."</p>
+                    <p><strong>Criterio (HACER):</strong> "Contrasta información de al menos dos fuentes históricas diferentes."</p>
+                    <p><strong>Indicadores para ese Criterio:</strong></p>
+                    <ul>
+                        <li><strong>Elabora</strong> un cuadro comparativo con 3 similitudes y 3 diferencias entre las fuentes.</li>
+                        <li><strong>Subraya</strong> en ambos textos las ideas que apoyan la postura de cada autor.</li>
+                    </ul>
+                </div>
             </div>
         </section>
 
-        <section id="slide4" class="slide">
+        <section class="slide">
             <div class="slide-content">
                 <h2>PARTE 2: La Caja de Herramientas</h2>
-                 <p>Con los fundamentos claros, ahora abrimos nuestra caja de herramientas para aprender a construir los instrumentos que nos permitirán recoger las evidencias del aprendizaje de forma eficaz.</p>
-                 <h3>Instrumentos Clave:</h3>
-                 <ul>
-                    <li><strong>Rúbrica Analítica:</strong> Ideal para valorar procesos complejos (HACER/SABER).</li>
-                    <li><strong>Lista de Cotejo:</strong> Perfecta para verificar actitudes o pasos (SER/HACER) con un SÍ/NO.</li>
-                    <li><strong>Escala de Valoración:</strong> Mide la frecuencia o intensidad de una conducta (SER/DECIDIR).</li>
-                 </ul>
+                <h3>Capítulo 3: Diseño de Instrumentos Clave</h3>
+                <p>Elegir y construir la herramienta correcta es fundamental. Como indica el **Artículo 5, inciso e)** del Reglamento, la evaluación debe ser <span class="highlight">flexible</span>, permitiendo aplicar una variedad de instrumentos.</p>
             </div>
         </section>
 
-        <section id="slide5" class="slide">
+        <section class="slide">
             <div class="slide-content">
-                <h2>Ejemplo: Rúbrica para un "Lapbook"</h2>
+                <h3>La Rúbrica Analítica</h3>
+                <p>Ideal para valorar procesos complejos (dimensión del **HACER**). [cite_start]Desglosa la tarea en criterios y describe cada nivel de desempeño (DP, DO, DA, ED, según **Artículo 50** [cite: 862]).</p>
+                <h4>Ejemplo: Rúbrica para un "Lapbook"</h4>
                 <table>
                     <thead><tr><th>Criterio</th><th>Nivel 4 (DP)</th><th>Nivel 3 (DO)</th><th>Nivel 2 (DA)</th></tr></thead>
                     <tbody>
-                        <tr><td><strong>Contenido y Precisión (Saber)</strong></td><td>El contenido es excepcionalmente preciso y detallado.</td><td>El contenido es preciso y cubre todos los aspectos.</td><td>El contenido tiene algunas imprecisiones.</td></tr>
-                        <tr><td><strong>Organización y Claridad (Hacer)</strong></td><td>La información está organizada de forma lógica y muy creativa.</td><td>La información está bien organizada y es fácil de seguir.</td><td>La información está algo desorganizada.</td></tr>
+                        <tr><td><strong>Contenido y Precisión (Saber)</strong></td><td>El contenido es excepcionalmente preciso, detallado y supera los requisitos.</td><td>El contenido es preciso y cubre todos los aspectos.</td><td>El contenido tiene algunas imprecisiones.</td></tr>
+                        <tr><td><strong>Organización (Hacer)</strong></td><td>La información está organizada de forma lógica y muy creativa.</td><td>La información está bien organizada.</td><td>La información está algo desorganizada.</td></tr>
                     </tbody>
                 </table>
             </div>
         </section>
 
-        <section id="slide6" class="slide">
+        <section class="slide">
             <div class="slide-content">
-                <h2>PARTE 3: Del Aula al Sistema</h2>
-                <p>Este es el paso final: cómo transformar los resultados de nuestros instrumentos en una calificación final justa, que cumpla con la normativa.</p>
-                <h3>Principio Clave: Calibración y Promedio</h3>
-                <p>Cada instrumento se califica sobre el valor total de su dimensión (ej: una prueba del SABER sobre 45 puntos). Si hay varias actividades para la misma dimensión, sus puntajes <span class="highlight">se promedian</span> para obtener la nota final de la dimensión.</p>
+                <h3>La Lista de Cotejo y la Prueba Objetiva</h3>
+                <p><strong>Lista de Cotejo:</strong> Perfecta para verificar la presencia de actitudes o pasos (dimensión del **SER**) con un simple SÍ/NO.</p>
+                <p><strong>Prueba Objetiva:</strong> Herramienta fundamental para valorar la dimensión del **SABER**. [cite_start]La **Disposición Adicional Cuarta** indica que deben realizarse en la unidad educativa para garantizar la autoría[cite: 1115, 1116, 1117].</p>
+                <div class="case-study">
+                    <h4>Caso de Uso: ¿Qué Instrumento Elijo?</h4>
+                    <p><strong>Situación:</strong> Necesito evaluar una dramatización sobre un hecho histórico.</p>
+                    <p><strong>Análisis:</strong> Una dramatización es un proceso complejo que involucra tanto conocimiento del tema (SABER) como habilidades de actuación y expresión (HACER). Una simple Lista de Cotejo (¿Participó? Sí/No) no captaría la calidad. Una Prueba Objetiva no evaluaría la actuación.</p>
+                    <p><strong>Decisión:</strong> La herramienta más idónea es una **Rúbrica Analítica** con criterios como "Fidelidad Histórica (Saber)", "Expresión Corporal (Hacer)" y "Claridad Vocal (Hacer)".</p>
+                </div>
             </div>
         </section>
-        
-        <section id="slide7" class="slide">
+
+        <section class="slide">
             <div class="slide-content">
-                <h2>El Cálculo Final para el SIE</h2>
-                <p>La calificación final del trimestre es la suma directa de los puntajes finales (promediados o únicos) de cada dimensión. La ponderación es la siguiente:</p>
+                <h2>PARTE 3: Del Aula al Sistema</h2>
+                <h3>Capítulo 4: El Registro y la Calificación</h3>
+                <p>Este es el paso final para sistematizar nuestros resultados. El principio clave es: **Cada instrumento se diseña para calificar directamente sobre el valor total de la dimensión que evalúa**.</p>
+                <blockquote>Si hay varias actividades para la misma dimensión, sus puntajes (calificados sobre el total de la dimensión) **se promedian** para obtener la nota final de esa dimensión.</blockquote>
+            </div>
+        </section>
+
+        <section class="slide">
+            <div class="slide-content">
+                <h3>El Cálculo Final para el SIE</h3>
+                <p>La calificación final del trimestre es la **suma directa** de los puntajes finales de cada dimensión. La ponderación, según los **Artículos 49 y 56**, es la siguiente:</p>
                 <table>
                     <thead><tr><th>Dimensión</th><th>Valor Total</th><th>Origen</th></tr></thead>
                     <tbody>
@@ -115,52 +135,32 @@
                         <tr><td><strong>TOTAL</strong></td><td><strong>100 puntos</strong></td><td></td></tr>
                     </tbody>
                 </table>
+                 <blockquote>"El cuaderno pedagógico, es un instrumento de uso obligatorio para la o el maestro, donde se registrará [...] criterios de evaluación, programación de evaluaciones y resultados logrados por las y los estudiantes."<br>- <cite>Reglamento de Evaluación, Art. 73, inc. [cite_start]II [cite: 1079]</cite></blockquote>
             </div>
         </section>
-        
-        <section id="slide8" class="slide">
+
+        <section class="slide">
             <div class="slide-content">
                 <h2>Conclusión y Código Secreto</h2>
-                 <p>Has completado el recorrido por el camino del evaluador salesiano. Ahora tienes una visión completa del proceso, desde la gran meta hasta la calificación final.</p>
+                 <p>Has completado el recorrido por el camino del evaluador salesiano. Ahora tienes una visión completa del proceso, desde la gran meta hasta la calificación final, todo fundamentado en nuestra normativa.</p>
                 <div class="final-code">
                     <h3>¡Misión Cumplida!</h3>
                     <p>Anota el siguiente código para usarlo en la página principal del taller.</p>
-                    <div class="secret-code">GUIAFINAL</div>
+                    <div class="secret-code">GUIAFINAL25</div>
                 </div>
             </div>
         </section>
+
     </main>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const mainContainer = document.getElementById('presentation-main');
-            const sections = mainContainer.querySelectorAll('.slide');
-            const navContainer = document.getElementById('slide-nav');
-
-            sections.forEach((section) => {
-                const anchor = document.createElement('a');
-                anchor.href = `#${section.id}`;
-                anchor.dataset.targetId = section.id;
-                navContainer.appendChild(anchor);
-            });
-
-            const navLinks = navContainer.querySelectorAll('a');
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const targetId = entry.target.id;
-                        navLinks.forEach(link => {
-                            link.classList.toggle('active', link.dataset.targetId === targetId);
-                        });
-                    }
-                });
-            }, { root: mainContainer, threshold: 0.7 });
-
-            sections.forEach(section => {
-                observer.observe(section);
-            });
-        });
+        window.onscroll = function() {updateProgressBar()};
+        function updateProgressBar() {
+            var winScroll = document.querySelector('main').scrollTop;
+            var height = document.querySelector('main').scrollHeight - document.querySelector('main').clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        }
     </script>
 </body>
 </html>
