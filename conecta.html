@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actividad: Conecta el Criterio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
         :root{--prm:#005A9C;--sec:#FFC72C;--bg:#f4f7fa;--txt:#333;--wht:#fff;--corr:#28a745;--incorr:#dc3545;--shw:0 4px 15px rgba(0,0,0,.08);--shw-deep:0 8px 25px rgba(0,0,0,.15)}
@@ -15,10 +16,9 @@
         .column h2{border-bottom:3px solid var(--sec);padding-bottom:10px;margin-bottom:20px}
         .draggable-item{background-color:var(--wht);padding:15px;margin-bottom:15px;border-radius:8px;border-left:5px solid var(--prm);box-shadow:var(--shw);cursor:grab;transition:box-shadow .3s,opacity .3s}
         .draggable-item:hover{box-shadow:var(--shw-deep)}
-        .dragging{opacity:.5;cursor:grabbing;box-shadow:var(--shw-deep)}
+        .sortable-ghost{opacity:.4;background:#cce5ff}
         .drop-zone{background-color:#e9ecef;border:2px dashed #ced4da;padding:10px;margin-bottom:15px;border-radius:8px;min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:background-color .3s,border-color .3s}
         .drop-zone .profile-text{font-weight:600;color:var(--prm);margin-bottom:5px}
-        .drop-zone.drag-over{background-color:#fff3cd;border-color:var(--sec)}
         .drop-zone.correct{background-color:#d4edda;border-color:var(--corr)}
         .drop-zone.incorrect{background-color:#f8d7da;border-color:var(--incorr)}
         .drop-zone .draggable-item{cursor:default;margin-top:10px}
@@ -86,7 +86,6 @@
             shuffledCriteria.forEach(item => {
                 const el = document.createElement('div');
                 el.className = 'draggable-item';
-                el.draggable = true;
                 el.setAttribute('data-pair', item.id);
                 el.textContent = item.criterion;
                 criteriaColumn.appendChild(el);
@@ -100,45 +99,23 @@
                 profilesColumn.appendChild(el);
             });
 
-            addDragAndDropListeners();
-            document.getElementById('feedback-area').innerHTML = '';
-        }
-
-        function addDragAndDropListeners() {
-            const draggables = document.querySelectorAll('.draggable-item');
-            const dropZones = document.querySelectorAll('.drop-zone');
+            // --- Lógica nueva con SortableJS ---
+            const criteriaList = document.getElementById('criteria-column');
+            const profilesList = document.querySelectorAll('.drop-zone');
             
-            let draggedItem = null;
+            new Sortable(criteriaList, {
+                group: 'shared',
+                animation: 150
+            });
 
-            draggables.forEach(item => {
-                item.addEventListener('dragstart', (e) => {
-                    draggedItem = e.target;
-                    setTimeout(() => e.target.classList.add('dragging'), 0);
-                });
-                item.addEventListener('dragend', () => {
-                    if (draggedItem) draggedItem.classList.remove('dragging');
+            profilesList.forEach(zone => {
+                new Sortable(zone, {
+                    group: 'shared',
+                    animation: 150
                 });
             });
 
-            dropZones.forEach(zone => {
-                zone.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                    zone.classList.add('drag-over');
-                });
-                zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
-                zone.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    zone.classList.remove('drag-over');
-                    if (zone.children.length > 1) {
-                       document.getElementById('criteria-column').appendChild(zone.lastChild);
-                    }
-                    if (draggedItem) {
-                        draggedItem.classList.remove('dragging');
-                        zone.appendChild(draggedItem);
-                        draggedItem = null;
-                    }
-                });
-            });
+            document.getElementById('feedback-area').innerHTML = '';
         }
 
         function checkAnswers() {
@@ -197,12 +174,7 @@
             }
         }
         
-        const keyframes = `@keyframes fall {
-            to {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 1;
-            }
-        }`;
+        const keyframes = `@keyframes fall { to { transform: translateY(100vh) rotate(360deg); opacity: 1; } }`;
         const styleSheet = document.createElement("style");
         styleSheet.type = "text/css";
         styleSheet.innerText = keyframes;
