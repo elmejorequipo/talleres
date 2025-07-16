@@ -6,134 +6,34 @@
     <title>Trivia: Falso y Verdadero de la Evaluación</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
-        :root {
-            --color-primario: #005A9C; /* Azul Salesiano */
-            --color-secundario: #FFC72C; /* Amarillo Salesiano */
-            --color-fondo: #f4f7fa;
-            --color-texto: #333333;
-            --color-blanco: #ffffff;
-            --color-correcto: #28a745;
-            --color-incorrecto: #dc3545;
-            --sombra-suave: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--color-fondo);
-            color: var(--color-texto);
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 20px auto;
-        }
-
-        header {
-            background-color: var(--color-primario);
-            color: var(--color-blanco);
-            padding: 20px;
-            text-align: center;
-            border-radius: 15px 15px 0 0;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2rem;
-        }
-
-        .trivia-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 25px;
-            margin-top: 25px;
-        }
-
-        .trivia-card {
-            background-color: var(--color-blanco);
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: var(--sombra-suave);
-            transition: transform 0.3s;
-        }
-
-        .trivia-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .question {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--color-primario);
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .options {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .options button {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            padding: 10px 30px;
-            border: 2px solid var(--color-primario);
-            background-color: var(--color-blanco);
-            color: var(--color-primario);
-            border-radius: 50px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .options button:hover {
-            background-color: var(--color-primario);
-            color: var(--color-blanco);
-        }
-        
-        .options button.correct {
-            background-color: var(--color-correcto);
-            border-color: var(--color-correcto);
-            color: var(--color-blanco);
-        }
-
-        .options button.incorrect {
-            background-color: var(--color-incorrecto);
-            border-color: var(--color-incorrecto);
-            color: var(--color-blanco);
-        }
-
-        .feedback {
-            display: none;
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            background-color: #e7f3fe;
-            border-left: 5px solid var(--color-secundario);
-        }
-        
-        .feedback.visible {
-            display: block;
-        }
-
-        .feedback strong {
-            color: var(--color-primario);
-        }
+        :root{--prm:#005A9C;--sec:#FFC72C;--bg:#f4f7fa;--txt:#333;--wht:#fff;--corr:#28a745;--incorr:#dc3545;--shw:0 4px 15px rgba(0,0,0,.1)}
+        body{font-family:'Poppins',sans-serif;background-color:var(--bg);color:var(--txt);line-height:1.6;margin:0;padding:20px}
+        .container{max-width:900px;margin:20px auto}
+        header{background-color:var(--prm);color:var(--wht);padding:20px;text-align:center;border-radius:15px 15px 0 0}
+        header h1{margin:0;font-size:2rem}
+        .trivia-grid{display:grid;grid-template-columns:1fr;gap:25px;margin-top:25px}
+        .trivia-card{background-color:var(--wht);border-radius:10px;padding:25px;box-shadow:var(--shw);transition:transform .3s}
+        .trivia-card:hover{transform:translateY(-5px)}
+        .question{font-size:1.2rem;font-weight:600;color:var(--prm);margin-bottom:20px;text-align:center}
+        .options{display:flex;justify-content:center;gap:20px;margin-bottom:20px}
+        .options button{font-family:'Poppins',sans-serif;font-size:1rem;font-weight:600;padding:10px 30px;border:2px solid var(--prm);background-color:var(--wht);color:var(--prm);border-radius:50px;cursor:pointer;transition:background-color .3s,color .3s}
+        .options button:hover:not(:disabled){background-color:var(--prm);color:var(--wht)}
+        .options button.correct{background-color:var(--corr);border-color:var(--corr);color:var(--wht)}
+        .options button.incorrect{background-color:var(--incorr);border-color:var(--incorr);color:var(--wht)}
+        .feedback{display:none;margin-top:20px;padding:15px;border-radius:8px;background-color:#e7f3fe;border-left:5px solid var(--sec)}
+        .feedback.visible{display:block}
+        .feedback strong{color:var(--prm)}
+        /* --- NUEVO ESTILO PARA EL MENSAJE FINAL --- */
+        #completion-message{display:none;margin-top:30px;padding:25px;border-radius:10px;background:var(--corr);color:var(--wht);text-align:center;box-shadow:var(--shw)}
+        #completion-message h2{margin-top:0}
+        #completion-message .secret-code{font-size:2rem;font-weight:700;background:var(--wht);color:var(--prm);padding:5px 15px;border-radius:8px;display:inline-block;margin-top:10px}
     </style>
 </head>
 <body>
-
     <div class="container">
         <header>
             <h1>Trivia: Falso o Verdadero de la Evaluación</h1>
         </header>
-
         <div class="trivia-grid">
             <div class="trivia-card">
                 <p class="question">1. "Evaluar es exactamente lo mismo que poner una nota (calificar)."</p>
@@ -141,69 +41,58 @@
                     <button onclick="checkAnswer(this, 'falso')">Falso</button>
                     <button onclick="checkAnswer(this, 'falso')">Verdadero</button>
                 </div>
-                <div class="feedback">
-                    <strong>Respuesta: Falso.</strong><br>
-                    Calificar es solo poner una nota. Evaluar es el proceso completo de observar, recoger información y tomar decisiones para mejorar el aprendizaje.
-                </div>
+                <div class="feedback"><strong>Respuesta: Falso.</strong><br>Calificar es solo poner una nota. Evaluar es el proceso completo de observar, recoger información y tomar decisiones para mejorar el aprendizaje.</div>
             </div>
-
             <div class="trivia-card">
                 <p class="question">2. "Una evaluación es más justa cuando los criterios son claros y se comparten con los estudiantes desde el principio."</p>
                 <div class="options">
                     <button onclick="checkAnswer(this, 'verdadero')">Falso</button>
                     <button onclick="checkAnswer(this, 'verdadero')">Verdadero</button>
                 </div>
-                <div class="feedback">
-                    <strong>Respuesta: Verdadero.</strong><br>
-                    La transparencia es clave. Si los estudiantes conocen las "reglas del juego" (los criterios) desde el inicio, pueden enfocar mejor sus esfuerzos.
-                </div>
+                <div class="feedback"><strong>Respuesta: Verdadero.</strong><br>La transparencia es clave. Si los estudiantes conocen las "reglas del juego" (los criterios) desde el inicio, pueden enfocar mejor sus esfuerzos.</div>
             </div>
-            
             <div class="trivia-card">
                 <p class="question">3. "La autoevaluación es un requisito formal que no tiene mucho valor real."</p>
                 <div class="options">
                     <button onclick="checkAnswer(this, 'falso')">Falso</button>
                     <button onclick="checkAnswer(this, 'falso')">Verdadero</button>
                 </div>
-                <div class="feedback">
-                    <strong>Respuesta: Falso.</strong><br>
-                    Al contrario, su poder está en desarrollar la metacognición. Es enseñar al estudiante a ser protagonista de su propio aprendizaje.
-                </div>
+                <div class="feedback"><strong>Respuesta: Falso.</strong><br>Al contrario, su poder está en desarrollar la metacognición. Es enseñar al estudiante a ser protagonista de su propio aprendizaje.</div>
             </div>
-
             <div class="trivia-card">
                 <p class="question">4. "La evaluación se planifica DESPUÉS de haber terminado de enseñar el tema."</p>
                 <div class="options">
                     <button onclick="checkAnswer(this, 'falso')">Falso</button>
                     <button onclick="checkAnswer(this, 'falso')">Verdadero</button>
                 </div>
-                <div class="feedback">
-                    <strong>Respuesta: Falso.</strong><br>
-                    La evaluación se diseña JUNTO con la planificación. Debemos saber qué y cómo vamos a evaluar desde el principio, porque eso guía toda nuestra enseñanza.
-                </div>
+                <div class="feedback"><strong>Respuesta: Falso.</strong><br>La evaluación se diseña JUNTO con la planificación. Debemos saber qué y cómo vamos a evaluar desde el principio.</div>
             </div>
-
             <div class="trivia-card">
                 <p class="question">5. "El propósito final de la evaluación es obtener información para mejorar tanto la enseñanza como el aprendizaje."</p>
                 <div class="options">
                     <button onclick="checkAnswer(this, 'verdadero')">Falso</button>
                     <button onclick="checkAnswer(this, 'verdadero')">Verdadero</button>
                 </div>
-                <div class="feedback">
-                    <strong>Respuesta: Verdadero.</strong><br>
-                    Este es el corazón de la evaluación formativa. No evaluamos solo para una nota, sino para entender qué funciona y qué no, y así poder ajustar nuestras estrategias.
-                </div>
+                <div class="feedback"><strong>Respuesta: Verdadero.</strong><br>Este es el corazón de la evaluación formativa. No evaluamos solo para una nota, sino para entender qué funciona y qué no, y así poder ajustar nuestras estrategias.</div>
             </div>
+        </div>
+        <div id="completion-message">
+            <h2>¡Felicidades, has completado la trivia!</h2>
+            <p>Has demostrado un gran conocimiento sobre la evaluación. Anota el siguiente código para desbloquear esta tarea en la página principal del taller:</p>
+            <div class="secret-code">82639</div>
         </div>
     </div>
 
     <script>
+        // --- LÓGICA MODIFICADA ---
+        const totalQuestions = document.querySelectorAll('.trivia-card').length;
+        let answeredQuestions = 0;
+
         function checkAnswer(button, correctAnswer) {
             const card = button.closest('.trivia-card');
             const options = card.querySelector('.options');
             const feedback = card.querySelector('.feedback');
             const buttons = options.querySelectorAll('button');
-
             const userAnswer = button.textContent.toLowerCase();
 
             if (userAnswer === correctAnswer) {
@@ -222,6 +111,12 @@
             });
             
             feedback.classList.add('visible');
+
+            // Incrementar contador y verificar si es la última pregunta
+            answeredQuestions++;
+            if (answeredQuestions === totalQuestions) {
+                document.getElementById('completion-message').style.display = 'block';
+            }
         }
     </script>
 </body>
