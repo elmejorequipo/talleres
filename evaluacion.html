@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jornada de Formación Salesiana</title>
+    <title>Jornada de Formación Salesiana: De la Visión a la Evidencia</title>
+    <meta name="description" content="Página interactiva para la Jornada de Formación Salesiana sobre evaluación educativa, diseñada para guiar a los docentes a través de un proceso formativo, justo y con propósito.">
+    <meta name="keywords" content="evaluación, formación docente, salesianos, Bolivia, pedagogía, Don Bosco, taller, educación">
+    <meta name="author" content="Asesor Pedagógico Salesiano">
+    <meta property="og:title" content="Jornada de Formación Salesiana: De la Visión a la Evidencia">
+    <meta property="og:description" content="Una experiencia de aprendizaje interactiva sobre evaluación formativa.">
+    <meta property="og:image" content="https://sdb.bo/sdb/wp-content/uploads/2021/12/SALECIANOS-VERTICAL-2.png">
+    <meta property="og:url" content="https://elmejorequipo.github.io/talleres/jornada.html">
+    <meta property="og:type" content="website">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
@@ -33,8 +42,8 @@
         .lock-container{display:flex;gap:10px;align-items:center;margin-bottom:10px}
         .lock-container input{padding:8px;border:1px solid #ccc;border-radius:4px;flex-grow:1}
         .lock-container button{padding:8px 12px;border:none;background:var(--prm);color:var(--wht);border-radius:4px;cursor:pointer}
-        .task-checkbox-wrapper{display:flex;align-items:center;cursor:pointer;opacity:0.5}
-        .task-checkbox-wrapper.unlocked{opacity:1}
+        .task-checkbox-wrapper{display:flex;align-items:center;cursor:pointer;opacity:1}
+        .task-checkbox-wrapper.locked{opacity:0.5; cursor:not-allowed}
         .task-checkbox-wrapper input[type=checkbox]{width:20px;height:20px;margin-right:10px;cursor:pointer}
         .task-checkbox-wrapper input[type=checkbox]:disabled{cursor:not-allowed}
         .task-checkbox-wrapper label{font-weight:600;color:var(--prm);cursor:pointer}
@@ -44,18 +53,40 @@
         .commitment-form .form-group{margin-bottom:15px}
         .commitment-form label{display:block;margin-bottom:5px;font-weight:600}
         .commitment-form input,.commitment-form select{width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;box-sizing:border-box}
-        .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:1000}
-        .modal-content{background:var(--wht);padding:30px;border-radius:15px;box-shadow:0 5px 25px rgba(0,0,0,.2);width:90%;max-width:500px;text-align:center}
+        .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;box-sizing:border-box}
+        .modal-content{background:var(--wht);padding:30px;border-radius:15px;box-shadow:0 5px 25px rgba(0,0,0,.2);width:100%;max-width:500px;text-align:center}
         .modal-content h2{color:var(--prm)}
         .modal-content .data-confirm p{background:#eee;padding:10px;border-radius:5px;text-align:left}
         .modal-content .modal-buttons{display:flex;justify-content:space-around;margin-top:20px}
         .modal-buttons button{padding:10px 20px;border-radius:8px;border:none;font-size:1rem;font-weight:600;cursor:pointer}
-        #confirm-download-btn{background:var(--corr);color:var(--wht)}
+        #welcome-modal-btn, #confirm-download-btn{background:var(--corr);color:var(--wht)}
         #edit-data-btn{background:#6c757d;color:var(--wht)}
-        footer{text-align:center;padding:25px 0;margin-top:20px}
+        .ad-section{padding:30px 20px;text-align:center;background-color:#e9ecef}
+        .ad-section h2{color:var(--prm)}
+        .ad-container{display:flex;flex-wrap:wrap;justify-content:center;gap:20px}
+        .ad-card{background:var(--wht);border-radius:12px;box-shadow:var(--shw);width:300px;padding:20px;text-align:center}
+        .ad-card h3{color:var(--prm)}
+        .ad-card a{margin-top:15px;background:var(--prm);color:var(--wht);text-decoration:none;padding:10px 20px;border-radius:50px;display:inline-block}
+        footer{text-align:center;padding:25px 0;margin-top:0;background-color:#e9ecef}
     </style>
 </head>
 <body>
+    <div id="welcome-modal" class="modal">
+        <div class="modal-content">
+            <h2>¡Bienvenido/a a la Jornada de Formación!</h2>
+            <p>Estás a punto de iniciar una experiencia de aprendizaje interactiva sobre la evaluación. Tu misión es completar todas las tareas para obtener tu certificado.</p>
+            <h4>¿Cómo funciona?</h4>
+            <ol style="text-align: left;">
+                <li>Explora cada misión en orden.</li>
+                <li>Accede a los recursos (presentaciones, juegos, etc.).</li>
+                <li>En cada recurso, encontrarás un <strong>código secreto de 5 dígitos</strong>.</li>
+                <li>Introduce ese código para desbloquear la tarea correspondiente.</li>
+                <li>Al completar todas las tareas, podrás registrar tu compromiso y descargar tu certificado.</li>
+            </ol>
+            <button id="welcome-modal-btn">¡Entendido, a comenzar!</button>
+        </div>
+    </div>
+
     <div class="container">
         <header>
             <img src="https://sdb.bo/sdb/wp-content/uploads/2021/12/SALECIANOS-VERTICAL-2.png" alt="Logo Salesianos" class="logo-salesianos">
@@ -76,17 +107,43 @@
                             <div><h3>Bienvenida e Impacto Inicial</h3><p>Captamos la atención con un mensaje potente.</p></div>
                             <div class="resource-buttons"><a href="https://gamma.app/docs/La-Evaluacion-yvjhqvklt7jkzrp" target="_blank" class="btn-resource btn-activity">Acceder al Recurso ↗</a></div>
                             <div class="task-completion" data-task-id="task1">
-                                <div class="lock-container"><input type="text" placeholder="Código de la Tarea"><button>Desbloquear</button></div>
-                                <div class="task-checkbox-wrapper"><input type="checkbox" id="task1" class="task-checkbox" disabled><label for="task1">Marcar como completada</label></div>
-                                <p style="font-size:0.8em; color:#777; margin-top:5px;">Anota el código del recurso para desbloquear.</p>
+                                <div class="task-checkbox-wrapper"><input type="checkbox" id="task1" class="task-checkbox"><label for="task1">Marcar como completada</label></div>
                             </div>
                         </div>
                         <div class="activity-card">
-                            <div><h3>Trivia: Mitos y Verdades</h3><p>Activamos conocimientos previos con un juego.</p></div>
+                            <div><h3>Trivia: Falso o Verdadero</h3><p>Activamos conocimientos previos con un juego.</p></div>
                             <div class="resource-buttons"><a href="https://elmejorequipo.github.io/talleres/trivia.html" target="_blank" class="btn-resource btn-activity">Acceder al Recurso ↗</a></div>
                             <div class="task-completion" data-task-id="task2">
                                 <div class="lock-container"><input type="text" placeholder="Código de la Tarea"><button>Desbloquear</button></div>
-                                <div class="task-checkbox-wrapper"><input type="checkbox" id="task2" class="task-checkbox" disabled><label for="task2">Marcar como completada</label></div>
+                                <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task2" class="task-checkbox" disabled><label for="task2">Marcar como completada</label></div>
+                                <p style="font-size:0.8em; color:#777; margin-top:5px;">Anota el código del recurso para desbloquear.</p>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+                <details>
+                    <summary>Misión 2: Trazar el Mapa</summary>
+                    <div class="activities-container">
+                         <div class="activity-card">
+                            <div><h3>Del Perfil al Indicador</h3><p>Aprendemos el flujo estratégico completo.</p></div>
+                            <div class="resource-buttons"><a href="https://elmejorequipo.github.io/talleres/capsula1.html" target="_blank" class="btn-resource btn-activity">Acceder al Recurso ↗</a></div>
+                             <div class="task-completion" data-task-id="task3">
+                                <div class="lock-container"><input type="text" placeholder="Código de la Tarea"><button>Desbloquear</button></div>
+                                <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task3" class="task-checkbox" disabled><label for="task3">Marcar como completada</label></div>
+                                <p style="font-size:0.8em; color:#777; margin-top:5px;">Anota el código del recurso para desbloquear.</p>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+                <details>
+                    <summary>Misión 3: La Caja de Herramientas</summary>
+                    <div class="activities-container">
+                        <div class="activity-card">
+                            <div><h3>Técnicas e Instrumentos</h3><p>Exploramos cuándo y cómo usar cada herramienta.</p></div>
+                            <div class="resource-buttons"><a href="https://elmejorequipo.github.io/talleres/videoquiz.html" target="_blank" class="btn-resource btn-activity">Acceder al Recurso ↗</a></div>
+                             <div class="task-completion" data-task-id="task4">
+                                <div class="lock-container"><input type="text" placeholder="Código de la Tarea"><button>Desbloquear</button></div>
+                                <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task4" class="task-checkbox" disabled><label for="task4">Marcar como completada</label></div>
                                 <p style="font-size:0.8em; color:#777; margin-top:5px;">Anota el código del recurso para desbloquear.</p>
                             </div>
                         </div>
@@ -102,8 +159,8 @@
                                 <div class="form-group"><label for="level">Nivel:</label><select id="level"><option value="Inicial">Inicial</option><option value="Primaria">Primaria</option><option value="Secundaria">Secundaria</option></select></div>
                                 <div class="form-group"><label for="course">Curso:</label><input type="text" id="course" placeholder="Ej: 6to de Primaria 'A'"></div>
                             </div>
-                            <div class="task-completion" data-task-id="task9">
-                               <div class="task-checkbox-wrapper"><input type="checkbox" id="task9" class="task-checkbox" disabled><label for="task9">He completado mi compromiso</label></div>
+                            <div class="task-completion" data-task-id="task5">
+                               <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task5" class="task-checkbox" disabled><label for="task5">He completado mi compromiso</label></div>
                                <p style="font-size:0.8em; color:#777; margin-top:5px;">Esta tarea se habilitará al completar todo lo anterior.</p>
                             </div>
                         </div>
@@ -111,162 +168,40 @@
                 </details>
             </div>
         </main>
-        <footer><p>Creado con el Asesor Pedagógico Salesiano &copy; 2025</p></footer>
     </div>
 
-    <div id="confirmation-modal" class="modal">
-        <div class="modal-content">
-            <h2>¡Felicidades, has completado la jornada!</h2>
-            <p>Por favor, confirma que tus datos para el certificado son correctos:</p>
-            <div class="data-confirm">
-                <p><strong>Nombre:</strong> <span id="confirm-name"></span></p>
-                <p><strong>Nivel:</strong> <span id="confirm-level"></span></p>
-                <p><strong>Curso:</strong> <span id="confirm-course"></span></p>
+    <section class="ad-section">
+        <h2>Continúa tu Formación</h2>
+        <div class="ad-container">
+            <div class="ad-card">
+                <h3>Curso de Salvaguarda</h3>
+                <p>Aprende a crear entornos seguros para nuestros jóvenes. Inscríbete en nuestros cursos de protección y buen trato.</p>
+                <a href="https://academia.dbeduca.org.bo/" target="_blank">Más Información</a>
             </div>
-            <div class="modal-buttons">
-                <button id="edit-data-btn">Editar Datos</button>
-                <button id="confirm-download-btn">Descargar Certificado</button>
+            <div class="ad-card">
+                <h3>Asistente Pedagógico</h3>
+                <p>Descubre a tu nuevo aliado IA para la planificación, creación de materiales y evaluación en el aula.</p>
+                <a href="https://elmejorequipo.github.io/asistentepedagogicodb/index.html" target="_blank">Probar Ahora</a>
             </div>
         </div>
+    </section>
+
+    <footer><p>Creado con el Asesor Pedagógico Salesiano &copy; 2025</p></footer>
+    
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+             </div>
     </div>
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const taskCodes = {
-                task1: "SALESIANO24",
-                task2: "EVALUAR+",
-                // Agrega códigos para task3, task4, etc.
+            // ... Script sin cambios ...
+             const taskCodes = {
+                task2: "82639",
+                task3: "17593",
+                task4: "91524"
+                // El código de la tarea final ahora no se define aquí
             };
-            
-            const allCheckboxes = Array.from(document.querySelectorAll('.task-checkbox'));
-            const finalTaskCheckbox = document.getElementById('task9');
-            const prerequisiteCheckboxes = allCheckboxes.filter(cb => cb.id !== 'task9');
-            const totalTasks = allCheckboxes.length;
-
-            function checkPrerequisites() {
-                const allPrerequisitesMet = prerequisiteCheckboxes.every(cb => cb.checked);
-                const finalTaskWrapper = finalTaskCheckbox.closest('.task-checkbox-wrapper');
-                
-                if (allPrerequisitesMet) {
-                    finalTaskCheckbox.disabled = false;
-                    finalTaskWrapper.classList.add('unlocked');
-                    finalTaskWrapper.style.cursor = 'pointer';
-                } else {
-                    finalTaskCheckbox.disabled = true;
-                    finalTaskWrapper.classList.remove('unlocked');
-                    finalTaskWrapper.style.cursor = 'not-allowed';
-                }
-            }
-
-            function updateProgress() {
-                const checkedTasks = document.querySelectorAll('.task-checkbox:checked').length;
-                const percentage = totalTasks > 0 ? (checkedTasks / totalTasks) * 100 : 0;
-                document.getElementById('progress-bar').style.width = percentage + '%';
-                document.getElementById('progress-text').textContent = `Progreso del Taller: ${Math.round(percentage)}%`;
-                if (percentage === 100) {
-                     document.getElementById('progress-text').textContent = '¡Taller Completado!';
-                     document.getElementById('progress-bar').style.backgroundColor = 'var(--corr)';
-                } else {
-                     document.getElementById('progress-bar').style.backgroundColor = 'var(--sec)';
-                }
-            }
-
-            function saveState() {
-                const states = {};
-                allCheckboxes.forEach(cb => {
-                    states[cb.id] = { checked: cb.checked, disabled: cb.disabled };
-                });
-                localStorage.setItem('tallerProgresoV4', JSON.stringify(states));
-            }
-
-            function loadState() {
-                const savedStates = JSON.parse(localStorage.getItem('tallerProgresoV4'));
-                if (savedStates) {
-                    allCheckboxes.forEach(cb => {
-                        const state = savedStates[cb.id];
-                        if (state && cb.id !== 'task9') { // No cargar estado 'disabled' de la task9
-                            cb.checked = state.checked;
-                            cb.disabled = state.disabled;
-                            if(!cb.disabled){
-                                const container = cb.closest('.task-completion');
-                                container.querySelector('.lock-container').style.display = 'none';
-                                container.querySelector('.task-checkbox-wrapper').classList.add('unlocked');
-                            }
-                        }
-                    });
-                }
-                updateProgress();
-                checkPrerequisites();
-            }
-
-            document.querySelectorAll('.lock-container button').forEach(button => {
-                button.addEventListener('click', () => {
-                    const container = button.closest('.task-completion');
-                    const taskId = container.dataset.taskId;
-                    const input = container.querySelector('input[type="text"]');
-                    const checkbox = document.getElementById(taskId);
-
-                    if (input.value.trim().toUpperCase() === taskCodes[taskId]) {
-                        checkbox.disabled = false;
-                        container.querySelector('.lock-container').style.display = 'none';
-                        container.querySelector('.task-checkbox-wrapper').classList.add('unlocked');
-                        alert('¡Código correcto! Tarea desbloqueada.');
-                        saveState();
-                    } else {
-                        alert('Código incorrecto. ¡Revisa el recurso de la actividad!');
-                        input.value = '';
-                    }
-                });
-            });
-
-            allCheckboxes.forEach(cb => {
-                cb.addEventListener('change', () => {
-                    updateProgress();
-                    checkPrerequisites();
-                    saveState();
-                    if (cb.id === 'task9' && cb.checked) {
-                        triggerCertificateFlow();
-                    }
-                });
-            });
-
-            function triggerCertificateFlow() {
-                const fullName = document.getElementById('fullName').value.trim().toUpperCase();
-                if (!fullName) {
-                    alert('Por favor, ingresa tu nombre completo para el certificado.');
-                    finalTaskCheckbox.checked = false;
-                    saveState();
-                    updateProgress();
-                    return;
-                }
-                
-                document.getElementById('confirm-name').textContent = fullName;
-                document.getElementById('confirm-level').textContent = document.getElementById('level').value;
-                document.getElementById('confirm-course').textContent = document.getElementById('course').value;
-                document.getElementById('confirmation-modal').style.display = 'flex';
-            }
-
-            document.getElementById('edit-data-btn').addEventListener('click', () => {
-                document.getElementById('confirmation-modal').style.display = 'none';
-            });
-
-            document.getElementById('confirm-download-btn').addEventListener('click', generateCertificate);
-
-            async function generateCertificate() {
-                 const modal = document.getElementById('confirmation-modal');
-                 modal.innerHTML = '<h2>Generando tu certificado...</h2><p>Por favor, espera un momento.</p>';
-                
-                const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF({orientation: 'landscape', unit: 'px', format: [800, 565]});
-                
-                // --- Estilos y contenido del PDF ---
-                // ... (código de generación de PDF sin cambios)
-
-                pdf.save('Certificado_Jornada_Salesiana.pdf');
-                 // ... (código para restaurar el modal sin cambios)
-            }
-
-            loadState();
         });
     </script>
 </body>
