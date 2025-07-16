@@ -36,7 +36,10 @@
         .quiz-navigation{text-align:right;margin-top:20px}
         .btn-next{font-family:'Poppins',sans-serif;font-size:1rem;font-weight:600;padding:10px 25px;border:none;border-radius:50px;cursor:pointer;background:var(--prm);color:var(--wht)}
         .btn-next:hover{background-color:#004a80}
-        .final-score{text-align:center;font-size:1.5rem;font-weight:700;color:var(--prm)}
+        .final-score{text-align:center;font-size:1.5rem;font-weight:700;color:var(--prm); padding: 20px; border-radius: 10px; background-color: #d4edda; border: 2px solid var(--corr);}
+        /* --- NUEVO ESTILO PARA EL CÓDIGO SECRETO --- */
+        .secret-code-box{margin-top:15px; font-size: 1rem; font-weight: normal;}
+        .secret-code-box .secret-code{font-size:2rem;font-weight:700;background:var(--wht);color:var(--prm);padding:5px 15px;border-radius:8px;display:inline-block;margin-top:10px; border: 2px dashed var(--prm);}
     </style>
 </head>
 <body>
@@ -90,7 +93,7 @@
             {time: "1:50", q: "Para ver la evolución completa de un proyecto, ¿qué instrumento que recoge 'evidencias' te sirve?", o: ["Prueba Objetiva", "Porfolio", "Rúbrica", "Diario de Aprendizaje"], a: "Porfolio", f: "El Porfolio es la 'carpeta de evidencias' por excelencia para mostrar el progreso y el proceso completo."},
             {time: "2:25", q: "Para que los estudiantes conozcan los 'niveles de desempeño' desde el principio, ¿qué instrumento 'tan clarito' deberías usar?", o: ["Escala de Valoración", "Porfolio", "Rúbrica", "Diario de Aprendizaje"], a: "Rúbrica", f: "La Rúbrica es la reina de la claridad. Guía el aprendizaje y hace la evaluación transparente y objetiva."},
             {time: "3:08", q: "Para verificar rápidamente si se cumplieron pasos obligatorios (SÍ/NO), ¿qué 'prima' de la Rúbrica es la más eficiente?", o: ["Lista de Cotejo", "Rúbrica", "Escala de Valoración", "Porfolio"], a: "Lista de Cotejo", f: "La Lista de Cotejo es perfecta para verificar la presencia o ausencia de tareas de forma rápida y directa."},
-            {time: "3:15", q: "Si necesitas medir el 'grado' de una actitud (Siempre, A veces, Nunca), ¿qué instrumento te permite medir en un 'rango'?", o: ["Lista de Cotejo", "Prueba Objetiva", "Escala de Valoración", "Diario de Aprendizaje"], a: "Escala de Valoración", f: "La Escala de Valoración es ideal para medir la frecuencia o intensidad de una conducta, permitiendo matices."}
+            {time: "3.15", q: "Si necesitas medir el 'grado' de una actitud (Siempre, A veces, Nunca), ¿qué instrumento te permite medir en un 'rango'?", o: ["Lista de Cotejo", "Prueba Objetiva", "Escala de Valoración", "Diario de Aprendizaje"], a: "Escala de Valoración", f: "La Escala de Valoración es ideal para medir la frecuencia o intensidad de una conducta, permitiendo matices."}
         ];
 
         let currentQuestionIndex = 0;
@@ -181,10 +184,18 @@
         function showFinalScore() {
             document.getElementById('navigation-container').classList.add('hidden');
             const finalScoreContainer = document.getElementById('final-score-container');
-            finalScoreContainer.textContent = `¡Quiz completado! Tu puntaje final es: ${score} de ${quizData.length}.`;
+            
+            // --- LÓGICA MODIFICADA PARA MOSTRAR EL CÓDIGO ---
+            let finalMessage = `¡Quiz completado! Tu puntaje final es: ${score} de ${quizData.length}.`;
+            let codeMessage = `
+                <div class="secret-code-box">
+                    <p>¡Excelente trabajo! Anota el siguiente código para desbloquear la Misión 3:</p>
+                    <div class="secret-code">44827</div>
+                </div>
+            `;
+            finalScoreContainer.innerHTML = finalMessage + codeMessage;
             finalScoreContainer.classList.remove('hidden');
         }
-
     </script>
 </body>
 </html>
