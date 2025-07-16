@@ -79,7 +79,7 @@
             <p>Estás a punto de iniciar una experiencia de aprendizaje interactiva sobre la evaluación. Tu misión es completar todas las tareas para obtener tu certificado.</p>
             <h4>¿Cómo funciona?</h4>
             <ol style="text-align: left;">
-                <li>Explora cada misión en orden.</li>
+                <li>Explora cada misión en orden. La primera tarea no necesita código.</li>
                 <li>Accede a los recursos (presentaciones, juegos, etc.).</li>
                 <li>En cada recurso, encontrarás un <strong>código secreto de 5 dígitos</strong>.</li>
                 <li>Introduce ese código para desbloquear la tarea correspondiente.</li>
@@ -208,11 +208,10 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            // --- ¡IMPORTANTE! DEFINE AQUÍ TUS CÓDIGOS SECRETOS ---
             const taskCodes = {
                 task2: "82639",
                 task3: "17593",
-                task4: "44827"
+                task4: "44827",
             };
             
             const allCheckboxes = Array.from(document.querySelectorAll('.task-checkbox'));
@@ -221,7 +220,6 @@
             const totalTasks = allCheckboxes.length;
             const welcomeModal = document.getElementById('welcome-modal');
 
-            // --- Lógica de la Ventana de Bienvenida ---
             if (!localStorage.getItem('welcomeShownV2')) {
                 welcomeModal.classList.add('visible');
             }
@@ -229,7 +227,6 @@
                 welcomeModal.classList.remove('visible');
                 localStorage.setItem('welcomeShownV2', 'true');
             });
-
 
             function checkPrerequisites() {
                 const allPrerequisitesMet = prerequisiteCheckboxes.every(cb => cb.checked);
@@ -278,7 +275,7 @@
                             if (lockContainer && !cb.disabled) {
                                 lockContainer.style.display = 'none';
                             }
-                            if(!container.querySelector('.task-checkbox').disabled){
+                             if(container.querySelector('.task-checkbox-wrapper') && !cb.disabled){
                                 container.querySelector('.task-checkbox-wrapper').classList.remove('locked');
                             }
                         }
