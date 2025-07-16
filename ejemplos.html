@@ -6,216 +6,37 @@
     <title>El Camino del Evaluador Salesiano</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-
-        :root {
-            --color-primario: #005A9C; /* Azul Salesiano */
-            --color-secundario: #FFC72C; /* Amarillo Salesiano */
-            --color-fondo: #f4f7fa;
-            --color-texto: #333;
-            --color-blanco: #ffffff;
-            --color-correcto: #28a745;
-            --color-incorrecto: #dc3545;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--color-fondo);
-            color: var(--color-texto);
-            overscroll-behavior: none;
-        }
-
-        main {
-            height: 100vh;
-            overflow-y: scroll;
-            scroll-snap-type: y mandatory;
-        }
-
-        .slide {
-            height: 100vh;
-            scroll-snap-align: start;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 40px;
-            position: relative;
-        }
-
-        .slide-content {
-            max-width: 800px;
-        }
-        
-        .slide-title h1 {
-            font-size: 3.5rem;
-            color: var(--color-primario);
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .slide-title p {
-            font-size: 1.3rem;
-            line-height: 1.7;
-            font-weight: 400;
-        }
-
-        .slide h2 {
-            font-size: 2.5rem;
-            color: var(--color-primario);
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        .slide p {
-            font-size: 1.2rem;
-            line-height: 1.7;
-            font-weight: 300;
-        }
-        
-        .slide .highlight {
-            color: var(--color-primario);
-            font-weight: 600;
-        }
-        
-        .slide-number {
-            position: absolute;
-            top: 30px;
-            left: 30px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            background-color: var(--color-primario);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-
-        .slide-nav {
-            position: fixed;
-            top: 50%;
-            right: 20px;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .slide-nav a {
-            width: 12px;
-            height: 12px;
-            background-color: #ccc;
-            border-radius: 50%;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-
-        .slide-nav a:hover {
-            transform: scale(1.2);
-        }
-
-        .slide-nav a.active {
-            background-color: var(--color-primario);
-            transform: scale(1.5);
-        }
-        
-        .button-container {
-            margin-top: 30px;
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-        }
-
-        .button {
-             display: inline-block;
-             padding: 15px 30px;
-             background-color: var(--color-secundario);
-             color: var(--color-primario);
-             text-decoration: none;
-             font-weight: 600;
-             border-radius: 50px;
-             transition: transform 0.2s;
-        }
-        .button:hover {
-            transform: scale(1.05);
-        }
-        
-        /* Quiz Styles */
-        .quiz-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            width: 100%;
-        }
-        .quiz-item {
-            background: var(--color-blanco);
-            padding: 20px;
-            border-radius: 10px;
-        }
-        .quiz-item p {
-            font-size: 1rem;
-            font-weight: 600;
-            min-height: 60px;
-        }
-        .quiz-options {
-            margin-top: 15px;
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-        .quiz-options button {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            padding: 10px 20px;
-            border-radius: 50px;
-            cursor: pointer;
-            border: 2px solid var(--color-primario);
-            background: none;
-            color: var(--color-primario);
-        }
-         .quiz-options button:hover:not(:disabled) {
-             background: var(--color-primario);
-             color: var(--color-blanco);
-         }
-        .quiz-options button.correct {
-            background-color: var(--color-correcto);
-            border-color: var(--color-correcto);
-            color: white;
-        }
-        .quiz-options button.incorrect {
-            background-color: var(--color-incorrecto);
-            border-color: var(--color-incorrecto);
-            color: white;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .slide-title h1 { font-size: 2.5rem; }
-            .slide h2 { font-size: 2rem; }
-            .slide p { font-size: 1rem; }
-            .slide-nav { display: none; }
-            .slide-number { width: 40px; height: 40px; font-size: 1.2rem; top: 20px; left: 20px;}
-            .button-container { flex-direction: column; }
-            .quiz-container { grid-template-columns: 1fr; }
-            .quiz-item p { min-height: auto; margin-bottom: 10px;}
-        }
+        :root {--prm: #005A9C;--sec: #FFC72C;--bg: #f4f7fa;--txt: #333;--wht: #ffffff;--corr: #28a745;--incorr: #dc3545;}
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        html {scroll-behavior: smooth;}
+        body {font-family: 'Poppins', sans-serif; background-color: var(--bg); color: var(--txt); overscroll-behavior: none;}
+        main {height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory;}
+        .slide {height: 100vh; scroll-snap-align: start; display: flex; align-items: center; justify-content: center; text-align: center; padding: 40px 80px; position: relative; background: var(--wht);}
+        .slide:nth-child(odd) {background: var(--bg);}
+        .slide-content {max-width: 850px; text-align: left;}
+        .slide-title h1 {font-size: 3.5rem; color: var(--prm); margin-bottom: 10px; font-weight: 700; text-align:center;}
+        .slide-title p {font-size: 1.3rem; line-height: 1.7; font-weight: 400; text-align:center;}
+        .slide h2 {font-size: 2rem; color: var(--prm); margin-bottom: 20px; font-weight: 600; border-bottom:3px solid var(--sec); padding-bottom:10px;}
+        .slide h3 {font-size: 1.4rem; color: var(--prm); margin-top:20px; margin-bottom:10px;}
+        .slide p, .slide li {font-size: 1.1rem; line-height: 1.8; font-weight: 400;}
+        .slide ul {padding-left: 25px;}
+        .highlight {color: var(--prm); font-weight: 600;}
+        blockquote{margin:15px 0;padding:15px;background:#e7f3fe;border-left:5px solid var(--prm);font-style:italic}
+        .slide-nav {position: fixed; top: 50%; right: 20px; transform: translateY(-50%); display: flex; flex-direction: column; gap: 15px;}
+        .slide-nav a {width: 12px; height: 12px; background-color: #ccc; border-radius: 50%; transition: all 0.3s;}
+        .slide-nav a:hover {transform: scale(1.2);}
+        .slide-nav a.active {background-color: var(--prm); transform: scale(1.5);}
+        table{width:100%;border-collapse:collapse;margin-top:20px;font-size:0.9rem;}
+        th,td{border:1px solid #ddd;padding:8px;text-align:left;vertical-align:top}
+        th{background-color:#f2f2f2;font-weight:600}
+        .final-code{background:var(--corr);color:var(--wht);text-align:center;padding:20px;border-radius:12px;margin-top:20px}
+        .final-code h3{margin-top:0; color:var(--wht)}
+        .final-code .secret-code{font-size:2.5rem;font-weight:700;background:var(--wht);color:var(--prm);padding:5px 20px;border-radius:8px;display:inline-block;margin-top:10px}
+        @media (max-width: 768px) {.slide{padding:40px 20px;}.slide-nav{display:none;}}
     </style>
 </head>
 <body>
-
     <nav class="slide-nav" id="slide-nav"></nav>
-
     <main id="presentation-main">
         <section id="slide1" class="slide">
             <div class="slide-content slide-title">
@@ -227,125 +48,85 @@
 
         <section id="slide2" class="slide">
             <div class="slide-content">
-                <span class="slide-number">01</span>
-                <h2>Nuestro Propósito</h2>
-                <p>Hoy iniciamos un viaje para transformar nuestra mirada sobre la evaluación. Pasaremos de verla como un simple acto de calificar a concebirla como la <span class="highlight">herramienta más poderosa</span> para acompañar, guiar y potenciar el aprendizaje de cada uno de nuestros estudiantes.</p>
+                <h2>PARTE 1: El Fundamento Estratégico</h2>
+                <p>En esta primera parte, construiremos los cimientos de nuestra práctica. No hablaremos de notas, sino del <span class="highlight">corazón de la evaluación</span>: su propósito. Anclaremos nuestra práctica en la normativa vigente para asegurar un proceso justo y transparente.</p>
+                <blockquote>"El objetivo de la evaluación es contribuir al desarrollo integral y holístico de las y los estudiantes."<br>- <cite>Reglamento de Evaluación, Art. 4</cite></blockquote>
             </div>
         </section>
 
         <section id="slide3" class="slide">
             <div class="slide-content">
-                <span class="slide-number">02</span>
-                <h2>El Camino del Evaluador</h2>
-                <p>Para lograrlo, seguiremos un camino lógico y coherente en 4 grandes etapas. Cada una construye sobre la anterior, asegurando que nuestra evaluación final esté <span class="highlight">perfectamente alineada</span> con nuestras metas más profundas.</p>
+                <h2>El Flujo: Del Perfil al Indicador</h2>
+                <p>Toda evaluación con propósito sigue una ruta lógica:</p>
+                <ul>
+                    <li><strong>Perfil de Salida (El Norte):</strong> Describe las capacidades que queremos formar. Es nuestra gran meta.</li>
+                    <li><strong>Criterios de Evaluación (Las Señales):</strong> "Traducimos" el perfil en metas observables para las 4 dimensiones (Ser, Saber, Hacer, Decidir).</li>
+                    <li><strong>Indicadores (El ADN):</strong> Es la evidencia específica y medible. Su regla de oro es: <span class="highlight">Verbo Observable + Contenido</span>.</li>
+                </ul>
             </div>
         </section>
-        
+
         <section id="slide4" class="slide">
             <div class="slide-content">
-                <span class="slide-number">03</span>
-                <h2>Paso 1: El Perfil de Salida</h2>
-                <p>Es nuestro <span class="highlight">"Norte"</span>, nuestra estrella guía. Antes de planificar cualquier actividad, respondemos a la pregunta: <span class="highlight">"¿Qué tipo de persona, con qué habilidades y valores, queremos formar al final del ciclo?"</span>. Esta visión define todo lo que haremos después.</p>
+                <h2>PARTE 2: La Caja de Herramientas</h2>
+                 <p>Con los fundamentos claros, ahora abrimos nuestra caja de herramientas para aprender a construir los instrumentos que nos permitirán recoger las evidencias del aprendizaje de forma eficaz.</p>
+                 <h3>Instrumentos Clave:</h3>
+                 <ul>
+                    <li><strong>Rúbrica Analítica:</strong> Ideal para valorar procesos complejos (HACER/SABER).</li>
+                    <li><strong>Lista de Cotejo:</strong> Perfecta para verificar actitudes o pasos (SER/HACER) con un SÍ/NO.</li>
+                    <li><strong>Escala de Valoración:</strong> Mide la frecuencia o intensidad de una conducta (SER/DECIDIR).</li>
+                 </ul>
             </div>
         </section>
 
         <section id="slide5" class="slide">
             <div class="slide-content">
-                <span class="slide-number">04</span>
-                <h2>Paso 2: Los Criterios</h2>
-                <p>Son las <span class="highlight">"grandes señales"</span> en nuestro camino. Desglosamos la gran visión del Perfil de Salida en metas concretas y observables para cada una de las 4 dimensiones: <span class="highlight">Ser, Saber, Hacer y Decidir</span>.</p>
+                <h2>Ejemplo: Rúbrica para un "Lapbook"</h2>
+                <table>
+                    <thead><tr><th>Criterio</th><th>Nivel 4 (DP)</th><th>Nivel 3 (DO)</th><th>Nivel 2 (DA)</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Contenido y Precisión (Saber)</strong></td><td>El contenido es excepcionalmente preciso y detallado.</td><td>El contenido es preciso y cubre todos los aspectos.</td><td>El contenido tiene algunas imprecisiones.</td></tr>
+                        <tr><td><strong>Organización y Claridad (Hacer)</strong></td><td>La información está organizada de forma lógica y muy creativa.</td><td>La información está bien organizada y es fácil de seguir.</td><td>La información está algo desorganizada.</td></tr>
+                    </tbody>
+                </table>
             </div>
         </section>
 
         <section id="slide6" class="slide">
             <div class="slide-content">
-                <span class="slide-number">05</span>
-                <h2>Paso 3: Los Indicadores</h2>
-                <p>Este es el <span class="highlight">"ADN"</span> de nuestro registro. Un indicador es una <span class="highlight">acción 100% observable</span> que demuestra que se está cumpliendo un criterio. Si no se puede ver, oír o medir, no es un buen indicador.</p>
+                <h2>PARTE 3: Del Aula al Sistema</h2>
+                <p>Este es el paso final: cómo transformar los resultados de nuestros instrumentos en una calificación final justa, que cumpla con la normativa.</p>
+                <h3>Principio Clave: Calibración y Promedio</h3>
+                <p>Cada instrumento se califica sobre el valor total de su dimensión (ej: una prueba del SABER sobre 45 puntos). Si hay varias actividades para la misma dimensión, sus puntajes <span class="highlight">se promedian</span> para obtener la nota final de la dimensión.</p>
             </div>
         </section>
         
         <section id="slide7" class="slide">
             <div class="slide-content">
-                 <span class="slide-number">06</span>
-                <h2>Indicador: El Verbo es la Clave</h2>
-                <p><strong>Evita verbos abstractos</strong> como <span style="text-decoration: line-through;">comprender o saber</span>. <br><strong>Usa verbos de acción concretos</strong> como <span class="highlight">explica, construye, compara, resuelve</span>.</p>
+                <h2>El Cálculo Final para el SIE</h2>
+                <p>La calificación final del trimestre es la suma directa de los puntajes finales (promediados o únicos) de cada dimensión. La ponderación es la siguiente:</p>
+                <table>
+                    <thead><tr><th>Dimensión</th><th>Valor Total</th><th>Origen</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>SER</strong></td><td>7.5 puntos</td><td>5 (maestro) + 2.5 (autoevaluación)</td></tr>
+                        <tr><td><strong>SABER</strong></td><td>45 puntos</td><td>45 (maestro)</td></tr>
+                        <tr><td><strong>HACER</strong></td><td>40 puntos</td><td>40 (maestro)</td></tr>
+                        <tr><td><strong>DECIDIR</strong></td><td>7.5 puntos</td><td>5 (maestro) + 2.5 (autoevaluación)</td></tr>
+                        <tr><td><strong>TOTAL</strong></td><td><strong>100 puntos</strong></td><td></td></tr>
+                    </tbody>
+                </table>
             </div>
         </section>
-
+        
         <section id="slide8" class="slide">
             <div class="slide-content">
-                 <span class="slide-number">07</span>
-                <h2>Paso 4: Los Instrumentos</h2>
-                <p>Son nuestra <span class="highlight">"caja de herramientas"</span>. La clave es elegir la herramienta correcta para el trabajo correcto, la que mejor recoja la evidencia que nuestro indicador necesita.</p>
-            </div>
-        </section>
-        
-         <section id="slide9" class="slide">
-            <div class="slide-content">
-                 <span class="slide-number">08</span>
-                <h2>Rúbrica vs. Lista de Cotejo</h2>
-                <p>Usa una <span class="highlight">Lista de Cotejo</span> para verificar tareas (Sí/No). <br> Usa una <span class="highlight">Rúbrica Analítica</span> para evaluar la <span class="highlight">calidad</span> de un trabajo, describiendo diferentes niveles de desempeño.</p>
-                <div class="button-container">
-                    <a href="https://docs.google.com/spreadsheets/d/1dZQBiFrSGEj0tQIaQEaPByKG7QDIXVPz1wJmlubVUrw/edit?usp=sharing" target="_blank" class="button">Ejemplo: Lista de Cotejo</a>
-                    <a href="https://docs.google.com/spreadsheets/d/1H3n9uwUnE6ZawFR7hrlERUMhy7ibXIV-sZ6wsnJWS08/edit?usp=sharing" target="_blank" class="button">Ejemplo: Rúbrica</a>
+                <h2>Conclusión y Código Secreto</h2>
+                 <p>Has completado el recorrido por el camino del evaluador salesiano. Ahora tienes una visión completa del proceso, desde la gran meta hasta la calificación final.</p>
+                <div class="final-code">
+                    <h3>¡Misión Cumplida!</h3>
+                    <p>Anota el siguiente código para usarlo en la página principal del taller.</p>
+                    <div class="secret-code">GUIAFINAL</div>
                 </div>
-            </div>
-        </section>
-
-        <section id="slide10" class="slide">
-            <div class="slide-content">
-                 <span class="slide-number">09</span>
-                <h2>Nuestro Aliado Digital</h2>
-                <p>Con el <span class="highlight">Asesor Pedagógico Salesiano</span>, podemos co-crear PDCs, diseñar guías, entrenar habilidades y construir instrumentos de forma ágil y colaborativa.</p>
-                <div class="button-container">
-                    <a href="https://elmejorequipo.github.io/asistentepedagogicodb/index.html" target="_blank" class="button">Instalar mi Asesor</a>
-                </div>
-            </div>
-        </section>
-        
-        <section id="slide11" class="slide">
-            <div class="slide-content">
-                <span class="slide-number">10</span>
-                 <h2>Comprobación Rápida</h2>
-                 <div class="quiz-container">
-                    <div class="quiz-item" id="q1">
-                        <p>1. Un buen indicador puede usar verbos como "comprender" o "saber".</p>
-                        <div class="quiz-options">
-                            <button onclick="checkQuizAnswer(this, 'Falso')">Verdadero</button>
-                            <button onclick="checkQuizAnswer(this, 'Falso')">Falso</button>
-                        </div>
-                    </div>
-                    <div class="quiz-item" id="q2">
-                        <p>2. El Perfil de Salida es el primer paso y la guía de toda la planificación evaluativa.</p>
-                        <div class="quiz-options">
-                            <button onclick="checkQuizAnswer(this, 'Verdadero')">Verdadero</button>
-                            <button onclick="checkQuizAnswer(this, 'Verdadero')">Falso</button>
-                        </div>
-                    </div>
-                    <div class="quiz-item" id="q3">
-                        <p>3. Para evaluar la CALIDAD de un ensayo, ¿qué instrumento es el más adecuado?</p>
-                        <div class="quiz-options">
-                            <button onclick="checkQuizAnswer(this, 'Rúbrica Analítica')">Lista de Cotejo</button>
-                            <button onclick="checkQuizAnswer(this, 'Rúbrica Analítica')">Rúbrica Analítica</button>
-                        </div>
-                    </div>
-                    <div class="quiz-item" id="q4">
-                        <p>4. ¿Qué dimensión se enfoca en la aplicación de habilidades y técnicas?</p>
-                         <div class="quiz-options">
-                            <button onclick="checkQuizAnswer(this, 'Hacer')">Ser</button>
-                            <button onclick="checkQuizAnswer(this, 'Hacer')">Hacer</button>
-                        </div>
-                    </div>
-                 </div>
-            </div>
-        </section>
-        
-        <section id="slide12" class="slide">
-            <div class="slide-content">
-                <span class="slide-number">11</span>
-                <h2>¡Ahora te Toca a Ti!</h2>
-                <p>Has recorrido el camino completo. Te invitamos a aplicar esta metodología en tu planificación para construir una <span class="highlight">evaluación más justa, formativa y con el corazón de Don Bosco</span>. ¡Gracias por tu compromiso!</p>
             </div>
         </section>
     </main>
@@ -380,24 +161,6 @@
                 observer.observe(section);
             });
         });
-
-        function checkQuizAnswer(button, correctAnswer) {
-            const optionsDiv = button.parentElement;
-            const buttons = optionsDiv.querySelectorAll('button');
-            const userAnswer = button.textContent;
-
-            buttons.forEach(btn => {
-                btn.disabled = true;
-                if (btn.textContent === correctAnswer) {
-                    btn.classList.add('correct');
-                }
-            });
-
-            if (userAnswer !== correctAnswer) {
-                button.classList.add('incorrect');
-            }
-        }
     </script>
-
 </body>
 </html>
