@@ -61,7 +61,7 @@
         .modal-content .data-confirm p{background:#eee;padding:10px;border-radius:5px;text-align:left}
         .modal-content .modal-buttons{display:flex;justify-content:space-around;margin-top:20px}
         .modal-buttons button{padding:10px 20px;border-radius:8px;border:none;font-size:1rem;font-weight:600;cursor:pointer}
-        #welcome-modal-btn, #confirm-download-btn{background:var(--corr);color:var(--wht)}
+        #welcome-modal-btn, #confirm-download-btn{background:var(--corr);color:var(--wht); padding: 15px 30px; font-size: 1.2rem; box-shadow: 0 4px 10px rgba(40,167,69,0.4);}
         #edit-data-btn{background:#6c757d;color:var(--wht)}
         .ad-section{padding:30px 20px;text-align:center;background-color:#e9ecef}
         .ad-section h2{color:var(--prm)}
@@ -126,7 +126,7 @@
                 <details>
                     <summary>Misión 2: Trazar el Mapa</summary>
                     <div class="activities-container">
-                         <div class="activity-card">
+                        <div class="activity-card">
                             <div><h3>El "Norte": Perfil de Salida</h3><p>Comprendemos por qué el Perfil de Salida es nuestra guía.</p></div>
                             <div class="resource-buttons"><a href="https://gamma.app/docs/El-Norte-es-el-Perfil-de-Salida-gd82doc127hk7wk" target="_blank" class="btn-resource btn-activity">Acceder al Recurso ↗</a></div>
                              <div class="task-completion" data-task-id="task3">
@@ -168,11 +168,23 @@
                             </div>
                         </div>
                         <div class="activity-card">
-                            <div><h3>Instrumentos en Acción</h3><p>Analizamos ejemplos de rúbricas y listas de cotejo.</p></div>
-                            <div class="resource-buttons"><a href="https://elmejorequipo.github.io/talleres/ejemplos.html" target="_blank" class="btn-resource btn-activity">Acceder al Recurso ↗</a></div>
+                            <div><h3>Infografía: El Camino Completo</h3><p>Un resumen visual de todo nuestro proceso de evaluación.</p></div>
+                            <div class="resource-buttons"><a href="https://elmejorequipo.github.io/talleres/infografia.html" target="_blank" class="btn-resource btn-activity">Acceder al Recurso ↗</a></div>
                              <div class="task-completion" data-task-id="task7">
                                 <div class="lock-container"><input type="text" placeholder="Código de la Tarea"><button>Desbloquear</button></div>
                                 <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task7" class="task-checkbox" disabled><label for="task7">Marcar como completada</label></div>
+                                <p style="font-size:0.8em; color:#777; margin-top:5px;">Anota el código del recurso para desbloquear.</p>
+                            </div>
+                        </div>
+                        <div class="activity-card">
+                            <div><h3>Instrumentos en Acción</h3><p>Analizamos ejemplos y casos de uso de rúbricas y listas.</p></div>
+                            <div class="resource-buttons">
+                                <a href="https://g.co/gemini/share/84ca31f4a60b" target="_blank" class="btn-resource btn-activity">Ver Guía de Instrumentos ↗</a>
+                                <a href="https://g.co/gemini/share/9438a4ee6963" target="_blank" class="btn-resource btn-activity">Escuchar Audio Explicativo ↗</a>
+                            </div>
+                             <div class="task-completion" data-task-id="task8">
+                                <div class="lock-container"><input type="text" placeholder="Código de la Tarea"><button>Desbloquear</button></div>
+                                <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task8" class="task-checkbox" disabled><label for="task8">Marcar como completada</label></div>
                                 <p style="font-size:0.8em; color:#777; margin-top:5px;">Anota el código del recurso para desbloquear.</p>
                             </div>
                         </div>
@@ -188,8 +200,8 @@
                                 <div class="form-group"><label for="level">Nivel:</label><select id="level"><option value="Inicial">Inicial</option><option value="Primaria">Primaria</option><option value="Secundaria">Secundaria</option></select></div>
                                 <div class="form-group"><label for="course">Curso:</label><input type="text" id="course" placeholder="Ej: 6to de Primaria 'A'"></div>
                             </div>
-                            <div class="task-completion" data-task-id="task8">
-                               <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task8" class="task-checkbox" disabled><label for="task8">He completado mi compromiso</label></div>
+                            <div class="task-completion" data-task-id="task9">
+                               <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task9" class="task-checkbox" disabled><label for="task9">He completado mi compromiso</label></div>
                                <p style="font-size:0.8em; color:#777; margin-top:5px;">Esta tarea se habilitará al completar todo lo anterior.</p>
                             </div>
                         </div>
@@ -241,12 +253,13 @@
                 task4: "88462",
                 task5: "17593",
                 task6: "44827",
-                task7: "62951"
+                task7: "35790",
+                task8: "62951"
             };
             
             const allCheckboxes = Array.from(document.querySelectorAll('.task-checkbox'));
-            const finalTaskCheckbox = document.getElementById('task8');
-            const prerequisiteCheckboxes = allCheckboxes.filter(cb => cb.id !== 'task8');
+            const finalTaskCheckbox = document.getElementById('task9');
+            const prerequisiteCheckboxes = allCheckboxes.filter(cb => cb.id !== 'task9');
             const totalTasks = allCheckboxes.length;
             const welcomeModal = document.getElementById('welcome-modal');
 
@@ -340,7 +353,7 @@
                     updateProgress();
                     checkPrerequisites();
                     saveState();
-                    if (cb.id === 'task8' && cb.checked) {
+                    if (cb.id === 'task9' && cb.checked) {
                         triggerCertificateFlow();
                     }
                 });
@@ -386,9 +399,10 @@
                             <p style="font-size:0.9rem; font-style:italic; margin-top:30px;">"Una educación sin afecto es como un cuerpo sin alma." - Don Bosco</p>
                         </div>
                         <div style="position:absolute; bottom:40px; width:100%; left:0; display:flex; justify-content:space-around; font-size:.9rem; color:var(--txt);">
-                            <div style="width:200px; border-top:1px solid var(--txt); padding-top:5px;">Facilitador</div>
-                            <div style="width:200px; border-top:1px solid var(--txt); padding-top:5px;">${new Date().toLocaleDateString('es-ES', {year:'numeric',month:'long',day:'numeric'})}</div>
+                            <div style="width:200px; border-top:1px solid var(--txt); padding-top:5px;">Dirección de Nivel</div>
+                            <div style="width:250px; border-top:1px solid var(--txt); padding-top:5px;">Santa Cruz de la Sierra, 15 de Julio del 2025</div>
                         </div>
+                         <div style="position:absolute; bottom:20px; width:100%; left:0; text-align:center; font-size:0.8rem;">Duración: 8 horas académicas</div>
                     </div>
                 `;
 
@@ -426,6 +440,7 @@
                     modal.style.display = 'none';
                 }, 1000);
             }
+
             loadState();
         });
     </script>
