@@ -13,7 +13,6 @@
     <meta property="og:url" content="https://elmejorequipo.github.io/talleres/jornada.html">
     <meta property="og:type" content="website">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
@@ -388,80 +387,82 @@
                 document.getElementById('confirmation-modal').classList.remove('visible');
             });
             document.getElementById('confirm-download-btn').addEventListener('click', generateCertificate);
-
+            
             async function generateCertificate() {
-                 const modal = document.getElementById('confirmation-modal').querySelector('.modal-content');
-                 modal.innerHTML = '<h2>Generando tu certificado...</h2><p>Por favor, espera un momento.</p>';
+                 const modalContent = document.getElementById('confirmation-modal').querySelector('.modal-content');
+                 modalContent.innerHTML = '<h2>Generando tu certificado...</h2><p>Por favor, espera un momento.</p>';
                 
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF({orientation: 'landscape', unit: 'px', format: [800, 565]});
                 
-                // --- Logo en Base64 para evitar errores ---
-                const logoBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACiSURBVEhLY2RY8v9/BgaGgywDDADpGMDy/39GRgaG/weS4j8QAbwZGGYdCMUYGBgYGJri/wcGBob////fM4wPjP+Yw/j/L8P/D4ap8//vQ0//f+r7/+s/x//v/x//v//fIisDEwMDw3/G/8+A4gEwGDAwMAxV/H8wywD+Z2BgYHgJ8B8wMDAwMDAwMEz4/4GBgeE/w08DAwMDAwMDw48BAgwAsrQhAtC4H3AAAAAASUVORK5CYII=';
+                const logoPrincipalBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccF/FAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6AYQEgUuE5h5yQAAIABJREFUeN7svXl4VdX9/z1r73/a2j/tH/sfY/s/xh9r7bX2uvZqPZ73elqtB4EAAhIBD8mThCR5lCRbkmzLlmRJlpLkcUKIhCRBQAJBhKQgAc97Pa/W6+31+n/a2vvfOfvse+2z5xofA3I+5+f7kGfN2Xvttc8+e8/ea87nBwAAAAAAQZl3gQEAAABAiQhBAAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAA-de';
 
-                const logo = new Image();
-                logo.src = logoBase64;
+                const logoSelloBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACiSURBVEhLY2RY8v9/BgaGgywDDADpGMDy/39GRgaG/weS4j8QAbwZGGYdCMUYGBgYGJri/wcGBob////fM4wPjP+Yw/j/L8P/D4ap8//vQ0//f+r7/+s/x//v/x//v//fIisDEwMDw3/G/8+A4gEwGDAwMAxV/H8wywD+Z2BgYHgJ8B8wMDAwMDAwMEz4/4GBgeE/w08DAwMDAwMDw48BAgwAsrQhAtC4H3AAAAAASUVORK5CYII=';
                 
-                logo.onload = function() {
-                    pdf.setFillColor(244, 247, 250);
-                    pdf.rect(0, 0, 800, 565, 'F');
-                    
-                    try {
-                         pdf.addImage(logo, 'PNG', 350, 200, 100, 100, undefined, 'FAST', 0.1);
-                    } catch(e) {
-                        console.error("Error al añadir la imagen al PDF:", e);
-                    }
-                   
-                    pdf.setDrawColor(0, 90, 156);
-                    pdf.setLineWidth(20);
-                    pdf.rect(0, 0, 800, 565);
+                // --- La función se ejecuta cuando el logo del sello (que es Base64 y carga al instante) está listo ---
+                pdf.setFillColor(244, 247, 250); // Fondo
+                pdf.rect(0, 0, 800, 565, 'F');
+                
+                const logoPrincipal = new Image();
+                logoPrincipal.src = 'https://raw.githubusercontent.com/elmejorequipo/talleres/5cbd9dc5f6cb45782b42517e4e7b52a46d22c48e/SALESIANOS.png';
+                logoPrincipal.onload = function() {
+                    pdf.addImage(this, 'PNG', 40, 40, 100, 50);
 
-                    pdf.setFont('Poppins', 'bold');
-                    pdf.setTextColor(0, 90, 156);
-                    pdf.setFontSize(40);
-                    pdf.text('Certificado de Participación', 400, 100, { align: 'center' });
+                    const logoSello = new Image();
+                    logoSello.src = logoSelloBase64;
+                    logoSello.onload = function() {
+                        pdf.addImage(this, 'PNG', 350, 220, 100, 100, undefined, 'FAST', 0.1);
+                        
+                        pdf.setDrawColor(0, 90, 156); // Borde azul
+                        pdf.setLineWidth(20);
+                        pdf.rect(0, 0, 800, 565);
 
-                    pdf.setFont('Poppins', 'normal');
-                    pdf.setTextColor(51, 51, 51);
-                    pdf.setFontSize(18);
-                    pdf.text('otorgado a:', 400, 150, { align: 'center' });
+                        pdf.setFont('Poppins', 'bold');
+                        pdf.setTextColor(0, 90, 156);
+                        pdf.setFontSize(40);
+                        pdf.text('Certificado de Participación', 400, 100, { align: 'center' });
 
-                    pdf.setFont('Poppins', 'bold');
-                    pdf.setTextColor(0, 90, 156);
-                    pdf.setFontSize(36);
-                    pdf.text(document.getElementById('fullName').value.trim().toUpperCase(), 400, 220, { align: 'center' });
-                    
-                    pdf.setDrawColor(255, 199, 44);
-                    pdf.setLineWidth(2);
-                    pdf.line(200, 235, 600, 235);
+                        pdf.setFont('Poppins', 'normal');
+                        pdf.setTextColor(51, 51, 51);
+                        pdf.setFontSize(18);
+                        pdf.text('otorgado a:', 400, 150, { align: 'center' });
 
-                    pdf.setFont('Poppins', 'normal');
-                    pdf.setTextColor(51, 51, 51);
-                    pdf.setFontSize(16);
-                    const longText = `Por haber completado con éxito la Jornada de Formación Salesiana: "De la Visión a la Evidencia", demostrando un firme compromiso con la excelencia y la rigurosidad en la evaluación, pilares del carisma de Don Bosco.`;
-                    pdf.text(longText, 400, 280, { align: 'center', maxWidth: 600 });
-                    
-                    pdf.setFont('Poppins', 'italic');
-                    pdf.setFontSize(14);
-                    pdf.text('"Una educación sin afecto es como un cuerpo sin alma." - Don Bosco', 400, 350, { align: 'center' });
-                    
-                    pdf.setDrawColor(51, 51, 51);
-                    pdf.setLineWidth(1);
-                    pdf.line(150, 480, 350, 480);
-                    pdf.line(450, 480, 650, 480);
-                    pdf.text('Dirección de Nivel', 250, 500, { align: 'center' });
-                    pdf.text('Santa Cruz de la Sierra, 15 de Julio del 2025', 550, 500, { align: 'center' });
+                        pdf.setFont('Poppins', 'bold');
+                        pdf.setTextColor(0, 90, 156);
+                        pdf.setFontSize(36);
+                        pdf.text(document.getElementById('fullName').value.trim().toUpperCase(), 400, 220, { align: 'center' });
+                        
+                        pdf.setDrawColor(255, 199, 44);
+                        pdf.setLineWidth(2);
+                        pdf.line(200, 235, 600, 235);
 
-                    pdf.setFontSize(10);
-                    pdf.text('Duración: 8 horas académicas', 400, 525, { align: 'center' });
-                    
-                    pdf.save('Certificado_Jornada_Salesiana.pdf');
-                     
-                    setTimeout(() => {
-                        const confirmationModal = document.getElementById('confirmation-modal');
-                        confirmationModal.classList.remove('visible');
-                    }, 1000);
-                }
+                        pdf.setFont('Poppins', 'normal');
+                        pdf.setTextColor(51, 51, 51);
+                        pdf.setFontSize(16);
+                        const longText = `Por haber completado con éxito la Jornada de Formación Salesiana: "De la Visión a la Evidencia", demostrando un firme compromiso con la excelencia y la rigurosidad en la evaluación, pilares del carisma de Don Bosco.`;
+                        pdf.text(longText, 400, 280, { align: 'center', maxWidth: 600 });
+                        
+                        pdf.setFont('Poppins', 'italic');
+                        pdf.setFontSize(14);
+                        pdf.text('"Una educación sin afecto es como un cuerpo sin alma." - Don Bosco', 400, 350, { align: 'center' });
+                        
+                        pdf.setDrawColor(51, 51, 51);
+                        pdf.setLineWidth(1);
+                        pdf.line(300, 480, 500, 480);
+                        pdf.text('Dirección de Nivel', 400, 500, { align: 'center' });
+
+                        pdf.setFontSize(10);
+                        pdf.text('Lugar y Fecha: Santa Cruz de la Sierra, 15 de Julio del 2025', 400, 525, { align: 'center' });
+                        pdf.text('Duración: 8 horas académicas', 400, 540, { align: 'center' });
+                        
+                        pdf.save('Certificado_Jornada_Salesiana.pdf');
+                        
+                        setTimeout(() => {
+                           modal.classList.remove('visible');
+                           // Código para restaurar el contenido del modal si es necesario
+                        }, 1000);
+                    };
+                };
             }
 
             loadState();
