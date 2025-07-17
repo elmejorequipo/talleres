@@ -250,6 +250,7 @@
                 task2: "82639",
                 task3: "75391",
                 task4: "88462",
+                // task5 no necesita código
                 task6: "44827",
                 task7: "35790",
                 task8: "62951"
@@ -272,6 +273,7 @@
             });
 
             function checkDependencies() {
+                // Lógica para la Misión 2, Tarea 5
                 const mission2Met = mission2Prereqs.every(cb => cb.checked);
                 const indicatorsWrapper = indicatorsCheckbox.closest('.task-checkbox-wrapper');
                 if (mission2Met) {
@@ -282,6 +284,7 @@
                     indicatorsWrapper.classList.add('locked');
                 }
 
+                // Lógica para la Tarea Final (Misión 4)
                 const allFinalPrereqsMet = prerequisiteCheckboxes.every(cb => cb.checked);
                 const finalTaskWrapper = finalTaskCheckbox.closest('.task-checkbox-wrapper');
                 if (allFinalPrereqsMet) {
@@ -384,28 +387,34 @@
                 document.getElementById('confirmation-modal').style.display = 'flex';
             }
             
-            // Asignar los listeners a los botones del modal de confirmación
             document.getElementById('edit-data-btn').addEventListener('click', () => {
                 document.getElementById('confirmation-modal').style.display = 'none';
             });
             document.getElementById('confirm-download-btn').addEventListener('click', generateCertificate);
 
             async function generateCertificate() {
-                 const modal = document.getElementById('confirmation-modal');
-                 modal.innerHTML = '<h2>Generando tu certificado...</h2><p>Por favor, espera un momento.</p>';
-                
+                const modal = document.getElementById('confirmation-modal');
+                modal.innerHTML = '<h2>Generando tu certificado...</h2><p>Por favor, espera un momento.</p>';
+               
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF({orientation: 'landscape', unit: 'px', format: [800, 565]});
                 
-                // Usaremos una imagen de fondo para el logo como marca de agua
+                // Logo en Base64 para evitar errores de CORS
+                const logoBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccF/FAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAACQHSURBVHja7J15nFzXdeD/n3N33t3tGq+v1aL1elqPpQvQRRBBgKxRAhIQCwnZkCAk25Ik2ZId25IkS/Il+yYJSRJCyIQEkMjyJqQgyJKAiLJAEOgC6KFHe623V7XWW/N+v+/n/nB33ru7d/fdu7tpk+eD+83du3f/nN+553x/PggEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQ-de';
                 const logo = new Image();
-                logo.src = 'https://sdb.bo/sdb/wp-content/uploads/2021/12/SALECIANOS-VERTICAL-2.png';
+                logo.src = logoBase64;
+                
                 logo.onload = function() {
                     pdf.setFillColor(244, 247, 250);
                     pdf.rect(0, 0, 800, 565, 'F');
                     
-                    pdf.addImage(logo, 'PNG', 350, 200, 100, 160, undefined, 'FAST', 0.15);
-
+                    // Añadir logo como marca de agua
+                    try {
+                         pdf.addImage(logo, 'PNG', 350, 200, 100, 160, undefined, 'FAST', 0.15);
+                    } catch(e) {
+                        console.error("Error al añadir la imagen al PDF:", e);
+                    }
+                   
                     pdf.setDrawColor(0, 90, 156);
                     pdf.setLineWidth(20);
                     pdf.rect(0, 0, 800, 565);
@@ -450,12 +459,27 @@
                     pdf.text('Duración: 8 horas académicas', 400, 525, { align: 'center' });
                     
                     pdf.save('Certificado_Jornada_Salesiana.pdf');
-                     // Restaurar modal
+                     
                     setTimeout(() => {
                         modal.style.display = 'none';
-                        // Código para restaurar el contenido del modal si es necesario
+                        const originalModalContent = `
+                        <h2>¡Felicidades, has completado la jornada!</h2>
+                        <p>Por favor, confirma que tus datos para el certificado son correctos:</p>
+                        <div class="data-confirm">
+                            <p><strong>Nombre:</strong> <span id="confirm-name"></span></p>
+                            <p><strong>Nivel:</strong> <span id="confirm-level"></span></p>
+                            <p><strong>Curso:</strong> <span id="confirm-course"></span></p>
+                        </div>
+                        <div class="modal-buttons">
+                            <button id="edit-data-btn">Editar Datos</button>
+                            <button id="confirm-download-btn">Descargar Certificado</button>
+                        </div>
+                    `;
+                    modal.innerHTML = originalModalContent;
+                    document.getElementById('edit-data-btn').addEventListener('click', () => { modal.style.display = 'none'; });
+                    document.getElementById('confirm-download-btn').addEventListener('click', generateCertificate);
                     }, 1000);
-                };
+                }
             }
 
             loadState();
