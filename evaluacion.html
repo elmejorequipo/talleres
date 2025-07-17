@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jornada de Formación Salesiana: De la Visión a la Evidencia</title>
-    <meta name="description" content="Página interactiva para la Jornada de Formación Salesiana sobre evaluación educativa, diseñada para guiar a los docentes a través de un proceso formativo, justo y con propósito.">
+    <meta name="description" content="Página interactiva para la Jornada de Formación Salesiana sobre evaluación educativa.">
     <meta name="keywords" content="evaluación, formación docente, salesianos, Bolivia, pedagogía, Don Bosco, taller, educación">
     <meta name="author" content="Asesor Pedagógico Salesiano">
     <meta property="og:title" content="Jornada de Formación Salesiana: De la Visión a la Evidencia">
@@ -249,6 +249,7 @@
                 task2: "82639",
                 task3: "75391",
                 task4: "88462",
+                task5: "17593", // Tarea de Indicadores ahora tiene código
                 task6: "44827",
                 task7: "35790",
                 task8: "62951"
@@ -256,12 +257,11 @@
             
             const allCheckboxes = Array.from(document.querySelectorAll('.task-checkbox'));
             const finalTaskCheckbox = document.getElementById('task9');
-            const mission2Prereqs = [document.getElementById('task3'), document.getElementById('task4')];
-            const indicatorsCheckbox = document.getElementById('task5');
             const prerequisiteCheckboxes = allCheckboxes.filter(cb => cb.id !== 'task9');
             const totalTasks = allCheckboxes.length;
             const welcomeModal = document.getElementById('welcome-modal');
 
+            // Lógica de la Ventana de Bienvenida
             if (!localStorage.getItem('welcomeShownV2')) {
                 welcomeModal.classList.add('visible');
             }
@@ -270,20 +270,10 @@
                 localStorage.setItem('welcomeShownV2', 'true');
             });
 
-            function checkDependencies() {
-                const mission2Met = mission2Prereqs.every(cb => cb.checked);
-                const indicatorsWrapper = indicatorsCheckbox.closest('.task-checkbox-wrapper');
-                if (mission2Met) {
-                    indicatorsCheckbox.disabled = false;
-                    indicatorsWrapper.classList.remove('locked');
-                } else {
-                    indicatorsCheckbox.disabled = true;
-                    indicatorsWrapper.classList.add('locked');
-                }
-
-                const allFinalPrereqsMet = prerequisiteCheckboxes.every(cb => cb.checked);
+            function checkFinalTaskPrerequisites() {
+                const allPrerequisitesMet = prerequisiteCheckboxes.every(cb => cb.checked);
                 const finalTaskWrapper = finalTaskCheckbox.closest('.task-checkbox-wrapper');
-                if (allFinalPrereqsMet) {
+                if (allPrerequisitesMet) {
                     finalTaskCheckbox.disabled = false;
                     finalTaskWrapper.classList.remove('locked');
                 } else {
@@ -310,11 +300,11 @@
                 allCheckboxes.forEach(cb => {
                     states[cb.id] = { checked: cb.checked, disabled: cb.disabled };
                 });
-                localStorage.setItem('tallerProgresoV6', JSON.stringify(states));
+                localStorage.setItem('tallerProgresoV7', JSON.stringify(states));
             }
 
             function loadState() {
-                const savedStates = JSON.parse(localStorage.getItem('tallerProgresoV6'));
+                const savedStates = JSON.parse(localStorage.getItem('tallerProgresoV7'));
                 if (savedStates) {
                     allCheckboxes.forEach(cb => {
                         const state = savedStates[cb.id];
@@ -333,7 +323,7 @@
                     });
                 }
                 updateProgress();
-                checkDependencies();
+                checkFinalTaskPrerequisites();
             }
 
             document.querySelectorAll('.lock-container button').forEach(button => {
@@ -359,7 +349,7 @@
             allCheckboxes.forEach(cb => {
                 cb.addEventListener('change', () => {
                     updateProgress();
-                    checkDependencies();
+                    checkFinalTaskPrerequisites();
                     saveState();
                     if (cb.id === 'task9' && cb.checked) {
                         triggerCertificateFlow();
@@ -387,81 +377,84 @@
                 document.getElementById('confirmation-modal').classList.remove('visible');
             });
             document.getElementById('confirm-download-btn').addEventListener('click', generateCertificate);
-            
-            async function generateCertificate() {
-                 const modalContent = document.getElementById('confirmation-modal').querySelector('.modal-content');
-                 modalContent.innerHTML = '<h2>Generando tu certificado...</h2><p>Por favor, espera un momento.</p>';
+
+            function generateCertificate() {
+                const modalContent = document.getElementById('confirmation-modal').querySelector('.modal-content');
+                modalContent.innerHTML = '<h2>Generando tu certificado...</h2><p>Por favor, espera un momento.</p>';
                 
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF({orientation: 'landscape', unit: 'px', format: [800, 565]});
-                
-                const logoPrincipalBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccF/FAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6AYQEgUuE5h5yQAAIABJREFUeN7svXl4VdX9/z1r73/a2j/tH/sfY/s/xh9r7bX2uvZqPZ73elqtB4EAAhIBD8mThCR5lCRbkmzLlmRJlpLkcUKIhCRBQAJBhKQgAc97Pa/W6+31+n/a2vvfOfvse+2z5xofA3I+5+f7kGfN2Xvttc8+e8/ea87nBwAAAAAAQZl3gQEAAABAiQhBAAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAA-de';
 
-                const logoSelloBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACiSURBVEhLY2RY8v9/BgaGgywDDADpGMDy/39GRgaG/weS4j8QAbwZGGYdCMUYGBgYGJri/wcGBob////fM4wPjP+Yw/j/L8P/D4ap8//vQ0//f+r7/+s/x//v/x//v//fIisDEwMDw3/G/8+A4gEwGDAwMAxV/H8wywD+Z2BgYHgJ8B8wMDAwMDAwMEz4/4GBgeE/w08DAwMDAwMDw48BAgwAsrQhAtC4H3AAAAAASUVORK5CYII=';
-                
-                // --- La función se ejecuta cuando el logo del sello (que es Base64 y carga al instante) está listo ---
-                pdf.setFillColor(244, 247, 250); // Fondo
-                pdf.rect(0, 0, 800, 565, 'F');
+                // --- LOGOS COMO BASE64 ---
+                const logoPrincipalBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccF/FAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6AYQEgUuE5h5yQAAIABJREFUeN7svXl4VdX9/z1r73/a2j/tH/sfY/s/xh9r7bX2uvZqPZ73elqtB4EAAhIBD8mThCR5lCRbkmzLlmRJlpLkcUKIhCRBQAJBhKQgAc97Pa/W6+31+n/a2vvfOfvse+2z5xofA3I+5+f7kGfN2Xvttc8+e8/ea87nBwAAAAAAQZl3gQEAAABAiQhBAAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAA-de';
+                const logoSelloBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccF/FAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAACQHSURBVHja7J15nFzXdeD/n3N33t3tGq+v1aL1elqPpQvQRRBBgKxRAhIQCwnZkCAk2ZIk2ZId25IkS/Il+yYJSRJCyIQEkMjyJqQgyJKAiLJAEOgC6KFHe623V7XWW/N+v+/n/nB33ru7d/fdu7tpk+eD+83du3f/nN+553x/PggEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQ-de'
                 
                 const logoPrincipal = new Image();
-                logoPrincipal.src = 'https://raw.githubusercontent.com/elmejorequipo/talleres/5cbd9dc5f6cb45782b42517e4e7b52a46d22c48e/SALESIANOS.png';
-                logoPrincipal.onload = function() {
-                    pdf.addImage(this, 'PNG', 40, 40, 100, 50);
+                logoPrincipal.src = logoPrincipalBase64;
+                const logoSello = new Image();
+                logoSello.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACiSURBVEhLY2RY8v9/BgaGgywDDADpGMDy/39GRgaG/weS4j8QAbwZGGYdCMUYGBgYGJri/wcGBob////fM4wPjP+Yw/j/L8P/D4ap8//vQ0//f+r7/+s/x//v/x//v//fIisDEwMDw3/G/8+A4gEwGDAwMAxV/H8wywD+Z2BgYHgJ8B8wMDAwMDAwMEz4/4GBgeE/w08DAwMDAwMDw48BAgwAsrQhAtC4H3AAAAAASUVORK5CYII=';
 
-                    const logoSello = new Image();
-                    logoSello.src = logoSelloBase64;
-                    logoSello.onload = function() {
-                        pdf.addImage(this, 'PNG', 350, 220, 100, 100, undefined, 'FAST', 0.1);
-                        
-                        pdf.setDrawColor(0, 90, 156); // Borde azul
-                        pdf.setLineWidth(20);
-                        pdf.rect(0, 0, 800, 565);
+                logoPrincipal.onload = () => {
+                    pdf.setFillColor(244, 247, 250);
+                    pdf.rect(0, 0, 800, 565, 'F');
 
-                        pdf.setFont('Poppins', 'bold');
-                        pdf.setTextColor(0, 90, 156);
-                        pdf.setFontSize(40);
-                        pdf.text('Certificado de Participación', 400, 100, { align: 'center' });
+                    pdf.setDrawColor(0, 90, 156);
+                    pdf.setLineWidth(20);
+                    pdf.rect(0, 0, 800, 565);
 
-                        pdf.setFont('Poppins', 'normal');
-                        pdf.setTextColor(51, 51, 51);
-                        pdf.setFontSize(18);
-                        pdf.text('otorgado a:', 400, 150, { align: 'center' });
+                    // --- Añadir logos ---
+                    pdf.addImage(logoPrincipal, 'PNG', 40, 40, 100, 50); // Logo principal en esquina
+                    pdf.addImage(logoSello, 'PNG', 350, 220, 100, 100, undefined, 'FAST', 0.1); // Sello como marca de agua
 
-                        pdf.setFont('Poppins', 'bold');
-                        pdf.setTextColor(0, 90, 156);
-                        pdf.setFontSize(36);
-                        pdf.text(document.getElementById('fullName').value.trim().toUpperCase(), 400, 220, { align: 'center' });
-                        
-                        pdf.setDrawColor(255, 199, 44);
-                        pdf.setLineWidth(2);
-                        pdf.line(200, 235, 600, 235);
+                    // --- Textos del certificado ---
+                    pdf.setFont('Poppins', 'bold');
+                    pdf.setTextColor(0, 90, 156);
+                    pdf.setFontSize(40);
+                    pdf.text('Certificado de Participación', 400, 100, { align: 'center' });
 
-                        pdf.setFont('Poppins', 'normal');
-                        pdf.setTextColor(51, 51, 51);
-                        pdf.setFontSize(16);
-                        const longText = `Por haber completado con éxito la Jornada de Formación Salesiana: "De la Visión a la Evidencia", demostrando un firme compromiso con la excelencia y la rigurosidad en la evaluación, pilares del carisma de Don Bosco.`;
-                        pdf.text(longText, 400, 280, { align: 'center', maxWidth: 600 });
-                        
-                        pdf.setFont('Poppins', 'italic');
-                        pdf.setFontSize(14);
-                        pdf.text('"Una educación sin afecto es como un cuerpo sin alma." - Don Bosco', 400, 350, { align: 'center' });
-                        
-                        pdf.setDrawColor(51, 51, 51);
-                        pdf.setLineWidth(1);
-                        pdf.line(300, 480, 500, 480);
-                        pdf.text('Dirección de Nivel', 400, 500, { align: 'center' });
+                    pdf.setFont('Poppins', 'normal');
+                    pdf.setTextColor(51, 51, 51);
+                    pdf.setFontSize(18);
+                    pdf.text('otorgado a:', 400, 150, { align: 'center' });
 
-                        pdf.setFontSize(10);
-                        pdf.text('Lugar y Fecha: Santa Cruz de la Sierra, 15 de Julio del 2025', 400, 525, { align: 'center' });
-                        pdf.text('Duración: 8 horas académicas', 400, 540, { align: 'center' });
-                        
-                        pdf.save('Certificado_Jornada_Salesiana.pdf');
-                        
-                        setTimeout(() => {
-                           modal.classList.remove('visible');
-                           // Código para restaurar el contenido del modal si es necesario
-                        }, 1000);
-                    };
+                    pdf.setFont('Poppins', 'bold');
+                    pdf.setTextColor(0, 90, 156);
+                    pdf.setFontSize(36);
+                    pdf.text(document.getElementById('fullName').value.trim().toUpperCase(), 400, 220, { align: 'center' });
+                    
+                    pdf.setDrawColor(255, 199, 44);
+                    pdf.setLineWidth(2);
+                    pdf.line(200, 235, 600, 235);
+
+                    pdf.setFont('Poppins', 'normal');
+                    pdf.setTextColor(51, 51, 51);
+                    pdf.setFontSize(16);
+                    const longText = `Por haber completado con éxito la Jornada de Formación Salesiana: "De la Visión a la Evidencia", demostrando un firme compromiso con la excelencia y la rigurosidad en la evaluación, pilares del carisma de Don Bosco.`;
+                    pdf.text(longText, 400, 280, { align: 'center', maxWidth: 600 });
+                    
+                    pdf.setFont('Poppins', 'italic');
+                    pdf.setFontSize(14);
+                    pdf.text('"Una educación sin afecto es como un cuerpo sin alma." - Don Bosco', 400, 350, { align: 'center' });
+                    
+                    // --- Firma única ---
+                    pdf.setDrawColor(51, 51, 51);
+                    pdf.setLineWidth(1);
+                    pdf.line(300, 480, 500, 480);
+                    pdf.setFontSize(12);
+                    pdf.text('Dirección de Nivel', 400, 500, { align: 'center' });
+
+                    // --- Datos finales ---
+                    pdf.setFontSize(10);
+                    pdf.text('Lugar y Fecha: Santa Cruz de la Sierra, 15 de Julio del 2025', 400, 525, { align: 'center' });
+                    pdf.text('Duración: 8 horas académicas', 400, 540, { align: 'center' });
+                    
+                    pdf.save('Certificado_Jornada_Salesiana.pdf');
+                     
+                    setTimeout(() => {
+                        const confirmationModal = document.getElementById('confirmation-modal');
+                        confirmationModal.classList.remove('visible');
+                        // No es necesario restaurar el modal aquí si no se va a reusar
+                    }, 1000);
                 };
             }
 
