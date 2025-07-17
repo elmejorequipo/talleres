@@ -9,7 +9,7 @@
     <meta name="author" content="Asesor Pedagógico Salesiano">
     <meta property="og:title" content="Jornada de Formación Salesiana: De la Visión a la Evidencia">
     <meta property="og:description" content="Una experiencia de aprendizaje interactiva sobre evaluación formativa.">
-    <meta property="og:image" content="https://sdb.bo/sdb/wp-content/uploads/2021/12/SALECIANOS-VERTICAL-2.png">
+    <meta property="og:image" content="https://raw.githubusercontent.com/elmejorequipo/talleres/5cbd9dc5f6cb45782b42517e4e7b52a46d22c48e/SALESIANOS.png">
     <meta property="og:url" content="https://elmejorequipo.github.io/talleres/jornada.html">
     <meta property="og:type" content="website">
 
@@ -91,7 +91,7 @@
 
     <div class="container">
         <header>
-            <img src="https://sdb.bo/sdb/wp-content/uploads/2021/12/SALECIANOS-VERTICAL-2.png" alt="Logo Salesianos" class="logo-salesianos">
+            <img src="https://raw.githubusercontent.com/elmejorequipo/talleres/5cbd9dc5f6cb45782b42517e4e7b52a46d22c48e/SALESIANOS.png" alt="Logo Salesianos" class="logo-salesianos">
             <h1>Jornada de Formación Salesiana</h1>
             <h2>De la Visión a la Evidencia</h2>
             <p>El Camino del Evaluador Riguroso y Creativo</p>
@@ -250,7 +250,6 @@
                 task2: "82639",
                 task3: "75391",
                 task4: "88462",
-                // task5 no necesita código
                 task6: "44827",
                 task7: "35790",
                 task8: "62951"
@@ -273,7 +272,6 @@
             });
 
             function checkDependencies() {
-                // Lógica para la Misión 2, Tarea 5
                 const mission2Met = mission2Prereqs.every(cb => cb.checked);
                 const indicatorsWrapper = indicatorsCheckbox.closest('.task-checkbox-wrapper');
                 if (mission2Met) {
@@ -284,7 +282,6 @@
                     indicatorsWrapper.classList.add('locked');
                 }
 
-                // Lógica para la Tarea Final (Misión 4)
                 const allFinalPrereqsMet = prerequisiteCheckboxes.every(cb => cb.checked);
                 const finalTaskWrapper = finalTaskCheckbox.closest('.task-checkbox-wrapper');
                 if (allFinalPrereqsMet) {
@@ -384,22 +381,24 @@
                 document.getElementById('confirm-name').textContent = fullName;
                 document.getElementById('confirm-level').textContent = document.getElementById('level').value;
                 document.getElementById('confirm-course').textContent = document.getElementById('course').value;
-                document.getElementById('confirmation-modal').style.display = 'flex';
+                document.getElementById('confirmation-modal').classList.add('visible');
             }
             
             document.getElementById('edit-data-btn').addEventListener('click', () => {
-                document.getElementById('confirmation-modal').style.display = 'none';
+                document.getElementById('confirmation-modal').classList.remove('visible');
             });
             document.getElementById('confirm-download-btn').addEventListener('click', generateCertificate);
 
             async function generateCertificate() {
-                 const modal = document.getElementById('confirmation-modal');
+                 const modal = document.getElementById('confirmation-modal').querySelector('.modal-content');
                  modal.innerHTML = '<h2>Generando tu certificado...</h2><p>Por favor, espera un momento.</p>';
                 
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF({orientation: 'landscape', unit: 'px', format: [800, 565]});
                 
-                const logoBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccF/FAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAACQHSURBVHja7J15nFzXdeD/n3N33t3tGq+v1aL1elqPpQvQRRBBgKxRAhIQCwnZkCAk25Ik2ZId25IkS/Il+yYJSRJCyIQEkMjyJqQgyJKAiLJAEOgC6KFHe623V7XWW/N+v+/n/nB33ru7d/fdu7tpk+eD+83du3f/nN+553x/PggEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQ-de';
+                // --- Logo en Base64 para evitar errores ---
+                const logoBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACiSURBVEhLY2RY8v9/BgaGgywDDADpGMDy/39GRgaG/weS4j8QAbwZGGYdCMUYGBgYGJri/wcGBob////fM4wPjP+Yw/j/L8P/D4ap8//vQ0//f+r7/+s/x//v/x//v//fIisDEwMDw3/G/8+A4gEwGDAwMAxV/H8wywD+Z2BgYHgJ8B8wMDAwMDAwMEz4/4GBgeE/w08DAwMDAwMDw48BAgwAsrQhAtC4H3AAAAAASUVORK5CYII=';
+
                 const logo = new Image();
                 logo.src = logoBase64;
                 
@@ -408,7 +407,7 @@
                     pdf.rect(0, 0, 800, 565, 'F');
                     
                     try {
-                        pdf.addImage(logo, 'PNG', 350, 200, 100, 160, undefined, 'FAST', 0.15);
+                         pdf.addImage(logo, 'PNG', 350, 200, 100, 100, undefined, 'FAST', 0.1);
                     } catch(e) {
                         console.error("Error al añadir la imagen al PDF:", e);
                     }
@@ -459,28 +458,12 @@
                     pdf.save('Certificado_Jornada_Salesiana.pdf');
                      
                     setTimeout(() => {
-                        modal.style.display = 'none';
-                        const originalModalContent = `
-                        <h2>¡Felicidades, has completado la jornada!</h2>
-                        <p>Por favor, confirma que tus datos para el certificado son correctos:</p>
-                        <div class="data-confirm">
-                            <p><strong>Nombre:</strong> <span id="confirm-name"></span></p>
-                            <p><strong>Nivel:</strong> <span id="confirm-level"></span></p>
-                            <p><strong>Curso:</strong> <span id="confirm-course"></span></p>
-                        </div>
-                        <div class="modal-buttons">
-                            <button id="edit-data-btn">Editar Datos</button>
-                            <button id="confirm-download-btn">Descargar Certificado</button>
-                        </div>
-                    `;
-                    modal.innerHTML = originalModalContent;
-                    const editBtn = document.getElementById('edit-data-btn');
-                    const downloadBtn = document.getElementById('confirm-download-btn');
-                    if(editBtn) editBtn.addEventListener('click', () => { modal.style.display = 'none'; });
-                    if(downloadBtn) downloadBtn.addEventListener('click', generateCertificate);
-                }, 1000);
+                        const confirmationModal = document.getElementById('confirmation-modal');
+                        confirmationModal.classList.remove('visible');
+                    }, 1000);
+                }
             }
-            
+
             loadState();
         });
     </script>
