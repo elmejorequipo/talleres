@@ -12,16 +12,18 @@
         .container{max-width:1000px;margin:20px auto;text-align:center}
         header h1{color:var(--prm);font-size:2.2rem}
         header p{font-size:1.1rem;margin-bottom:30px}
-        .game-board{display:grid;grid-template-columns:1fr 1fr;gap:30px;text-align:left}
+        .game-board{display:grid;grid-template-columns:1fr 1.5fr;gap:30px;text-align:left}
         .column h2{border-bottom:3px solid var(--sec);padding-bottom:10px;margin-bottom:20px}
         .draggable-item{background-color:var(--wht);padding:15px;margin-bottom:15px;border-radius:8px;border-left:5px solid var(--prm);box-shadow:var(--shw);cursor:grab;transition:box-shadow .3s,opacity .3s}
         .draggable-item:hover{box-shadow:var(--shw-deep)}
         .sortable-ghost{opacity:.4;background:#cce5ff}
-        .drop-zone{background-color:#e9ecef;border:2px dashed #ced4da;padding:10px;margin-bottom:15px;border-radius:8px;min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:background-color .3s,border-color .3s}
-        .drop-zone .profile-text{font-weight:600;color:var(--prm);margin-bottom:5px}
+        /* --- NUEVOS ESTILOS PARA LA COLUMNA DE PERFILES --- */
+        #profiles-column-content{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+        .drop-zone{background-color:#e9ecef;border:2px dashed #ced4da;padding:10px;border-radius:8px;min-height:95px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:background-color .3s,border-color .3s}
+        .drop-zone .profile-text{font-weight:600;color:var(--prm);margin-bottom:5px;font-size:0.9rem;}
         .drop-zone.correct{background-color:#d4edda;border-color:var(--corr)}
         .drop-zone.incorrect{background-color:#f8d7da;border-color:var(--incorr)}
-        .drop-zone .draggable-item{cursor:default;margin-top:10px}
+        .drop-zone .draggable-item{cursor:default;margin-top:10px;width:100%;font-size:0.9rem;padding:10px;}
         .controls{margin-top:30px}
         .btn{font-family:'Poppins',sans-serif;font-size:1.1rem;font-weight:600;padding:12px 35px;border:none;border-radius:50px;cursor:pointer;transition:background-color .3s,transform .2s;margin:0 10px}
         .btn-check{background-color:var(--prm);color:var(--wht)}
@@ -33,7 +35,8 @@
         .confetti.yellow{background-color:var(--sec)}
         .secret-code-box{margin-top:15px; font-size: 1rem; font-weight: normal; padding: 15px; background: #e7f3fe; border-radius: 8px;}
         .secret-code-box .secret-code{font-size:2rem;font-weight:700;background:var(--wht);color:var(--prm);padding:5px 15px;border-radius:8px;display:inline-block;margin-top:10px; border: 2px dashed var(--prm);}
-        @media (max-width:768px){.game-board{grid-template-columns:1fr};header h1{font-size:1.8rem}}
+        @media (max-width:850px){.game-board{grid-template-columns:1fr};header h1{font-size:1.8rem}}
+        @media (max-width:500px){#profiles-column-content{grid-template-columns:1fr}}
     </style>
 </head>
 <body>
@@ -44,7 +47,10 @@
         </header>
         <div class="game-board">
             <div class="column" id="criteria-column"><h2>Criterios de Evaluación (Arrastra)</h2></div>
-            <div class="column" id="profiles-column"><h2>Perfiles de Salida (Suelta aquí)</h2></div>
+            <div class="column" id="profiles-column">
+                <h2>Perfiles de Salida (Suelta aquí)</h2>
+                <div id="profiles-column-content"></div>
+            </div>
         </div>
         <div class="controls">
             <button class="btn btn-check" onclick="checkAnswers()">Verificar Respuestas</button>
@@ -73,10 +79,10 @@
 
         function initGame() {
             const criteriaColumn = document.getElementById('criteria-column');
-            const profilesColumn = document.getElementById('profiles-column');
+            const profilesColumnContent = document.getElementById('profiles-column-content');
 
             criteriaColumn.innerHTML = '<h2>Criterios de Evaluación (Arrastra)</h2>';
-            profilesColumn.innerHTML = '<h2>Perfiles de Salida (Suelta aquí)</h2>';
+            profilesColumnContent.innerHTML = '';
 
             let shuffledCriteria = [...gameData];
             let shuffledProfiles = [...gameData];
@@ -96,19 +102,19 @@
                 el.className = 'drop-zone';
                 el.setAttribute('data-pair', item.id);
                 el.innerHTML = `<p class="profile-text">${item.profile}</p>`;
-                profilesColumn.appendChild(el);
+                profilesColumnContent.appendChild(el);
             });
 
             // --- Lógica nueva con SortableJS ---
             const criteriaList = document.getElementById('criteria-column');
-            const profilesList = document.querySelectorAll('.drop-zone');
+            const dropZones = document.querySelectorAll('.drop-zone');
             
             new Sortable(criteriaList, {
                 group: 'shared',
                 animation: 150
             });
 
-            profilesList.forEach(zone => {
+            dropZones.forEach(zone => {
                 new Sortable(zone, {
                     group: 'shared',
                     animation: 150
