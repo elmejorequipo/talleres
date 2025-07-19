@@ -4,7 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jornada de Formación Salesiana: De la Visión a la Evidencia</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <meta name="description" content="Página interactiva para la Jornada de Formación Salesiana sobre evaluación educativa, diseñada para guiar a los docentes a través de un proceso formativo, justo y con propósito.">
+    <meta name="keywords" content="evaluación, formación docente, salesianos, Bolivia, pedagogía, Don Bosco, taller, educación">
+    <meta name="author" content="Asesor Pedagógico Salesiano">
+    <meta property="og:title" content="Jornada de Formación Salesiana: De la Visión a la Evidencia">
+    <meta property="og:description" content="Una experiencia de aprendizaje interactiva sobre evaluación formativa.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/elmejorequipo/talleres/5cbd9dc5f6cb45782b42517e4e7b52a46d22c48e/SALESIANOS.png">
+    <meta property="og:url" content="https://elmejorequipo.github.io/talleres/jornada.html">
+    <meta property="og:type" content="website">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
@@ -61,63 +69,343 @@
         .ad-card h3{color:var(--prm)}
         .ad-card a{margin-top:15px;background:var(--prm);color:var(--wht);text-decoration:none;padding:10px 20px;border-radius:50px;display:inline-block}
         footer{text-align:center;padding:25px 0;margin-top:0;background-color:#e9ecef}
-        /* --- ESTILOS PARA LA PLANTILLA DEL CERTIFICADO --- */
-        #certificate-wrapper{position:fixed;left:-9999px;top:0} /* Lo ocultamos fuera de la pantalla */
-        #certificate-template{width:800px;height:565px;padding:40px;box-sizing:border-box;background-color:var(--wht);border:10px solid var(--prm);position:relative;text-align:center;font-family:'Poppins',sans-serif}
-        #certificate-template .cert-header{font-size:3rem;font-weight:700;color:var(--prm)}
-        #certificate-template .cert-subtitle{font-size:1.2rem;color:var(--txt);margin-top:-10px}
-        #certificate-template .cert-body{margin:60px 0}
-        #certificate-template #cert-name{font-size:2.2rem;font-weight:700;color:var(--prm);border-bottom:2px solid var(--sec);display:inline-block;padding-bottom:5px}
-        #certificate-template .cert-text{font-size:1.1rem; margin: 20px 40px 0; color: var(--txt)}
-        #certificate-template .cert-quote{font-size:0.9rem; font-style:italic; margin-top:30px; color: var(--txt)}
-        #certificate-template .cert-footer{position:absolute;bottom:40px;width:calc(100% - 80px);left:40px;display:flex;justify-content:space-around;font-size:.9rem}
-        #certificate-template .cert-footer .signature{width:250px;border-top:1px solid var(--txt);padding-top:5px;text-align:center; font-weight:600}
-        #certificate-template .cert-logo-main{position:absolute;top:40px;left:40px;height:60px;}
-        #certificate-template .cert-logo-seal{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);height:200px;opacity:0.1}
     </style>
 </head>
 <body>
-    <div class="container">
+    <div id="welcome-modal" class="modal">
+        <div class="modal-content">
+            <h2>¡Bienvenido/a a la Jornada de Formación!</h2>
+            <p>Estás a punto de iniciar una experiencia de aprendizaje interactiva sobre la evaluación. Tu misión es completar todas las tareas para obtener tu certificado.</p>
+            <h4>¿Cómo funciona?</h4>
+            <ol style="text-align: left;">
+                <li>Explora cada misión en orden. La primera tarea no necesita código.</li>
+                <li>Accede a los recursos (presentaciones, juegos, etc.).</li>
+                <li>En cada recurso, encontrarás un <strong>código secreto de 5 dígitos</strong>.</li>
+                <li>Introduce ese código para desbloquear la tarea correspondiente.</li>
+                <li>Al completar todas las tareas, podrás registrar tu compromiso y descargar tu certificado.</li>
+            </ol>
+            <button id="welcome-modal-btn">¡Entendido, a comenzar!</button>
         </div>
-    <div class="ad-section">
-        </div>
-    
-    <div id="welcome-modal" class="modal"> </div>
-    <div id="confirmation-modal" class="modal"> </div>
+    </div>
 
-    <div id="certificate-wrapper">
-        <div id="certificate-template">
-            <img id="cert-logo-main" src="" alt="Logo Principal" class="cert-logo-main">
-            <img id="cert-logo-seal" src="" alt="Sello" class="cert-logo-seal">
-            <div class="cert-header">Certificado de Participación</div>
-            <div class="cert-subtitle">otorgado a:</div>
-            <div class="cert-body">
-                <div id="cert-name">NOMBRE DEL DOCENTE</div>
-                <p class="cert-text">Por haber completado con éxito la <strong>Jornada de Formación Salesiana: "De la Visión a la Evidencia"</strong>, demostrando un firme compromiso con la excelencia y la rigurosidad en la evaluación, pilares del carisma de Don Bosco.</p>
-                <p class="cert-quote">"Una educación sin afecto es como un cuerpo sin alma." - Don Bosco</p>
+    <div class="container">
+        <header>
+            <img src="https://raw.githubusercontent.com/elmejorequipo/talleres/5cbd9dc5f6cb45782b42517e4e7b52a46d22c48e/SALESIANOS.png" alt="Logo Salesianos" class="logo-salesianos">
+            <h1>Jornada de Formación Salesiana</h1>
+            <h2>De la Visión a la Evidencia</h2>
+            <p>El Camino del Evaluador Riguroso y Creativo</p>
+        </header>
+        <main>
+            <div class="progress-container">
+                <div class="progress-label" id="progress-text">Progreso del Taller: 0%</div>
+                <div class="progress-bar-wrapper"><div class="progress-bar" id="progress-bar"></div></div>
             </div>
-            <div class="cert-footer">
-                <div class="signature" id="cert-signature">Dirección de Nivel</div>
-                <div class="signature" id="cert-location-date">Santa Cruz de la Sierra, 15 de Julio del 2025</div>
+            <div class="phase-accordion">
+                <details open>
+                    <summary>Misión 1: Conectar y Activar</summary>
+                    <div class="activities-container">
+                        <div class="activity-card">
+                            <div><h3>Bienvenida e Impacto Inicial</h3><p>Captamos la atención con un mensaje potente.</p></div>
+                            <div class="resource-buttons"><a href="https://gamma.app/docs/La-Evaluacion-yvjhqvklt7jkzrp" target="_blank" class="btn-resource btn-activity">Acceder al Recurso ↗</a></div>
+                            <div class="task-completion" data-task-id="task1">
+                                <div class="task-checkbox-wrapper"><input type="checkbox" id="task1" class="task-checkbox"><label for="task1">Marcar como completada</label></div>
+                            </div>
+                        </div>
+                        <div class="activity-card">
+                            <div><h3>Trivia: Falso o Verdadero</h3><p>Activamos conocimientos previos con un juego.</p></div>
+                            <div class="resource-buttons"><a href="https://elmejorequipo.github.io/talleres/trivia.html" target="_blank" class="btn-resource btn-activity">Acceder al Recurso ↗</a></div>
+                            <div class="task-completion" data-task-id="task2">
+                                <div class="lock-container"><input type="text" placeholder="Código de la Tarea"><button>Desbloquear</button></div>
+                                <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task2" class="task-checkbox" disabled><label for="task2">Marcar como completada</label></div>
+                                <p style="font-size:0.8em; color:#777; margin-top:5px;">Anota el código del recurso para desbloquear.</p>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+                <details>
+                    <summary>Misión 2: Trazar el Mapa</summary>
+                    <div class="activities-container">
+                        <div class="activity-card">
+                            <div><h3>El "Norte": Perfil de Salida</h3><p>Comprendemos por qué el Perfil de Salida es nuestra guía.</p></div>
+                            <div class="resource-buttons"><a href="https://gamma.app/docs/El-Norte-es-el-Perfil-de-Salida-gd82doc127hk7wk" target="_blank" class="btn-resource btn-activity">Acceder al Recurso ↗</a></div>
+                             <div class="task-completion" data-task-id="task3">
+                                <div class="lock-container"><input type="text" placeholder="Código de la Tarea"><button>Desbloquear</button></div>
+                                <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task3" class="task-checkbox" disabled><label for="task3">Marcar como completada</label></div>
+                                <p style="font-size:0.8em; color:#777; margin-top:5px;">Anota el código del recurso para desbloquear.</p>
+                            </div>
+                        </div>
+                        <div class="activity-card">
+                            <div><h3>Del Perfil al Criterio</h3><p>"Traducimos" la visión en metas observables.</p></div>
+                            <div class="resource-buttons"><a href="https://elmejorequipo.github.io/talleres/conecta.html" target="_blank" class="btn-resource btn-activity">Acceder al Recurso ↗</a></div>
+                             <div class="task-completion" data-task-id="task4">
+                                <div class="lock-container"><input type="text" placeholder="Código de la Tarea"><button>Desbloquear</button></div>
+                                <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task4" class="task-checkbox" disabled><label for="task4">Marcar como completada</label></div>
+                                <p style="font-size:0.8em; color:#777; margin-top:5px;">Anota el código del recurso para desbloquear.</p>
+                            </div>
+                        </div>
+                         <div class="activity-card">
+                            <div><h3>El ADN: Indicadores</h3><p>Creamos la evidencia concreta del aprendizaje.</p></div>
+                            <div class="resource-buttons"><a href="https://character.ai/chat/0kYN93wDwulJnLuLZQIhgKKI0-mDvGegL23Bh-oG4kQ" target="_blank" class="btn-resource btn-activity">Acceder al Recurso ↗</a></div>
+                             <div class="task-completion" data-task-id="task5">
+                                <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task5" class="task-checkbox" disabled><label for="task5">Marcar como completada</label></div>
+                                <p style="font-size:0.8em; color:#777; margin-top:5px;">Se habilita al completar las tareas anteriores de la Misión 2.</p>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+                <details>
+                    <summary>Misión 3: La Caja de Herramientas</summary>
+                    <div class="activities-container">
+                        <div class="activity-card">
+                            <div><h3>Técnicas e Instrumentos</h3><p>Exploramos cuándo y cómo usar cada herramienta.</p></div>
+                            <div class="resource-buttons"><a href="https://elmejorequipo.github.io/talleres/videoquiz.html" target="_blank" class="btn-resource btn-activity">Acceder al Recurso ↗</a></div>
+                             <div class="task-completion" data-task-id="task6">
+                                <div class="lock-container"><input type="text" placeholder="Código de la Tarea"><button>Desbloquear</button></div>
+                                <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task6" class="task-checkbox" disabled><label for="task6">Marcar como completada</label></div>
+                                <p style="font-size:0.8em; color:#777; margin-top:5px;">Anota el código del recurso para desbloquear.</p>
+                            </div>
+                        </div>
+                        <div class="activity-card">
+                            <div><h3>Infografía: El Camino Completo</h3><p>Un resumen visual de todo nuestro proceso de evaluación.</p></div>
+                            <div class="resource-buttons"><a href="https://elmejorequipo.github.io/talleres/infografia.html" target="_blank" class="btn-resource btn-activity">Acceder al Recurso ↗</a></div>
+                             <div class="task-completion" data-task-id="task7">
+                                <div class="lock-container"><input type="text" placeholder="Código de la Tarea"><button>Desbloquear</button></div>
+                                <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task7" class="task-checkbox" disabled><label for="task7">Marcar como completada</label></div>
+                                <p style="font-size:0.8em; color:#777; margin-top:5px;">Anota el código del recurso para desbloquear.</p>
+                            </div>
+                        </div>
+                        <div class="activity-card">
+                            <div><h3>Instrumentos en Acción</h3><p>Analizamos ejemplos y casos de uso de rúbricas y listas.</p></div>
+                            <div class="resource-buttons">
+                                <a href="https://soundcloud.com/el-mejor-equipo-282759177/mas-alla-de-la-nota?si=f2eaf0c20c244ac3b73f2b2218e379a6&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" target="_blank" class="btn-resource btn-activity">🎧 Escuchar Audio Explicativo ↗</a>
+                                <a href="https://g.co/gemini/share/84ca31f4a60b" target="_blank" class="btn-resource btn-activity">📄 Ver Guía de Instrumentos ↗</a>
+                            </div>
+                             <div class="task-completion" data-task-id="task8">
+                                <div class="lock-container"><input type="text" placeholder="Código de la Tarea"><button>Desbloquear</button></div>
+                                <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task8" class="task-checkbox" disabled><label for="task8">Marcar como completada</label></div>
+                                <p style="font-size:0.8em; color:#777; margin-top:5px;">Anota el código del recurso para desbloquear.</p>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+                <details>
+                    <summary>Misión 4: Sellar el Compromiso</summary>
+                    <div class="activities-container">
+                         <div class="activity-card">
+                             <div><h3>Nuestro Muro del Compromiso</h3><p>Transforma la reflexión en acción y obtén tu certificado.</p></div>
+                            <div class="commitment-form">
+                                <div class="form-group"><label for="fullName">Nombre Completo:</label><input type="text" id="fullName" placeholder="TODO EN MAYÚSCULAS"></div>
+                                <div class="form-group"><label for="level">Nivel:</label><select id="level"><option value="Inicial">Inicial</option><option value="Primaria">Primaria</option><option value="Secundaria">Secundaria</option></select></div>
+                                <div class="form-group"><label for="course">Curso:</label><input type="text" id="course" placeholder="Ej: 6to de Primaria 'A'"></div>
+                            </div>
+                            <div class="task-completion" data-task-id="task9">
+                               <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task9" class="task-checkbox" disabled><label for="task9">He completado mi compromiso</label></div>
+                               <p style="font-size:0.8em; color:#777; margin-top:5px;">Esta tarea se habilitará al completar todo lo anterior.</p>
+                            </div>
+                        </div>
+                    </div>
+                </details>
             </div>
-             <div style="position:absolute; bottom:20px; width:100%; left:0; text-align:center; font-size:0.8rem;">Duración: 8 horas académicas</div>
+        </main>
+    </div>
+
+    <div class="ad-section">
+        <h2>Continúa tu Formación</h2>
+        <div class="ad-container">
+            <div class="ad-card">
+                <h3>Curso de Salvaguarda</h3>
+                <p>Aprende a crear entornos seguros para nuestros jóvenes. Inscríbete en nuestros cursos de protección y buen trato.</p>
+                <a href="https://academia.dbeduca.org.bo/" target="_blank">Más Información</a>
+            </div>
+            <div class="ad-card">
+                <h3>Asistente Pedagógico IA</h3>
+                <p>Descubre a tu nuevo aliado IA para la planificación, creación de materiales y evaluación en el aula.</p>
+                <a href="https://elmejorequipo.github.io/asistentepedagogicodb/index.html" target="_blank">Probar Ahora</a>
+            </div>
+        </div>
+        <footer><p>Creado con el Asesor Pedagógico Salesiano &copy; 2025</p></footer>
+    </div>
+    
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <h2>¡Felicidades, has completado la jornada!</h2>
+            <p>Por favor, confirma que tus datos para el certificado son correctos:</p>
+            <div class="data-confirm">
+                <p><strong>Nombre:</strong> <span id="confirm-name"></span></p>
+                <p><strong>Nivel:</strong> <span id="confirm-level"></span></p>
+                <p><strong>Curso:</strong> <span id="confirm-course"></span></p>
+            </div>
+            <div class="modal-buttons">
+                <button id="edit-data-btn">Editar Datos</button>
+                <button id="confirm-download-btn">Descargar Certificado</button>
+            </div>
         </div>
     </div>
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            // ... (Toda la lógica de tareas, códigos, progreso, etc. se mantiene igual)
+            const taskCodes = {
+                task2: "82639",
+                task3: "75391",
+                task4: "88462",
+                task5: "17593",
+                task6: "44827",
+                task7: "35790",
+                task8: "62951"
+            };
+            
+            const allCheckboxes = Array.from(document.querySelectorAll('.task-checkbox'));
+            const finalTaskCheckbox = document.getElementById('task9');
+            const welcomeModal = document.getElementById('welcome-modal');
+            
+            if (!localStorage.getItem('welcomeShownV2')) {
+                welcomeModal.classList.add('visible');
+            }
+            document.getElementById('welcome-modal-btn').addEventListener('click', () => {
+                welcomeModal.classList.remove('visible');
+                localStorage.setItem('welcomeShownV2', 'true');
+            });
 
-            // --- FUNCIÓN DE GENERAR CERTIFICADO TOTALMENTE RECONSTRUIDA ---
-            async function generateCertificate() {
+            function checkDependencies() {
+                const indicatorsCheckbox = document.getElementById('task5');
+                const mission2Prereqs = [document.getElementById('task3'), document.getElementById('task4')];
+                const mission2Met = mission2Prereqs.every(cb => cb.checked);
+                const indicatorsWrapper = indicatorsCheckbox.closest('.task-checkbox-wrapper');
+                if (mission2Met) {
+                    indicatorsCheckbox.disabled = false;
+                    indicatorsWrapper.classList.remove('locked');
+                } else {
+                    indicatorsCheckbox.disabled = true;
+                    indicatorsWrapper.classList.add('locked');
+                }
+
+                const prerequisiteCheckboxes = allCheckboxes.filter(cb => cb.id !== 'task9');
+                const allFinalPrereqsMet = prerequisiteCheckboxes.every(cb => cb.checked);
+                const finalTaskWrapper = finalTaskCheckbox.closest('.task-checkbox-wrapper');
+                if (allFinalPrereqsMet) {
+                    finalTaskCheckbox.disabled = false;
+                    finalTaskWrapper.classList.remove('locked');
+                } else {
+                    finalTaskCheckbox.disabled = true;
+                    finalTaskWrapper.classList.add('locked');
+                }
+            }
+
+            function updateProgress() {
+                const checkedTasks = document.querySelectorAll('.task-checkbox:checked').length;
+                const totalTasks = allCheckboxes.length;
+                const percentage = totalTasks > 0 ? (checkedTasks / totalTasks) * 100 : 0;
+                document.getElementById('progress-bar').style.width = percentage + '%';
+                document.getElementById('progress-text').textContent = `Progreso del Taller: ${Math.round(percentage)}%`;
+                if (percentage === 100) {
+                     document.getElementById('progress-text').textContent = '¡Taller Completado!';
+                     document.getElementById('progress-bar').style.backgroundColor = 'var(--corr)';
+                } else {
+                     document.getElementById('progress-bar').style.backgroundColor = 'var(--sec)';
+                }
+            }
+
+            function saveState() {
+                const states = {};
+                allCheckboxes.forEach(cb => {
+                    states[cb.id] = { checked: cb.checked, disabled: cb.disabled };
+                });
+                localStorage.setItem('tallerProgresoV7', JSON.stringify(states));
+            }
+
+            function loadState() {
+                const savedStates = JSON.parse(localStorage.getItem('tallerProgresoV7'));
+                if (savedStates) {
+                    allCheckboxes.forEach(cb => {
+                        const state = savedStates[cb.id];
+                        if (state) {
+                            cb.checked = state.checked;
+                            cb.disabled = state.disabled;
+                            const container = cb.closest('.task-completion');
+                            const lockContainer = container.querySelector('.lock-container');
+                            if (lockContainer && !cb.disabled) {
+                                lockContainer.style.display = 'none';
+                            }
+                             if(container.querySelector('.task-checkbox-wrapper') && !cb.disabled){
+                                container.querySelector('.task-checkbox-wrapper').classList.remove('locked');
+                            }
+                        }
+                    });
+                }
+                updateProgress();
+                checkDependencies();
+            }
+
+            document.querySelectorAll('.lock-container button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const container = button.closest('.task-completion');
+                    const taskId = container.dataset.taskId;
+                    const input = container.querySelector('input[type="text"]');
+                    const checkbox = document.getElementById(taskId);
+
+                    if (input.value.trim() === taskCodes[taskId]) {
+                        checkbox.disabled = false;
+                        container.querySelector('.lock-container').style.display = 'none';
+                        container.querySelector('.task-checkbox-wrapper').classList.remove('locked');
+                        alert('¡Código correcto! Tarea desbloqueada.');
+                        saveState();
+                    } else {
+                        alert('Código incorrecto. ¡Revisa el recurso de la actividad!');
+                        input.value = '';
+                    }
+                });
+            });
+
+            allCheckboxes.forEach(cb => {
+                cb.addEventListener('change', () => {
+                    updateProgress();
+                    checkDependencies();
+                    saveState();
+                    if (cb.id === 'task9' && cb.checked) {
+                        triggerCertificateFlow();
+                    }
+                });
+            });
+
+            function triggerCertificateFlow() {
+                const fullName = document.getElementById('fullName').value.trim().toUpperCase();
+                if (!fullName) {
+                    alert('Por favor, ingresa tu nombre completo para el certificado.');
+                    finalTaskCheckbox.checked = false;
+                    saveState();
+                    updateProgress();
+                    return;
+                }
+                
+                document.getElementById('confirm-name').textContent = fullName;
+                document.getElementById('confirm-level').textContent = document.getElementById('level').value;
+                document.getElementById('confirm-course').textContent = document.getElementById('course').value;
+                document.getElementById('confirmation-modal').classList.add('visible');
+            }
+            
+            document.getElementById('edit-data-btn').addEventListener('click', () => {
+                document.getElementById('confirmation-modal').classList.remove('visible');
+            });
+            document.getElementById('confirm-download-btn').addEventListener('click', generateCertificate);
+
+            function generateCertificate() {
                 const modalContent = document.getElementById('confirmation-modal').querySelector('.modal-content');
                 modalContent.innerHTML = '<h2>Generando tu certificado...</h2><p>Por favor, espera un momento.</p>';
                 
-                // --- Los logos como datos Base64 para garantizar su carga ---
-                const logoPrincipalBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccF/FAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6AYQEgUuE5h5yQAAIABJREFUeN7svXl4VdX9/z1r73/a2j/tH/sfY/s/xh9r7bX2uvZqPZ73elqtB4EAAhIBD8mThCR5lCRbkmzLlmRJlpLkcUKIhCRBQAJBhKQgAc97Pa/W6+31+n/a2vvfOfvse+2z5xofA3I+5+f7kGfN2Xvttc8+e8/ea87nBwAAAAAAQZl3gQEAAABAiQhBAAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCk...';
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({orientation: 'landscape', unit: 'px', format: [800, 565]});
+                
+                const logoPrincipalBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccF/FAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6AYQEgUuE5h5yQAAIABJREFUeN7svXl4VdX9/z1r73/a2j/tH/sfY/s/xh9r7bX2uvZqPZ73elqtB4EAAhIBD8mThCR5lCRbkmzLlmRJlpLkcUKIhCRBQAJBhKQgAc97Pa/W6+31+n/a2vvfOfvse+2z5xofA3I+5+f7kGfN2Xvttc8+e8/ea87nBwAAAAAAQZl3gQEAAABAiQhBAAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAAAEBFCkAA-de';
                 const logoSelloBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACiSURBVEhLY2RY8v9/BgaGgywDDADpGMDy/39GRgaG/weS4j8QAbwZGGYdCMUYGBgYGJri/wcGBob////fM4wPjP+Yw/j/L8P/D4ap8//vQ0//f+r7/+s/x//v/x//v//fIisDEwMDw3/G/8+A4gEwGDAwMAxV/H8wywD+Z2BgYHgJ8B8wMDAwMDAwMEz4/4GBgeE/w08DAwMDAwMDw48BAgwAsrQhAtC4H3AAAAAASUVORK5CYII=';
 
+                const logoPrincipal = new Image();
+                logoPrincipal.src = logoPrincipalBase64;
+                
+                const logoSello = new Image();
+                logoSello.src = logoSelloBase64;
+
+                // --- La función reconstruida ---
                 const modalContent = document.getElementById('confirmation-modal').querySelector('.modal-content');
                 modalContent.innerHTML = '<h2>Generando tu certificado...</h2><p>Por favor, espera un momento.</p>';
                 
@@ -134,9 +422,9 @@
 
                 try {
                     // Sello como marca de agua
-                    pdf.addImage(logoSelloBase64, 'PNG', 350, 220, 100, 100, undefined, 'FAST', 0.15); 
+                    pdf.addImage(logoSello, 'PNG', 350, 220, 100, 100, undefined, 'FAST', 0.15); 
                     // Logo principal en esquina
-                    pdf.addImage(logoPrincipalBase64, 'PNG', 40, 40, 120, 60);
+                    pdf.addImage(logoPrincipal, 'PNG', 40, 40, 120, 60);
                 } catch(e) {
                     console.error("Error al añadir imágenes al PDF:", e);
                 }
@@ -187,6 +475,9 @@
                  
                 setTimeout(() => {
                     const confirmationModal = document.getElementById('confirmation-modal');
+                    const modalContent = confirmationModal.querySelector('.modal-content');
+                    confirmationModal.classList.remove('visible');
+                    // Restaurar el contenido del modal por si el usuario quiere editar
                     const originalModalContent = `
                         <h2>¡Felicidades, has completado la jornada!</h2>
                         <p>Por favor, confirma que tus datos para el certificado son correctos:</p>
@@ -200,9 +491,7 @@
                             <button id="confirm-download-btn">Descargar Certificado</button>
                         </div>
                     `;
-                    modal.querySelector('.modal-content').innerHTML = originalModalContent;
-                    confirmationModal.classList.remove('visible');
-                    // Re-asignar los eventos a los nuevos botones
+                    modalContent.innerHTML = originalModalContent;
                     document.getElementById('edit-data-btn').addEventListener('click', () => { confirmationModal.classList.remove('visible'); });
                     document.getElementById('confirm-download-btn').addEventListener('click', generateCertificate);
                 }, 1500);
