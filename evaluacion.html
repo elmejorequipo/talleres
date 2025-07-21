@@ -431,59 +431,78 @@
             const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [800, 565] });
             
             try {
-                pdf.setFillColor(244, 247, 250);
-                pdf.rect(0, 0, 800, 565, 'F');
-                pdf.setDrawColor(0, 90, 156);
-                pdf.setLineWidth(20);
-                pdf.rect(0, 0, 800, 565);
-                pdf.addImage(logoPrincipalBase64, 'PNG', 40, 40, 120, 60, 'logoPrincipal', 'FAST');
-                pdf.addImage(logoSelloBase64, 'PNG', 350, 400, 100, 100, 'logoSello', 'FAST');
-                
-                pdf.setFont('Poppins', 'bold');
-                pdf.setTextColor(0, 90, 156);
-                pdf.setFontSize(40);
-                pdf.text('Certificado de Participación', 400, 120, { align: 'center' });
+    pdf.setFillColor(244, 247, 250);
+    pdf.rect(0, 0, 800, 565, 'F');
+    pdf.setDrawColor(0, 90, 156);
+    pdf.setLineWidth(20);
+    pdf.rect(0, 0, 800, 565);
 
-                pdf.setFont('Poppins', 'normal');
-                pdf.setTextColor(51, 51, 51);
-                pdf.setFontSize(18);
-                pdf.text('Otorgado a:', 400, 170, { align: 'center' });
+    // --- Ajustes para el Logo Principal ---
+    const logoPrincipalImg = new Image();
+    logoPrincipalImg.src = logoPrincipalBase64;
+    const originalWidthLogo = logoPrincipalImg.width;
+    const originalHeightLogo = logoPrincipalImg.height;
+    const desiredHeightLogo = 60; // Altura deseada para el logo
+    const aspectRatioLogo = originalWidthLogo / originalHeightLogo;
+    const desiredWidthLogo = desiredHeightLogo * aspectRatioLogo;
 
-                pdf.setFont('Poppins', 'bold');
-                pdf.setTextColor(0, 90, 156);
-                pdf.setFontSize(36);
-                pdf.text(document.getElementById('fullName').value.trim().toUpperCase(), 400, 230, { align: 'center' });
-                
-                pdf.setDrawColor(255, 199, 44);
-                pdf.setLineWidth(2);
-                pdf.line(200, 245, 600, 245);
+    pdf.addImage(logoPrincipalBase64, 'PNG', 40, 40, desiredWidthLogo, desiredHeightLogo, 'logoPrincipal', 'FAST');
 
-                pdf.setFont('Poppins', 'normal');
-                pdf.setTextColor(51, 51, 51);
-                pdf.setFontSize(16);
-                const longText = `Por haber completado con éxito la Jornada de Formación Salesiana: "De la Visión a la Evidencia", demostrando un firme compromiso con la excelencia y la rigurosidad en la evaluación, pilares del carisma de Don Bosco.`;
-                pdf.text(longText, 400, 300, { align: 'center', maxWidth: 600 });
-                
-                pdf.setFont('Poppins', 'italic');
-                pdf.setFontSize(14);
-                pdf.text('"Una educación sin afecto es como un cuerpo sin alma." - Don Bosco', 400, 370, { align: 'center' });
-                
-                pdf.setDrawColor(51, 51, 51);
-                pdf.setLineWidth(1);
-                pdf.line(300, 480, 500, 480);
-                pdf.setFontSize(12);
-                pdf.text('Dirección de Nivel', 400, 500, { align: 'center' });
+    // --- Ajustes para el Logo del Sello (Derecha) ---
+    const logoSelloWidth = 80;
+    const logoSelloHeight = 80;
+    const marginRight = 40; // Margen desde el borde derecho
+    const topMarginSello = 40; // Margen superior para el sello
+    const xPositionSello = 800 - logoSelloWidth - marginRight;
 
-                const currentDate = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
-                pdf.setFontSize(10);
-                pdf.text(`Lugar y Fecha: Santa Cruz de la Sierra, ${currentDate}`, 400, 525, { align: 'center' });
-                pdf.text('Duración: 8 horas académicas', 400, 540, { align: 'center' });
-                
-                pdf.save(`Certificado_${document.getElementById('fullName').value.trim()}.pdf`);
+    pdf.addImage(logoSelloBase64, 'PNG', xPositionSello, topMarginSello, logoSelloWidth, logoSelloHeight, 'logoSello', 'FAST');
 
-            } catch (e) {
-                console.error("Error al generar el PDF:", e);
-                alert("Hubo un error al generar el certificado. Es posible que una de las imágenes no se haya podido cargar.");
+    pdf.setFont('Poppins', 'bold');
+    pdf.setTextColor(0, 90, 156);
+    pdf.setFontSize(40);
+    pdf.text('Certificado de Participación', 400, 120 + 20, { align: 'center' }); // Bajamos el texto para dar espacio a los logos
+
+    pdf.setFont('Poppins', 'normal');
+    pdf.setTextColor(51, 51, 51);
+    pdf.setFontSize(18);
+    pdf.text('Otorgado a:', 400, 170 + 20, { align: 'center' });
+
+    pdf.setFont('Poppins', 'bold');
+    pdf.setTextColor(0, 90, 156);
+    pdf.setFontSize(36);
+    pdf.text(document.getElementById('fullName').value.trim().toUpperCase(), 400, 230 + 20, { align: 'center' });
+
+    pdf.setDrawColor(255, 199, 44);
+    pdf.setLineWidth(2);
+    pdf.line(200, 245 + 20, 600, 245 + 20);
+
+    pdf.setFont('Poppins', 'normal');
+    pdf.setTextColor(51, 51, 51);
+    pdf.setFontSize(16);
+    const longText = `Por haber completado con éxito la Jornada de Formación Salesiana: "De la Visión a la Evidencia", demostrando un firme compromiso con la excelencia y la rigurosidad en la evaluación, pilares del carisma de Don Bosco.`;
+    pdf.text(longText, 400, 300 + 20, { align: 'center', maxWidth: 600 });
+
+    pdf.setFont('Poppins', 'italic');
+    pdf.setFontSize(14);
+    pdf.text('"Una educación sin afecto es como un cuerpo sin alma." - Don Bosco', 400, 370 + 20, { align: 'center' });
+
+    pdf.setDrawColor(51, 51, 51);
+    pdf.setLineWidth(1);
+    pdf.line(300, 480, 500, 480);
+    pdf.setFontSize(12);
+    pdf.text('Dirección de Nivel', 400, 500, { align: 'center' });
+
+    const currentDate = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
+    pdf.setFontSize(10);
+    pdf.text(`Lugar y Fecha: Santa Cruz de la Sierra, ${currentDate}`, 400, 525, { align: 'center' });
+    pdf.text('Duración: 8 horas académicas', 400, 540, { align: 'center' });
+
+    pdf.save(`Certificado_${document.getElementById('fullName').value.trim()}.pdf`);
+
+} catch (e) {
+    console.error("Error al generar el PDF:", e);
+    alert("Hubo un error al generar el certificado. Es posible que una de las imágenes no se haya podido cargar.");
+}
             } finally {
                 // Restaurar el modal a su estado original
                 setTimeout(() => {
