@@ -1,3 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jornada de Formación Salesiana: De la Visión a la Evidencia</title>
+    <meta name="description" content="Página interactiva para la Jornada de Formación Salesiana sobre evaluación educativa, diseñada para guiar a los docentes a través de un proceso formativo, justo y con propósito.">
+    <meta name="keywords" content="evaluación, formación docente, salesianos, Bolivia, pedagogía, Don Bosco, taller, educación">
+    <meta name="author" content="Asesor Pedagógico Salesiano">
+    <meta property="og:title" content="Jornada de Formación Salesiana: De la Visión a la Evidencia">
+    <meta property="og:description" content="Una experiencia de aprendizaje interactiva sobre evaluación formativa.">
+    <meta property="og:image" content="https://sdb.bo/sdb/wp-content/uploads/2021/12/SALECIANOS-VERTICAL-2.png">
+    <meta property="og:url" content="https://elmejorequipo.github.io/talleres/jornada.html">
+    <meta property="og:type" content="website">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        :root{--prm:#005A9C;--sec:#FFC72C;--bg:#f4f7fa;--txt:#333;--wht:#fff;--shw:0 4px 15px rgba(0,0,0,0.08);--corr:#28a745;--err:#dc3545}
+
+        body{font-family:'Poppins',sans-serif;background-color:var(--bg);color:var(--txt);line-height:1.6;margin:0;padding:20px}
+
+        .container{max-width:900px;margin:0 auto;background-color:var(--wht);border-radius:15px;box-shadow:var(--shw);overflow:hidden}
+
+        header{background-color:var(--prm);color:var(--wht);padding:30px 20px;text-align:center;position:relative}
+
+        header h1{margin:0 0 10px 0;font-size:2.5rem;font-weight:700}
+
+        header h2{margin:0;font-size:1.8rem;font-weight:600;opacity:0.95}
+
+        header p{margin:10px 0 0;font-size:1.1rem;opacity:0.9}
+
+        .logo-salesianos{position:absolute;top:20px;left:25px;height:80px;opacity:0.9}
+
+        main{padding:20px}
+
+        .progress-container{margin-bottom:30px}
+
+        .progress-bar-wrapper{width:100%;background-color:#e0e0e0;border-radius:50px;overflow:hidden}
+
+        .progress-bar{height:20px;width:0%;background-color:var(--sec);border-radius:50px;transition:width .5s ease-in-out;text-align:center;color:var(--txt);font-weight:600}
+
+        .progress-label{text-align:center;font-weight:600;color:var(--prm);margin-top:5px}
+
+        .phase-accordion details{margin-bottom:15px;border-radius:10px;border:1px solid #ddd;overflow:hidden}
+
+        .phase-accordion summary{background-color:var(--wht);color:var(--prm);font-size:1.3rem;font-weight:600;padding:15px 20px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;transition:background-color .3s}
+
+        .phase-accordion details[open] summary{background-color:var(--prm);color:var(--wht)}
+
+        .phase-accordion summary::after{content:'➕';font-size:1.5rem;transition:transform .3s ease-out}
+
+        .phase-accordion details[open] summary::after{content:'➖';transform:rotate(180deg)}
+
+        .activities-container{padding:20px;background-color:var(--bg);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+
+        .activity-card{background-color:var(--wht);border-radius:10px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.08);border-left:5px solid var(--sec);display:flex;flex-direction:column;justify-content:space-between}
+
+        .activity-card h3{margin-top:0;color:var(--prm);font-size:1.1rem}
+
+        .task-completion{margin-top:15px;padding-top:15px;border-top:1px solid #eee}
+
+        .lock-container{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+
+        .lock-container input{padding:8px;border:1px solid #ccc;border-radius:4px;flex-grow:1}
+
+        .lock-container button{padding:8px 12px;border:none;background:var(--prm);color:var(--wht);border-radius:4px;cursor:pointer}
+
+        .task-checkbox-wrapper{display:flex;align-items:center;cursor:pointer;opacity:1}
+
+        .task-checkbox-wrapper.locked{opacity:0.5; cursor:not-allowed}
+
+        .task-checkbox-wrapper input[type=checkbox]{width:20px;height:20px;margin-right:10px;cursor:pointer}
+
+        .task-checkbox-wrapper input[type=checkbox]:disabled{cursor:not-allowed}
+
+        .task-checkbox-wrapper label{font-weight:600;color:var(--prm);cursor:pointer}
+
+        .resource-buttons{margin-top:15px;display:flex;flex-direction:column;gap:10px}
+
+        .btn-resource{font-weight:600;text-decoration:none;display:inline-block;padding:8px 15px;border-radius:5px;text-align:center}
+
+        .btn-activity{background-color:var(--sec);color:var(--txt)}
+
+        .commitment-form .form-group{margin-bottom:15px}
+
+        .commitment-form label{display:block;margin-bottom:5px;font-weight:600}
+
+        .commitment-form input,.commitment-form select{width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;box-sizing:border-box}
+
+        .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;box-sizing:border-box;opacity:0;visibility:hidden;transition:opacity .3s, visibility .3s}
+
+        .modal.visible{opacity:1;visibility:visible}
+
+        .modal-content{background:var(--wht);padding:30px;border-radius:15px;box-shadow:0 5px 25px rgba(0,0,0,.2);width:100%;max-width:500px;text-align:center;transform:scale(.9);transition:transform .3s}
+
+        .modal.visible .modal-content{transform:scale(1)}
+
+        .modal-content h2{color:var(--prm)}
+
+        .modal-content .data-confirm p{background:#eee;padding:10px;border-radius:5px;text-align:left}
+
+        .modal-content .modal-buttons{display:flex;justify-content:space-around;margin-top:20px}
+
+        .modal-buttons button{padding:10px 20px;border-radius:8px;border:none;font-size:1rem;font-weight:600;cursor:pointer}
+
+        #welcome-modal-btn, #confirm-download-btn{background:var(--corr);color:var(--wht); padding: 15px 30px; font-size: 1.2rem; box-shadow: 0 4px 10px rgba(40,167,69,0.4);}
+
+        #edit-data-btn{background:#6c757d;color:var(--wht)}
+
+        .ad-section{padding:30px 20px;text-align:center;background-color:#e9ecef}
+
+        .ad-section h2{color:var(--prm)}
+
+        .ad-container{display:flex;flex-wrap:wrap;justify-content:center;gap:20px}
+
+        .ad-card{background:var(--wht);border-radius:12px;box-shadow:var(--shw);width:300px;padding:20px;text-align:center}
+
+        .ad-card h3{color:var(--prm)}
+
+        .ad-card a{margin-top:15px;background:var(--prm);color:var(--wht);text-decoration:none;padding:10px 20px;border-radius:50px;display:inline-block}
+
+        footer{text-align:center;padding:25px 0;margin-top:0;background-color:#e9ecef}
+
+    </style>
+
+</head>
+
+<body>
+
+    <div id="welcome-modal" class="modal">
+
+        <div class="modal-content">
+
+            <h2>¡Bienvenido/a a la Jornada de Formación!</h2>
+
+            <p>Estás a punto de iniciar una experiencia de aprendizaje interactiva sobre la evaluación. Tu misión es completar todas las tareas para obtener tu certificado.</p>
+
+            <h4>¿Cómo funciona?</h4>
+
+            <ol style="text-align: left;">
+
+                <li>Explora cada misión en orden. La primera tarea no necesita código.</li>
+
+                <li>Accede a los recursos (presentaciones, juegos, etc.).</li>
+
+                <li>En cada recurso, encontrarás un <strong>código secreto de 5 dígitos</strong>.</li>
+
+                <li>Introduce ese código para desbloquear la tarea correspondiente.</li>
+
+                <li>Al completar todas las tareas, podrás registrar tu compromiso y descargar tu certificado.</li>
+
+            </ol>
+
+            <button id="welcome-modal-btn">¡Entendido, a comenzar!</button>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="container">
+
+        <header>
+
+            <img src="https://sdb.bo/sdb/wp-content/uploads/2021/12/SALECIANOS-VERTICAL-2.png" alt="Logo Salesianos" class="logo-salesianos">
+
+            <h1>Jornada de Formación Salesiana</h1>
+
+            <h2>De la Visión a la Evidencia</h2>
+
+            <p>El Camino del Evaluador Riguroso y Creativo</p>
+
+        </header>
+
+        <main>
+
+            <div class="progress-container">
+
+                <div class="progress-label" id="progress-text">Progreso del Taller: 0%</div>
+
+                <div class="progress-bar-wrapper"><div class="progress-bar" id="progress-bar"></div></div>
+
+            </div>
+
+            <div class="phase-accordion">
+
+                <details open>
+
+                    <summary>Misión 1: Conectar y Activar</summary>
+
+                    <div class="activities-container">
+
+                        <div class="activity-card">
+
+                            <div><h3>Bienvenida e Impacto Inicial</h3><p>Captamos la atención con un mensaje potente.</p></div>
+
+                            <div class="resource-buttons"><a href="https://gamma.app/docs/La-Evaluacion-yvjhqvklt7jkzrp" target="_blank" class="btn-resource btn-activity">Acceder al Recurso ↗</a></div>
+
+                            <div class="task-completion" data-task-id="task1">
+
+                                <div class="task-checkbox-wrapper"><input type="checkbox" id="task1" class="task-checkbox"><label for="task1">Marcar como completada</label></div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="activity-card">
+
+                            <div><h3>Trivia: Falso o Verdadero</h3><p>Activamos conocimientos previos con un juego.</p></div>
+
+                            <div class="resource-buttons"><a href="https://elmejorequipo.github.io/talleres/trivia.html" target="_blank" class="btn-resource btn-activity">Acceder al Recurso ↗</a></div>
+
+                            <div class="task-completion" data-task-id="task2">
+
+                                <div class="lock-container"><input type="text" placeholder="Código de la Tarea"><button>Desbloquear</button></div>
+
+                                <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task2" class="task-checkbox" disabled><label for="task2">Marcar como completada</label></div>
+
+                                <p style="font-size:0.8em; color:#777; margin-top:5px;">Anota el código del recurso para desbloquear.</p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </details>
+
+                <details>
+
+                    <summary>Misión 2: Trazar el Mapa</summary>
+
+                    <div class="activities-container">
+
+                        <div class="activity-card">
+
+                            <div><h3>El "Norte": Perfil de Salida</h3><p>Comprendemos por qué el Perfil de Salida es nuestra guía.</p></div>
+
+                            <div class="resource-buttons"><a href="https://gamma.app/docs/El-Norte-es-el-Perfil-de-Salida-gd82doc127hk7wk" target="_blank" class="btn-resource btn-activity">Acceder al Recurso ↗</a></div>
+
+                             <div class="task-completion" data-task-id="task3">
+
+                                <div class="lock-container"><input type="text" placeholder="Código de la Tarea"><button>Desbloquear</button></div>
+
+                                <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task3" class="task-checkbox" disabled><label for="task3">Marcar como completada</label></div>
+
+                                <p style="font-size:0.8em; color:#777; margin-top:5px;">Anota el código del recurso para desbloquear.</p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="activity-card">
+
+                            <div><h3>Del Perfil al Criterio</h3><p>"Traducimos" la visión en metas observables.</p></div>
+
+                            <div class="resource-buttons"><a href="https://elmejorequipo.github.io/talleres/conecta.html" target="_blank" class="btn-resource btn-activity">Acceder al Recurso ↗</a></div>
+
+                             <div class="task-completion" data-task-id="task4">
+
+                                <div class="lock-container"><input type="text" placeholder="Código de la Tarea"><button>Desbloquear</button></div>
+
+                                <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task4" class="task-checkbox" disabled><label for="task4">Marcar como completada</label></div>
+
+                                <p style="font-size:0.8em; color:#777; margin-top:5px;">Anota el código del recurso para desbloquear.</p>
+
+                            </div>
+
+                        </div>
+
+                         <div class="activity-card">
+
+                            <div><h3>El ADN: Indicadores</h3><p>Creamos la evidencia concreta del aprendizaje.</p></div>
+
+                            <div class="resource-buttons"><a href="https://character.ai/chat/0kYN93wDwulJnLuLZQIhgKKI0-mDvGegL23Bh-oG4kQ" target="_blank" class="btn-resource btn-activity">Acceder al Recurso ↗</a></div>
+
+                             <div class="task-completion" data-task-id="task5">
+
+                                <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task5" class="task-checkbox" disabled><label for="task5">Marcar como completada</label></div>
+
+                                <p style="font-size:0.8em; color:#777; margin-top:5px;">Se habilita al completar las tareas anteriores de la Misión 2.</p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </details>
+
+                <details>
+
+                    <summary>Misión 3: La Caja de Herramientas</summary>
+
+                    <div class="activities-container">
+
+                        <div class="activity-card">
+
+                            <div><h3>Técnicas e Instrumentos</h3><p>Exploramos cuándo y cómo usar cada herramienta.</p></div>
+
+                            <div class="resource-buttons"><a href="https://elmejorequipo.github.io/talleres/videoquiz.html" target="_blank" class="btn-resource btn-activity">Acceder al Recurso ↗</a></div>
+
+                             <div class="task-completion" data-task-id="task6">
+
+                                <div class="lock-container"><input type="text" placeholder="Código de la Tarea"><button>Desbloquear</button></div>
+
+                                <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task6" class="task-checkbox" disabled><label for="task6">Marcar como completada</label></div>
+
+                                <p style="font-size:0.8em; color:#777; margin-top:5px;">Anota el código del recurso para desbloquear.</p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="activity-card">
+
+                            <div><h3>Infografía: El Camino Completo</h3><p>Un resumen visual de todo nuestro proceso de evaluación.</p></div>
+
+                            <div class="resource-buttons"><a href="https://elmejorequipo.github.io/talleres/infografia.html" target="_blank" class="btn-resource btn-activity">Acceder al Recurso ↗</a></div>
+
+                             <div class="task-completion" data-task-id="task7">
+
+                                <div class="lock-container"><input type="text" placeholder="Código de la Tarea"><button>Desbloquear</button></div>
+
+                                <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task7" class="task-checkbox" disabled><label for="task7">Marcar como completada</label></div>
+
+                                <p style="font-size:0.8em; color:#777; margin-top:5px;">Anota el código del recurso para desbloquear.</p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="activity-card">
+
+                            <div><h3>Instrumentos en Acción</h3><p>Analizamos ejemplos y casos de uso de rúbricas y listas.</p></div>
+
+                            <div class="resource-buttons">
+
+                                <a href="https://soundcloud.com/el-mejor-equipo-282759177/mas-alla-de-la-nota?si=f2eaf0c20c244ac3b73f2b2218e379a6&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" target="_blank" class="btn-resource btn-activity">🎧 Escuchar Audio Explicativo ↗</a>
+
+                                <a href="https://g.co/gemini/share/84ca31f4a60b" target="_blank" class="btn-resource btn-activity">📄 Ver Guía de Instrumentos ↗</a>
+
+                            </div>
+
+                             <div class="task-completion" data-task-id="task8">
+
+                                <div class="lock-container"><input type="text" placeholder="Código de la Tarea"><button>Desbloquear</button></div>
+
+                                <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task8" class="task-checkbox" disabled><label for="task8">Marcar como completada</label></div>
+
+                                <p style="font-size:0.8em; color:#777; margin-top:5px;">Anota el código del recurso para desbloquear.</p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </details>
+
+                <details>
+
+                    <summary>Misión 4: Sellar el Compromiso</summary>
+
+                    <div class="activities-container">
+
+                         <div class="activity-card">
+
+                             <div><h3>Nuestro Muro del Compromiso</h3><p>Transforma la reflexión en acción y obtén tu certificado.</p></div>
+
+                            <div class="commitment-form">
+
+                                <div class="form-group"><label for="fullName">Nombre Completo:</label><input type="text" id="fullName" placeholder="TODO EN MAYÚSCULAS"></div>
+
+                                <div class="form-group"><label for="level">Nivel:</label><select id="level"><option value="Inicial">Inicial</option><option value="Primaria">Primaria</option><option value="Secundaria">Secundaria</option></select></div>
+
+                                <div class="form-group"><label for="course">Curso:</label><input type="text" id="course" placeholder="Ej: 6to de Primaria 'A'"></div>
+
+                            </div>
+
+                            <div class="task-completion" data-task-id="task9">
+
+                               <div class="task-checkbox-wrapper locked"><input type="checkbox" id="task9" class="task-checkbox" disabled><label for="task9">He completado mi compromiso</label></div>
+
+                               <p style="font-size:0.8em; color:#777; margin-top:5px;">Esta tarea se habilitará al completar todo lo anterior.</p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </details>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+
+    <div class="ad-section">
+
+        <h2>Continúa tu Formación</h2>
+
+        <div class="ad-container">
+
+            <div class="ad-card">
+
+                <h3>Curso de Salvaguarda</h3>
+
+                <p>Aprende a crear entornos seguros para nuestros jóvenes. Inscríbete en nuestros cursos de protección y buen trato.</p>
+
+                <a href="https://academia.dbeduca.org.bo/" target="_blank">Más Información</a>
+
+            </div>
+
+            <div class="ad-card">
+
+                <h3>Asistente Pedagógico IA</h3>
+
+                <p>Descubre a tu nuevo aliado IA para la planificación, creación de materiales y evaluación en el aula.</p>
+
+                <a href="https://elmejorequipo.github.io/asistentepedagogicodb/index.html" target="_blank">Probar Ahora</a>
+
+            </div>
+
+        </div>
+
+        <footer><p>Creado con el Asesor Pedagógico Salesiano &copy; 2025</p></footer>
+
+    </div>
+
+    
+
+    <div id="confirmation-modal" class="modal">
+
+        <div class="modal-content">
+
+            <h2>¡Felicidades, has completado la jornada!</h2>
+
+            <p>Por favor, confirma que tus datos para el certificado son correctos:</p>
+
+            <div class="data-confirm">
+
+                <p><strong>Nombre:</strong> <span id="confirm-name"></span></p>
+
+                <p><strong>Nivel:</strong> <span id="confirm-level"></span></p>
+
+                <p><strong>Curso:</strong> <span id="confirm-course"></span></p>
+
+            </div>
+
+            <div class="modal-buttons">
+
+                <button id="edit-data-btn">Editar Datos</button>
+
+                <button id="confirm-download-btn">Descargar Certificado</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    
 <script>
     document.addEventListener('DOMContentLoaded', () => {
 
@@ -271,3 +740,5 @@
         loadState();
     });
 </script>
+</body>
+</html>
